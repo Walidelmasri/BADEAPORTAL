@@ -1,0 +1,344 @@
+﻿@{
+    ViewData["Title"] = "BADEA Portal";
+}
+
+@section Scripts {
+    <script>
+        // just a tiny hover animation for cards
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.portal-tool-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    card.style.transform = `translateY(-4px) rotateX(${(-y / 80)}deg) rotateY(${x / 80}deg)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+                });
+            });
+        });
+    </script>
+}
+
+<style>
+    .portal-hero {
+        border-radius: 2rem;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 26px 80px rgba(0, 0, 0, 0.25);
+        background-color: #000;
+    }
+
+    /* 👉 Put your banner image here */
+    .portal-hero-bg {
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/portal-hero.jpg'); /* replace with your BADEA banner */
+        background-size: cover;
+        background-position: center;
+        opacity: 0.9;
+    }
+
+    .portal-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top left, rgba(255,255,255,0.35), transparent 60%),
+                    linear-gradient(120deg, rgba(0,150,57,0.85), rgba(0,150,57,0.35), rgba(0,0,0,0.55));
+        mix-blend-mode: soft-light;
+    }
+
+    .portal-hero-inner {
+        position: relative;
+        z-index: 1;
+        padding: 2.5rem 3.5rem;
+        color: #fff;
+        display: flex;
+        gap: 2rem;
+    }
+
+    .portal-hero-left {
+        max-width: 420px;
+    }
+
+    .portal-hero-title {
+        font-size: 2.4rem;
+        font-weight: 800;
+        line-height: 1.15;
+    }
+
+    .portal-hero-sub {
+        font-size: 0.95rem;
+        opacity: 0.92;
+    }
+
+    .portal-hero-pulse {
+        min-width: 220px;
+        align-self: flex-start;
+        background: rgba(0,0,0,0.56);
+        border-radius: 999px;
+        padding: 1.1rem 1.4rem;
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+    }
+
+    .portal-pulse-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        color: #b6f4c9;
+    }
+
+    .portal-pulse-value {
+        font-size: 2.1rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .portal-pulse-note {
+        font-size: 0.8rem;
+        color: #e6fff0;
+        opacity: .85;
+    }
+
+    .portal-hero-actions .btn-primary {
+        background: #009639;
+        border-color: #009639;
+        box-shadow: 0 14px 30px rgba(0, 150, 57, 0.5);
+    }
+
+    .portal-hero-actions .btn-outline-light {
+        border-width: 1px;
+    }
+
+    .portal-section-title {
+        font-size: 0.8rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: #6c757d;
+    }
+
+    .portal-tool-card {
+        border-radius: 1.5rem;
+        border: 1px solid #e4e6eb;
+        padding: 1.6rem 1.5rem;
+        background: #fff;
+        box-shadow: 0 14px 32px rgba(15, 29, 45, 0.06);
+        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        cursor: pointer;
+    }
+
+    .portal-tool-card:hover {
+        box-shadow: 0 20px 60px rgba(15, 29, 45, 0.12);
+        border-color: rgba(0,150,57,0.25);
+    }
+
+    .portal-tool-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--badea-green-soft);
+        color: var(--badea-green);
+        margin-bottom: 0.75rem;
+        font-size: 1.3rem;
+    }
+
+    .portal-tool-meta {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #8b9097;
+    }
+
+    .portal-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        background: #f1faf5;
+        color: #137c3e;
+        border: 1px solid #cfead7;
+    }
+
+    .portal-blog-card {
+        border-radius: 1.25rem;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        padding: 1.25rem 1.4rem;
+        transition: box-shadow .2s ease, transform .2s ease;
+    }
+
+    .portal-blog-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 36px rgba(15, 29, 45, 0.08);
+    }
+
+    @@media (max-width: 991.98px) {
+        .portal-hero-inner {
+            flex-direction: column;
+            padding: 2.25rem 2rem;
+        }
+        .portal-hero-left {
+            max-width: none;
+        }
+    }
+
+    @@media (max-width: 767.98px) {
+        .portal-hero-inner {
+            padding: 2rem 1.5rem;
+        }
+        .portal-hero-title {
+            font-size: 1.9rem;
+        }
+    }
+</style>
+
+<div class="container-fluid px-0">
+    <!-- HERO -->
+    <section class="mb-4">
+        <div class="portal-hero">
+            <div class="portal-hero-bg"></div>
+            <div class="portal-hero-overlay"></div>
+
+            <div class="portal-hero-inner">
+                <div class="portal-hero-left">
+                    <div class="portal-pill-badge mb-2">
+                        <span>BADEA internal portal</span>
+                    </div>
+                    <h1 class="portal-hero-title mb-2">
+                        One place for your BADEA tools and insights.
+                    </h1>
+                    <p class="portal-hero-sub mb-3">
+                        Jump into KPI dashboards, action plans, approvals and more.
+                        For now, this page is the front door – later we’ll wire in the real links.
+                    </p>
+                    <div class="portal-hero-actions d-flex flex-wrap gap-2">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary btn-sm px-4">
+                            Go to KPI Dashboard
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-sm px-4">
+                            View Action Plans
+                        </a>
+                    </div>
+                </div>
+
+                <div class="portal-hero-pulse">
+                    <div class="portal-pulse-label">Today’s pulse</div>
+                    <div class="portal-pulse-value">72%</div>
+                    <div class="portal-pulse-note">KPIs updated this week</div>
+                    <div class="mt-2 d-flex align-items-center gap-1">
+                        <span class="badge bg-success rounded-pill">Live</span>
+                        <span class="small text-white-50">Environment: BADEA HQ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOOLS & WORKSPACES -->
+    <section class="mb-4">
+        <div class="d-flex justify-content-between align-items-end mb-2">
+            <div>
+                <div class="portal-section-title">Tools &amp; workspaces</div>
+                <div class="text-muted small">
+                    These cards will later link into different modules in your existing system.
+                </div>
+            </div>
+            <span class="portal-chip">
+                • Internal
+                <span class="badge bg-success rounded-pill ms-1">BADEA</span>
+            </span>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-4 col-md-6">
+                <div class="portal-tool-card">
+                    <div class="portal-tool-icon">
+                        <span class="bi bi-graph-up"></span>
+                    </div>
+                    <h5 class="mb-1">KPI Dashboard</h5>
+                    <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                    <p class="mb-3 small text-muted">
+                        Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                    </p>
+                    <span class="portal-chip">Live data</span>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="portal-tool-card">
+                    <div class="portal-tool-icon">
+                        <span class="bi bi-exclamation-octagon"></span>
+                    </div>
+                    <h5 class="mb-1">RedBoard</h5>
+                    <div class="portal-tool-meta mb-2">Escalation · Priority view</div>
+                    <p class="mb-3 small text-muted">
+                        Focus on KPIs that need attention, review action plans, and follow up on critical items.
+                    </p>
+                    <span class="portal-chip">Priority KPIs</span>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="portal-tool-card">
+                    <div class="portal-tool-icon">
+                        <span class="bi bi-list-check"></span>
+                    </div>
+                    <h5 class="mb-1">Action Plans</h5>
+                    <div class="portal-tool-meta mb-2">Execution · Tasks &amp; owners</div>
+                    <p class="mb-3 small text-muted">
+                        Track follow-ups, owners, and deadlines. Turn discussions into measurable progress.
+                    </p>
+                    <span class="portal-chip">Tasks &amp; owners</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG / UPDATES -->
+    <section class="mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <div class="portal-section-title">BADEA updates</div>
+                <div class="text-muted small">Lightweight internal news stream (static for now).</div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-4 col-md-6">
+                <article class="portal-blog-card">
+                    <div class="small text-muted mb-1">March 2025</div>
+                    <h6 class="mb-1">Portal design draft ready</h6>
+                    <p class="small mb-0 text-muted">
+                        First version of the BADEA internal portal layout – we’ll plug it into existing tools next.
+                    </p>
+                </article>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <article class="portal-blog-card">
+                    <div class="small text-muted mb-1">Coming soon</div>
+                    <h6 class="mb-1">Single entry for KPIs &amp; actions</h6>
+                    <p class="small mb-0 text-muted">
+                        The portal will become the front entry for dashboards, RedBoard, and action plans.
+                    </p>
+                </article>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <article class="portal-blog-card">
+                    <div class="small text-muted mb-1">Coming soon</div>
+                    <h6 class="mb-1">BADEA guidelines &amp; resources</h6>
+                    <p class="small mb-0 text-muted">
+                        A space for templates, policies, and reference documents – one place instead of many links.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>

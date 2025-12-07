@@ -1,0 +1,235 @@
+﻿@*
+  File: Views/Shared/_Layout.cshtml  (BADEAPORTAL)
+*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BADEAPORTAL</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BADEAPORTAL.styles.css" asp-append-version="true" />
+
+    <style>
+        :root {
+            /* BADEA-ish greens */
+            --badea-green: #009639;
+            --badea-green-dark: #006b2a;
+            --badea-green-soft: #e6f4ec;
+            --portal-bg: #f3f5f7;
+        }
+
+        body.portal-body {
+            background: var(--portal-bg);
+        }
+
+        .portal-root {
+            min-height: 100vh;
+        }
+
+        .portal-sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--badea-green-dark), var(--badea-green));
+            color: #fff;
+            box-shadow: 4px 0 18px rgba(0, 0, 0, 0.18);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* TOP HEADER IN SIDEBAR = LOGO ONLY */
+        .portal-brand {
+            padding: 0;
+            background: #004f1f; /* dark green behind logo strip */
+        }
+
+        .portal-brand a {
+            display: block;
+        }
+
+        .portal-logo-banner {
+            display: block;
+            width: 100%;
+            height: 72px; /* height of that top strip */
+            object-fit: contain;
+            object-position: left center;
+            padding: 0.75rem 1rem;
+        }
+
+        .portal-sidebar .nav-link {
+            border-radius: 999px;
+            color: #e4f7eb;
+            font-size: 0.9rem;
+            padding: 0.45rem 0.9rem;
+        }
+
+        .portal-sidebar .nav-link.active {
+            background: #fff;
+            color: var(--badea-green-dark);
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .portal-sidebar .nav-link:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .portal-sidebar-footer {
+            font-size: 0.8rem;
+        }
+
+        .portal-main {
+            background: var(--portal-bg);
+        }
+
+        .portal-topbar {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .portal-content {
+            padding: 1.5rem 1.5rem 2.5rem 1.5rem;
+        }
+
+        .portal-pill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.15rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            background: rgba(0, 0, 0, 0.05);
+            color: #555;
+        }
+
+        @@media (max-width: 991.98px) {
+            .portal-sidebar {
+                width: 220px;
+            }
+        }
+
+        @@media (max-width: 767.98px) {
+            .portal-root {
+                flex-direction: column;
+            }
+
+            .portal-sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                transform: translateX(0);
+                width: 230px;
+                box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+                background: linear-gradient(180deg, var(--badea-green-dark), var(--badea-green));
+            }
+
+            .portal-main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body class="portal-body">
+    <div class="portal-root d-flex">
+        <!-- LEFT TOOLBAR -->
+        <aside id="portalSidebar" class="portal-sidebar d-flex flex-column">
+            <!-- LOGO ONLY -->
+            <div class="portal-brand border-bottom border-light-subtle">
+                <a asp-area=""
+                   asp-controller="Portal"
+                   asp-action="Index">
+                    <!-- use your English logo -->
+                    <img src="~/images/logo-en.png"
+                         alt="BADEA logo"
+                         class="portal-logo-banner" />
+                </a>
+            </div>
+
+            <nav class="flex-grow-1 p-3">
+                <div class="text-uppercase text-white-50 small mb-2">Portal</div>
+                <ul class="nav nav-pills flex-column gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           asp-area=""
+                           asp-controller="Portal"
+                           asp-action="Index">
+                            Overview
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Tools &amp; apps
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            BADEA updates
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="portal-sidebar-footer p-3 border-top border-light-subtle d-flex justify-content-between align-items-center">
+                <span>Logged in to BADEA</span>
+                <span class="badge bg-success border border-light">Online</span>
+            </div>
+        </aside>
+
+        <!-- MAIN AREA -->
+        <div class="portal-main flex-grow-1 d-flex flex-column">
+            <header class="portal-topbar px-4 py-2 border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="fw-semibold text-secondary">
+                        Welcome to <span class="text-dark">BADEA</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="small text-muted d-none d-md-inline">Internal portal</span>
+
+                        <!-- mobile sidebar toggle -->
+                        <button type="button"
+                                class="btn btn-sm btn-outline-success d-md-none"
+                                id="sidebarToggle">
+                            ☰
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="portal-content flex-grow-1">
+                @RenderBody()
+            </main>
+
+            <footer class="border-top small text-muted py-2 px-4">
+                &copy; 2025 BADEA – Internal Portal
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        // Simple mobile toggle for sidebar
+        document.addEventListener('DOMContentLoaded', function () {
+            var toggle = document.getElementById('sidebarToggle');
+            var sidebar = document.getElementById('portalSidebar');
+            if (!toggle || !sidebar) return;
+
+            toggle.addEventListener('click', function () {
+                sidebar.classList.toggle('d-none');
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
