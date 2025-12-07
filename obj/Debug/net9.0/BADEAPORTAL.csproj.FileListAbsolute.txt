@@ -95,3 +95,4 @@
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/BADEAPORTAL.pdb
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/BADEAPORTAL.genruntimeconfig.cache
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/ref/BADEAPORTAL.dll
+/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/BADEAPORTAL.sourcelink.json

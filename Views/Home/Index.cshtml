@@ -4,7 +4,7 @@
 
 @section Scripts {
     <script>
-        // just a tiny hover animation for cards
+        // Card hover tilt
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.portal-tool-card').forEach(card => {
                 card.addEventListener('mousemove', (e) => {
@@ -17,11 +17,33 @@
                     card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
                 });
             });
+
+            // --- HERO BACKGROUND CAROUSEL ---
+            const heroImgs = document.querySelectorAll('.portal-hero-bg-carousel img');
+            if (heroImgs.length > 0) {
+                let idx = 0;
+
+                function showHero(i) {
+                    heroImgs.forEach((img, k) => {
+                        img.classList.toggle('active', k === i);
+                    });
+                }
+
+                showHero(idx);
+
+                // faster rotation – 2.5 seconds
+                setInterval(() => {
+                    idx = (idx + 1) % heroImgs.length;
+                    showHero(idx);
+                }, 2500);
+            }
         });
     </script>
 }
 
 <style>
+    /* ---------- HERO ---------- */
+
     .portal-hero {
         border-radius: 2rem;
         overflow: hidden;
@@ -30,41 +52,107 @@
         background-color: #000;
     }
 
-    /* 👉 Put your banner image here */
-    .portal-hero-bg {
+    /* stack of images under the text */
+    .portal-hero-bg-carousel {
         position: absolute;
         inset: 0;
-        background-image: url('/images/portal-hero.jpg'); /* replace with your BADEA banner */
-        background-size: cover;
-        background-position: center;
-        opacity: 0.9;
+        overflow: hidden;
     }
 
+    .portal-hero-bg-carousel img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.9s ease-in-out;
+    }
+
+    .portal-hero-bg-carousel img.active {
+        opacity: 1;
+    }
+
+    /* darker vignette so images never kill readability */
     .portal-hero-overlay {
         position: absolute;
         inset: 0;
-        background: radial-gradient(circle at top left, rgba(255,255,255,0.35), transparent 60%),
-                    linear-gradient(120deg, rgba(0,150,57,0.85), rgba(0,150,57,0.35), rgba(0,0,0,0.55));
-        mix-blend-mode: soft-light;
+        background:
+            linear-gradient(90deg,
+                rgba(0, 0, 0, 0.85) 0%,
+                rgba(0, 0, 0, 0.65) 30%,
+                rgba(0, 0, 0, 0.25) 60%,
+                rgba(0, 0, 0, 0.05) 100%),
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 60%);
+        mix-blend-mode: normal;
     }
 
     .portal-hero-inner {
         position: relative;
         z-index: 1;
-        padding: 2.5rem 3.5rem;
+        padding: 2.75rem 3.5rem;
         color: #fff;
         display: flex;
-        gap: 2rem;
+        gap: 2.25rem;
+        align-items: center;
     }
 
     .portal-hero-left {
-        max-width: 420px;
+        max-width: 460px;
+    }
+
+    /* shared glass background for hero cards */
+    :root {
+:root {
+    --portal-hero-glass-bg: rgba(0, 0, 0, 0.55); /* slightly darker so text always readable */
+}
+    }
+
+    /* main glass card behind hero text */
+    .portal-hero-main-card {
+        position: relative;
+        border-radius: 2rem;
+        padding: 1.9rem 2.3rem;
+        background:
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 55%),
+            var(--portal-hero-glass-bg);
+        box-shadow:
+            0 20px 55px rgba(0, 0, 0, 0.45),
+            0 0 18px rgba(0, 200, 120, 0.18); /* very subtle green glow */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        overflow: hidden;
+    }
+
+    .portal-hero-main-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        box-shadow: inset 0 0 14px rgba(0, 255, 160, 0.15);
+        pointer-events: none;
+    }
+
+    .portal-pill-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.2rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: rgba(0, 0, 0, 0.6);
+        color: #c0f3d2;
+        border: 1px solid rgba(192, 243, 210, 0.45);
     }
 
     .portal-hero-title {
-        font-size: 2.4rem;
+        font-size: 2.5rem;
         font-weight: 800;
         line-height: 1.15;
+        text-shadow: 0 6px 24px rgba(0, 0, 0, 0.8);
     }
 
     .portal-hero-sub {
@@ -72,16 +160,37 @@
         opacity: 0.92;
     }
 
-    .portal-hero-pulse {
-        min-width: 220px;
-        align-self: flex-start;
-        background: rgba(0,0,0,0.56);
+    .portal-hero-actions .btn-primary {
+        background: #009639;
+        border-color: #009639;
+        box-shadow: 0 14px 30px rgba(0, 150, 57, 0.45);
+        font-weight: 600;
+    }
+
+    .portal-hero-actions .btn-outline-light {
+        border-width: 1px;
+        font-weight: 500;
+    }
+
+    .portal-hero-actions .btn {
         border-radius: 999px;
+    }
+
+    /* Today’s pulse card – SAME glass bg + subtle glow as main card */
+    .portal-hero-pulse {
+        min-width: 230px;
+        align-self: flex-start;
+        background:
+            radial-gradient(circle at top, rgba(255, 255, 255, 0.14), transparent 55%),
+            var(--portal-hero-glass-bg);  /* same transparency */
+        border-radius: 2rem;
         padding: 1.1rem 1.4rem;
         display: flex;
         flex-direction: column;
         gap: .25rem;
-        box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+        box-shadow:
+            0 20px 55px rgba(0, 0, 0, 0.45),
+            0 0 18px rgba(0, 200, 120, 0.18); /* very subtle green glow */
     }
 
     .portal-pulse-label {
@@ -92,7 +201,7 @@
     }
 
     .portal-pulse-value {
-        font-size: 2.1rem;
+        font-size: 2.2rem;
         font-weight: 700;
         line-height: 1;
     }
@@ -103,15 +212,7 @@
         opacity: .85;
     }
 
-    .portal-hero-actions .btn-primary {
-        background: #009639;
-        border-color: #009639;
-        box-shadow: 0 14px 30px rgba(0, 150, 57, 0.5);
-    }
-
-    .portal-hero-actions .btn-outline-light {
-        border-width: 1px;
-    }
+    /* ---------- CARDS / BLOG ---------- */
 
     .portal-section-title {
         font-size: 0.8rem;
@@ -124,15 +225,16 @@
         border-radius: 1.5rem;
         border: 1px solid #e4e6eb;
         padding: 1.6rem 1.5rem;
-        background: #fff;
+        background: radial-gradient(circle at top left, #f9fcff, #ffffff);
         box-shadow: 0 14px 32px rgba(15, 29, 45, 0.06);
         transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
         cursor: pointer;
     }
 
     .portal-tool-card:hover {
-        box-shadow: 0 20px 60px rgba(15, 29, 45, 0.12);
-        border-color: rgba(0,150,57,0.25);
+        box-shadow: 0 20px 60px rgba(15, 29, 45, 0.14);
+        border-color: rgba(0, 150, 57, 0.25);
+        transform: translateY(-6px);
     }
 
     .portal-tool-icon {
@@ -180,13 +282,21 @@
         box-shadow: 0 16px 36px rgba(15, 29, 45, 0.08);
     }
 
+    /* ---------- RESPONSIVE ---------- */
+
     @@media (max-width: 991.98px) {
         .portal-hero-inner {
             flex-direction: column;
             padding: 2.25rem 2rem;
         }
+
         .portal-hero-left {
             max-width: none;
+        }
+
+        .portal-hero-pulse {
+            align-self: stretch;
+            margin-top: 0.5rem;
         }
     }
 
@@ -194,42 +304,56 @@
         .portal-hero-inner {
             padding: 2rem 1.5rem;
         }
+
         .portal-hero-title {
-            font-size: 1.9rem;
+            font-size: 2.05rem;
+        }
+
+        .portal-hero-main-card {
+            padding: 1.5rem 1.6rem;
         }
     }
 </style>
+
 
 <div class="container-fluid px-0">
     <!-- HERO -->
     <section class="mb-4">
         <div class="portal-hero">
-            <div class="portal-hero-bg"></div>
+            <!-- background carousel under the text -->
+            <div class="portal-hero-bg-carousel">
+                <img src="~/images/portal-hero.jpg" alt="BADEA hero 1" />
+                <img src="~/images/portal-hero2.jpg" alt="BADEA hero 2" />
+                <img src="~/images/portal-hero3.jpg" alt="BADEA hero 3" />
+            </div>
+
             <div class="portal-hero-overlay"></div>
 
             <div class="portal-hero-inner">
                 <div class="portal-hero-left">
-                    <div class="portal-pill-badge mb-2">
-                        <span>BADEA internal portal</span>
-                    </div>
-                    <h1 class="portal-hero-title mb-2">
-                        One place for your BADEA tools and insights.
-                    </h1>
-                    <p class="portal-hero-sub mb-3">
-                        Jump into KPI dashboards, action plans, approvals and more.
-                        For now, this page is the front door – later we’ll wire in the real links.
-                    </p>
-                    <div class="portal-hero-actions d-flex flex-wrap gap-2">
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary btn-sm px-4">
-                            Go to KPI Dashboard
-                        </a>
-                        <a href="#" class="btn btn-outline-light btn-sm px-4">
-                            View Action Plans
-                        </a>
+                    <div class="portal-hero-main-card">
+                        <div class="portal-pill-badge mb-2">
+                            <span>BADEA internal portal</span>
+                        </div>
+                        <h1 class="portal-hero-title mb-2">
+                            One place for your BADEA tools and insights.
+                        </h1>
+                        <p class="portal-hero-sub mb-3">
+                            Jump into KPI dashboards, action plans, approvals and more.
+                            For now, this page is the front door – later we’ll wire in the real links.
+                        </p>
+                        <div class="portal-hero-actions d-flex flex-wrap gap-2 mt-2">
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary btn-sm px-4">
+                                Go to KPI Dashboard
+                            </a>
+                            <a href="#" class="btn btn-outline-light btn-sm px-4">
+                                View Action Plans
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="portal-hero-pulse">
+                @* <div class="portal-hero-pulse">
                     <div class="portal-pulse-label">Today’s pulse</div>
                     <div class="portal-pulse-value">72%</div>
                     <div class="portal-pulse-note">KPIs updated this week</div>
@@ -237,7 +361,7 @@
                         <span class="badge bg-success rounded-pill">Live</span>
                         <span class="small text-white-50">Environment: BADEA HQ</span>
                     </div>
-                </div>
+                </div> *@
             </div>
         </div>
     </section>
