@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3wO1auWyAgkEBP4PkAJ5Z10TAga2C2oW5AEbJuHSwDY=",
+  "Hash": "SYVLmLQWNxVxk4kR6UfGPqMkhMo8X+YJtnqPRoSYJSI=",
   "Source": "BADEAPORTAL",
   "BasePath": "_content/BADEAPORTAL",
   "Mode": "Default",
@@ -1443,6 +1443,153 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/favicon.ico"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/BADEAServicelogo.png",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/icons/BADEAServicelogo#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "x5h1ldtktw",
+      "Integrity": "JWZ0ZEyqF5gBJgDiOO1Xrd/xeNPlJ/wwYEcJjtjpLIU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/icons/BADEAServicelogo.png"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Freshworks.png",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/icons/Freshworks#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "z0q696c9x6",
+      "Integrity": "Q0o5xfw5t+8ZYQuLLroUrJJjGHM6pU3XpXzOVI4f37k=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/icons/Freshworks.png"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Laserfiche.png",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/icons/Laserfiche#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "7c6g8vjeig",
+      "Integrity": "FxhqdnYz4dAZ3kLWauh6E6P3rKHv8R1ApmmYYF8XLxw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/icons/Laserfiche.png"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/MOFAD.png",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/icons/MOFAD#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "681c8zlxxr",
+      "Integrity": "ymoGkP4a2D6t49PfJkRp1OioPqebtJPS5FVGr+pPuzc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/icons/MOFAD.png"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/ORM.png",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/icons/ORM#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "bdr1m31436",
+      "Integrity": "Me1nqU07RXOKUiqQYA7mexaKmGBC/v6vFKEMjlChEPk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/icons/ORM.png"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/SAP-FIORI-LOGO.png",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/icons/SAP-FIORI-LOGO#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "dwsys42g0l",
+      "Integrity": "M+14d49mao7/6Z+fPk9OM1BWtS/m7Y797jAZstw6QLY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/icons/SAP-FIORI-LOGO.png"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/SAP-Success-Factor-HCM.png",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/icons/SAP-Success-Factor-HCM#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "xoky34qdjt",
+      "Integrity": "vw84X9Z2g4OIu2XW651b9aPOdx1h7BbECnSbpoMo0qs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/icons/SAP-Success-Factor-HCM.png"
     },
     {
       "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/logo-en.png",
@@ -4210,6 +4357,580 @@
         {
           "Name": "integrity",
           "Value": "sha256-+/824NtfTA0L7Mr42Fo+86YJP4R5cigdi9S7Fx5VVl4="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/BADEAServicelogo.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/BADEAServicelogo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1547149"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JWZ0ZEyqF5gBJgDiOO1Xrd/xeNPlJ/wwYEcJjtjpLIU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:38:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JWZ0ZEyqF5gBJgDiOO1Xrd/xeNPlJ/wwYEcJjtjpLIU="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/BADEAServicelogo.x5h1ldtktw.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/BADEAServicelogo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1547149"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JWZ0ZEyqF5gBJgDiOO1Xrd/xeNPlJ/wwYEcJjtjpLIU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:38:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "x5h1ldtktw"
+        },
+        {
+          "Name": "label",
+          "Value": "images/icons/BADEAServicelogo.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JWZ0ZEyqF5gBJgDiOO1Xrd/xeNPlJ/wwYEcJjtjpLIU="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/Freshworks.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Freshworks.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "374226"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q0o5xfw5t+8ZYQuLLroUrJJjGHM6pU3XpXzOVI4f37k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Q0o5xfw5t+8ZYQuLLroUrJJjGHM6pU3XpXzOVI4f37k="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/Freshworks.z0q696c9x6.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Freshworks.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "374226"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q0o5xfw5t+8ZYQuLLroUrJJjGHM6pU3XpXzOVI4f37k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "z0q696c9x6"
+        },
+        {
+          "Name": "label",
+          "Value": "images/icons/Freshworks.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Q0o5xfw5t+8ZYQuLLroUrJJjGHM6pU3XpXzOVI4f37k="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/Laserfiche.7c6g8vjeig.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Laserfiche.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9126"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FxhqdnYz4dAZ3kLWauh6E6P3rKHv8R1ApmmYYF8XLxw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7c6g8vjeig"
+        },
+        {
+          "Name": "label",
+          "Value": "images/icons/Laserfiche.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-FxhqdnYz4dAZ3kLWauh6E6P3rKHv8R1ApmmYYF8XLxw="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/Laserfiche.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Laserfiche.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9126"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FxhqdnYz4dAZ3kLWauh6E6P3rKHv8R1ApmmYYF8XLxw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-FxhqdnYz4dAZ3kLWauh6E6P3rKHv8R1ApmmYYF8XLxw="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/MOFAD.681c8zlxxr.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/MOFAD.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6096"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ymoGkP4a2D6t49PfJkRp1OioPqebtJPS5FVGr+pPuzc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:16 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "681c8zlxxr"
+        },
+        {
+          "Name": "label",
+          "Value": "images/icons/MOFAD.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ymoGkP4a2D6t49PfJkRp1OioPqebtJPS5FVGr+pPuzc="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/MOFAD.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/MOFAD.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6096"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ymoGkP4a2D6t49PfJkRp1OioPqebtJPS5FVGr+pPuzc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:16 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ymoGkP4a2D6t49PfJkRp1OioPqebtJPS5FVGr+pPuzc="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/ORM.bdr1m31436.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/ORM.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19138"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Me1nqU07RXOKUiqQYA7mexaKmGBC/v6vFKEMjlChEPk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:22 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "bdr1m31436"
+        },
+        {
+          "Name": "label",
+          "Value": "images/icons/ORM.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Me1nqU07RXOKUiqQYA7mexaKmGBC/v6vFKEMjlChEPk="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/ORM.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/ORM.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19138"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Me1nqU07RXOKUiqQYA7mexaKmGBC/v6vFKEMjlChEPk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:22 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Me1nqU07RXOKUiqQYA7mexaKmGBC/v6vFKEMjlChEPk="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/SAP-FIORI-LOGO.dwsys42g0l.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/SAP-FIORI-LOGO.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "100308"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"M+14d49mao7/6Z+fPk9OM1BWtS/m7Y797jAZstw6QLY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:40:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dwsys42g0l"
+        },
+        {
+          "Name": "label",
+          "Value": "images/icons/SAP-FIORI-LOGO.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-M+14d49mao7/6Z+fPk9OM1BWtS/m7Y797jAZstw6QLY="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/SAP-FIORI-LOGO.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/SAP-FIORI-LOGO.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "100308"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"M+14d49mao7/6Z+fPk9OM1BWtS/m7Y797jAZstw6QLY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:40:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-M+14d49mao7/6Z+fPk9OM1BWtS/m7Y797jAZstw6QLY="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/SAP-Success-Factor-HCM.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/SAP-Success-Factor-HCM.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23109"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vw84X9Z2g4OIu2XW651b9aPOdx1h7BbECnSbpoMo0qs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-vw84X9Z2g4OIu2XW651b9aPOdx1h7BbECnSbpoMo0qs="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/SAP-Success-Factor-HCM.xoky34qdjt.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/SAP-Success-Factor-HCM.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23109"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vw84X9Z2g4OIu2XW651b9aPOdx1h7BbECnSbpoMo0qs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 07 Dec 2025 11:39:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xoky34qdjt"
+        },
+        {
+          "Name": "label",
+          "Value": "images/icons/SAP-Success-Factor-HCM.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-vw84X9Z2g4OIu2XW651b9aPOdx1h7BbECnSbpoMo0qs="
         }
       ]
     },

@@ -11,10 +11,12 @@
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
-                    card.style.transform = `translateY(-4px) rotateX(${(-y / 80)}deg) rotateY(${x / 80}deg)`;
+                    card.style.transform =
+                        `translateY(-4px) rotateX(${(-y / 90)}deg) rotateY(${x / 90}deg)`;
                 });
                 card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+                    card.style.transform =
+                        'translateY(0) rotateX(0) rotateY(0)';
                 });
             });
 
@@ -42,6 +44,11 @@
 }
 
 <style>
+    /* ---------- SHARED TOKEN FOR GLASS ---------- */
+    :root {
+        --portal-hero-glass-bg: rgba(0, 0, 0, 0.55); /* slightly darker so text always readable */
+    }
+
     /* ---------- HERO ---------- */
 
     .portal-hero {
@@ -99,13 +106,6 @@
 
     .portal-hero-left {
         max-width: 460px;
-    }
-
-    /* shared glass background for hero cards */
-    :root {
-:root {
-    --portal-hero-glass-bg: rgba(0, 0, 0, 0.55); /* slightly darker so text always readable */
-}
     }
 
     /* main glass card behind hero text */
@@ -176,41 +176,7 @@
         border-radius: 999px;
     }
 
-    /* Today’s pulse card – SAME glass bg + subtle glow as main card */
-    .portal-hero-pulse {
-        min-width: 230px;
-        align-self: flex-start;
-        background:
-            radial-gradient(circle at top, rgba(255, 255, 255, 0.14), transparent 55%),
-            var(--portal-hero-glass-bg);  /* same transparency */
-        border-radius: 2rem;
-        padding: 1.1rem 1.4rem;
-        display: flex;
-        flex-direction: column;
-        gap: .25rem;
-        box-shadow:
-            0 20px 55px rgba(0, 0, 0, 0.45),
-            0 0 18px rgba(0, 200, 120, 0.18); /* very subtle green glow */
-    }
-
-    .portal-pulse-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: .08em;
-        color: #b6f4c9;
-    }
-
-    .portal-pulse-value {
-        font-size: 2.2rem;
-        font-weight: 700;
-        line-height: 1;
-    }
-
-    .portal-pulse-note {
-        font-size: 0.8rem;
-        color: #e6fff0;
-        opacity: .85;
-    }
+    /* (pulse card kept commented-out in markup) */
 
     /* ---------- CARDS / BLOG ---------- */
 
@@ -224,30 +190,73 @@
     .portal-tool-card {
         border-radius: 1.5rem;
         border: 1px solid #e4e6eb;
-        padding: 1.6rem 1.5rem;
-        background: radial-gradient(circle at top left, #f9fcff, #ffffff);
-        box-shadow: 0 14px 32px rgba(15, 29, 45, 0.06);
-        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        padding: 1.3rem 1.5rem;
+        background: linear-gradient(145deg, #ffffff, #f7fafc);
+        box-shadow:
+            0 10px 28px rgba(15, 29, 45, 0.06),
+            0 0 0 rgba(0, 150, 57, 0.0);
+        transition:
+            transform .25s ease,
+            box-shadow .25s ease,
+            border-color .25s ease,
+            background .25s ease;
         cursor: pointer;
     }
 
     .portal-tool-card:hover {
-        box-shadow: 0 20px 60px rgba(15, 29, 45, 0.14);
-        border-color: rgba(0, 150, 57, 0.25);
-        transform: translateY(-6px);
+        box-shadow:
+            0 18px 40px rgba(15, 29, 45, 0.14),
+            0 0 24px rgba(0, 150, 57, 0.12);
+        border-color: rgba(0, 150, 57, 0.22);
+        background: linear-gradient(145deg, #ffffff, #f3f8ff);
+        transform: translateY(-4px);
+    }
+
+    /* new flex layout: text on left, logo/icon on right */
+    .portal-tool-layout {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+    }
+
+    .portal-tool-body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .portal-tool-visual {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .portal-tool-title {
+        margin-bottom: 0.15rem;
     }
 
     .portal-tool-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 1rem;
+        width: 54px;
+        height: 54px;
+        border-radius: 1.1rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         background: var(--badea-green-soft);
         color: var(--badea-green);
-        margin-bottom: 0.75rem;
-        font-size: 1.3rem;
+        font-size: 1.5rem;
+        box-shadow: 0 10px 26px rgba(15, 29, 45, 0.18);
+    }
+
+    .portal-tool-logo-img,
+    .portal-tool-icon-img {
+        width: 126px;
+        height: 126px;
+        border-radius: 1.75rem;
+        object-fit: contain;
+        background: radial-gradient(circle at top, #ffffff, #eef3f8);
+        box-shadow: 0 12px 30px rgba(15, 29, 45, 0.18);
     }
 
     .portal-tool-meta {
@@ -293,11 +302,6 @@
         .portal-hero-left {
             max-width: none;
         }
-
-        .portal-hero-pulse {
-            align-self: stretch;
-            margin-top: 0.5rem;
-        }
     }
 
     @@media (max-width: 767.98px) {
@@ -311,6 +315,21 @@
 
         .portal-hero-main-card {
             padding: 1.5rem 1.6rem;
+        }
+
+        .portal-tool-layout {
+            align-items: flex-start;
+            gap: 0.9rem;
+        }
+
+        .portal-tool-visual {
+            align-self: stretch;
+        }
+
+        .portal-tool-logo-img,
+        .portal-tool-icon-img {
+            width: 80px;
+            height: 80px;
         }
     }
 </style>
@@ -343,7 +362,8 @@
                             For now, this page is the front door – later we’ll wire in the real links.
                         </p>
                         <div class="portal-hero-actions d-flex flex-wrap gap-2 mt-2">
-                            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary btn-sm px-4">
+                            <a asp-area="" asp-controller="Home" asp-action="Index"
+                               class="btn btn-primary btn-sm px-4">
                                 Go to KPI Dashboard
                             </a>
                             <a href="#" class="btn btn-outline-light btn-sm px-4">
@@ -353,14 +373,9 @@
                     </div>
                 </div>
 
+                @* Pulse card kept commented out for now *@
                 @* <div class="portal-hero-pulse">
-                    <div class="portal-pulse-label">Today’s pulse</div>
-                    <div class="portal-pulse-value">72%</div>
-                    <div class="portal-pulse-note">KPIs updated this week</div>
-                    <div class="mt-2 d-flex align-items-center gap-1">
-                        <span class="badge bg-success rounded-pill">Live</span>
-                        <span class="small text-white-50">Environment: BADEA HQ</span>
-                    </div>
+                    ...
                 </div> *@
             </div>
         </div>
@@ -382,47 +397,146 @@
         </div>
 
         <div class="row g-3">
+            <!-- KPI Dashboard -->
             <div class="col-lg-4 col-md-6">
                 <div class="portal-tool-card">
-                    <div class="portal-tool-icon">
-                        <span class="bi bi-graph-up"></span>
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">KPI Dashboard</h5>
+                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                            <p class="mb-3 small text-muted">
+                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                            </p>
+                            <span class="portal-chip">Live data</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/BADEAServicelogo.png"
+                                 alt="KPI icon"
+                                 class="portal-tool-logo-img" />
+                        </div>
                     </div>
-                    <h5 class="mb-1">KPI Dashboard</h5>
-                    <div class="portal-tool-meta mb-2">Analytics · Live data</div>
-                    <p class="mb-3 small text-muted">
-                        Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
-                    </p>
-                    <span class="portal-chip">Live data</span>
+                </div>
+            </div>
+            <!-- KPI Dashboard -->
+            <div class="col-lg-4 col-md-6">
+                <div class="portal-tool-card">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">KPI Dashboard</h5>
+                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                            <p class="mb-3 small text-muted">
+                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                            </p>
+                            <span class="portal-chip">Live data</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/Freshworks.png"
+                                 alt="KPI icon"
+                                 class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <!-- KPI Dashboard -->
+            <div class="col-lg-4 col-md-6">
+                <div class="portal-tool-card">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">KPI Dashboard</h5>
+                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                            <p class="mb-3 small text-muted">
+                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                            </p>
+                            <span class="portal-chip">Live data</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/Laserfiche.png"
+                                 alt="KPI icon"
+                                 class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <!-- KPI Dashboard -->
+            <div class="col-lg-4 col-md-6">
+                <div class="portal-tool-card">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Missions Management</h5>
+                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                            <p class="mb-3 small text-muted">
+                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                            </p>
+                            <span class="portal-chip">Live data</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/MOFAD.png"
+                                 alt="KPI icon"
+                                 class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <!-- KPI Dashboard -->
+            <div class="col-lg-4 col-md-6">
+                <div class="portal-tool-card">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Operational Risk Management</h5>
+                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                            <p class="mb-3 small text-muted">
+                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                            </p>
+                            <span class="portal-chip">Live data</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/ORM.png"
+                                 alt="KPI icon"
+                                 class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <!-- KPI Dashboard -->
+            <div class="col-lg-4 col-md-6">
+                <div class="portal-tool-card">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">SAP Fiori</h5>
+                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                            <p class="mb-3 small text-muted">
+                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                            </p>
+                            <span class="portal-chip">Live data</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/SAP-FIORI-LOGO.png"
+                                 alt="KPI icon"
+                                 class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="portal-tool-card">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">SAP Employee Central</h5>
+                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                            <p class="mb-3 small text-muted">
+                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                            </p>
+                            <span class="portal-chip">Live data</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/SAP-Success-Factor-HCM.png"
+                                 alt="KPI icon"
+                                 class="portal-tool-logo-img" />
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="portal-tool-card">
-                    <div class="portal-tool-icon">
-                        <span class="bi bi-exclamation-octagon"></span>
-                    </div>
-                    <h5 class="mb-1">RedBoard</h5>
-                    <div class="portal-tool-meta mb-2">Escalation · Priority view</div>
-                    <p class="mb-3 small text-muted">
-                        Focus on KPIs that need attention, review action plans, and follow up on critical items.
-                    </p>
-                    <span class="portal-chip">Priority KPIs</span>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="portal-tool-card">
-                    <div class="portal-tool-icon">
-                        <span class="bi bi-list-check"></span>
-                    </div>
-                    <h5 class="mb-1">Action Plans</h5>
-                    <div class="portal-tool-meta mb-2">Execution · Tasks &amp; owners</div>
-                    <p class="mb-3 small text-muted">
-                        Track follow-ups, owners, and deadlines. Turn discussions into measurable progress.
-                    </p>
-                    <span class="portal-chip">Tasks &amp; owners</span>
-                </div>
-            </div>
         </div>
     </section>
 

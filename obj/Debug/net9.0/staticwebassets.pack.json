@@ -17,6 +17,34 @@
       "PackagePath": "staticwebassets/images/Picture1.png"
     },
     {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/BADEAServicelogo.png",
+      "PackagePath": "staticwebassets/images/icons/BADEAServicelogo.png"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Freshworks.png",
+      "PackagePath": "staticwebassets/images/icons/Freshworks.png"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Laserfiche.png",
+      "PackagePath": "staticwebassets/images/icons/Laserfiche.png"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/MOFAD.png",
+      "PackagePath": "staticwebassets/images/icons/MOFAD.png"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/ORM.png",
+      "PackagePath": "staticwebassets/images/icons/ORM.png"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/SAP-FIORI-LOGO.png",
+      "PackagePath": "staticwebassets/images/icons/SAP-FIORI-LOGO.png"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/SAP-Success-Factor-HCM.png",
+      "PackagePath": "staticwebassets/images/icons/SAP-Success-Factor-HCM.png"
+    },
+    {
       "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/logo-en.png",
       "PackagePath": "staticwebassets/images/logo-en.png"
     },
