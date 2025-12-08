@@ -50,6 +50,23 @@
         /* slightly darker so text always readable */
     }
 
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body,
+    button,
+    a,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Tajawal', sans-serif !important;
+    }
+
     /* ---------- HERO ---------- */
 
     .portal-hero {
@@ -162,20 +179,58 @@
         opacity: 0.92;
     }
 
-    .portal-hero-actions .btn-primary {
-        background: #009639;
-        border-color: #009639;
-        box-shadow: 0 14px 30px rgba(0, 150, 57, 0.45);
-        font-weight: 600;
-    }
-
-    .portal-hero-actions .btn-outline-light {
-        border-width: 1px;
-        font-weight: 500;
-    }
+    /* --- PREMIUM TAJAWAL BUTTONS --- */
 
     .portal-hero-actions .btn {
-        border-radius: 999px;
+        font-family: 'Tajawal', sans-serif !important;
+        font-weight: 600;
+        letter-spacing: .25px;
+        /* Tajawal-friendly spacing */
+        padding: 0.48rem 1.45rem;
+        /* slightly more horizontal space */
+        border-radius: 2.5rem;
+        /* softer, cleaner pill */
+        transition: all .22s ease;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+    }
+
+    /* PRIMARY (GREEN) */
+    .portal-hero-actions .btn-primary {
+        background: #0a9c50;
+        border-color: #0a9c50;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+    }
+
+    .portal-hero-actions .btn-primary:hover {
+        background: #07b55d;
+        border-color: #07b55d;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.30);
+    }
+
+    /* OUTLINE LIGHT (WHITE PILL) */
+    .portal-hero-actions .btn-outline-light {
+        color: #ffffff !important;
+        border-color: rgba(255, 255, 255, 0.55);
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .portal-hero-actions .btn-outline-light:hover {
+        background: #ffffff;
+        color: #000000 !important;
+        border-color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.30);
+    }
+
+    /* OPTIONAL: micro ripple on click */
+    .portal-hero-actions .btn:active {
+        transform: scale(0.97);
     }
 
     /* (pulse card kept commented-out in markup) */
@@ -360,17 +415,19 @@
                             One place for your BADEA tools and insights.
                         </h1>
                         <p class="portal-hero-sub mb-3">
-                            Jump into KPI dashboards, action plans, approvals and more.
-                            For now, this page is the front door – later we’ll wire in the real links.
+                            Access BADEA’s core tools in one place — from finance and HR to missions, workflows, and
+                            strategic KPIs.
+
                         </p>
                         <div class="portal-hero-actions d-flex flex-wrap gap-2 mt-2">
-                            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary btn-sm px-4">
-                                Go to KPI Dashboard
+                            <a href="#tools-section" class="btn btn-primary btn-sm px-4">
+                                Browse apps & tools
                             </a>
-                            <a href="#" class="btn btn-outline-light btn-sm px-4">
-                                View Action Plans
+                            <a href="#updates-section" class="btn btn-outline-light btn-sm px-4">
+                                View BADEA updates
                             </a>
                         </div>
+
                     </div>
                 </div>
 
@@ -383,15 +440,15 @@
     </section>
 
     <!-- TOOLS & WORKSPACES -->
-    <section class="mb-4">
+    <section id="tools-section" class="mb-4">
         <div class="d-flex justify-content-between align-items-end mb-2">
             <div>
                 <div class="portal-section-title">Tools &amp; workspaces</div>
             </div>
-            <span class="portal-chip">
+            @* <span class="portal-chip">
                 • Internal
                 <span class="badge bg-success rounded-pill ms-1">BADEA</span>
-            </span>
+            </span> *@
         </div>
         <div class="row g-3">
 
@@ -571,7 +628,7 @@
     </section>
 
     <!-- BLOG / UPDATES -->
-    <section class="mt-4">
+    <section id="updates-section" class="mt-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
                 <div class="portal-section-title">BADEA updates</div>
