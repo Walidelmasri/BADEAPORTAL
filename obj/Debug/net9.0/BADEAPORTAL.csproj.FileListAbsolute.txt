@@ -17,7 +17,6 @@
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/scopedcss/bundle/BADEAPORTAL.styles.css
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/scopedcss/projectbundle/BADEAPORTAL.bundle.scp.css
-/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-b9sayid5wm.gz
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/yih9qev36i-61n19gt1b8.gz
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ze0wfwsvok-xtxxf3hu2r.gz
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/oqhl4e2ubt-bqjiyaj88i.gz
@@ -96,3 +95,4 @@
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/BADEAPORTAL.genruntimeconfig.cache
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/ref/BADEAPORTAL.dll
 /Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/BADEAPORTAL.sourcelink.json
+/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-synollloij.gz

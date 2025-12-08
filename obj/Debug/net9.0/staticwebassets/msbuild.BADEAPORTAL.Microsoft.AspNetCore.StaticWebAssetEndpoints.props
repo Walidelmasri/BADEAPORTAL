@@ -12,17 +12,17 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"tilxtjeldq"},{"Name":"integrity","Value":"sha256-y4vTvUAdR0HMFIBMcnMqRnxcbLYFqnPiKNznA/0KVRg="},{"Name":"label","Value":"_content/BADEAPORTAL/BADEAPORTAL.bundle.scp.css"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1080"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022y4vTvUAdR0HMFIBMcnMqRnxcbLYFqnPiKNznA/0KVRg=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 06:25:55 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/css/site.b9sayid5wm.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"b9sayid5wm"},{"Name":"integrity","Value":"sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="},{"Name":"label","Value":"_content/BADEAPORTAL/css/site.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"667"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 06:24:38 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"667"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 06:24:38 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1885"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:56:04 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/css/site.synollloij.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"synollloij"},{"Name":"integrity","Value":"sha256-rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s="},{"Name":"label","Value":"_content/BADEAPORTAL/css/site.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1885"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:56:04 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/favicon.61n19gt1b8.ico">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.ico'))</AssetFile>
@@ -35,6 +35,90 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"5430"},{"Name":"Content-Type","Value":"image/x-icon"},{"Name":"ETag","Value":"\u0022Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 06:24:38 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Black.pxtrqzpjzl.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Black.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"pxtrqzpjzl"},{"Name":"integrity","Value":"sha256-sxn/UvMV5BD3STbqe56a53owUE5iAlFidnezDvKLqJc="},{"Name":"label","Value":"_content/BADEAPORTAL/fonts/Tajawal-Black.ttf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"55712"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022sxn/UvMV5BD3STbqe56a53owUE5iAlFidnezDvKLqJc=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Black.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Black.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-sxn/UvMV5BD3STbqe56a53owUE5iAlFidnezDvKLqJc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"55712"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022sxn/UvMV5BD3STbqe56a53owUE5iAlFidnezDvKLqJc=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Bold.iyvswnwf70.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Bold.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"iyvswnwf70"},{"Name":"integrity","Value":"sha256-yiyMoEC2cltrBYyEcP5bv1xMK3c1b\u002BjDjEFxbeyyBr0="},{"Name":"label","Value":"_content/BADEAPORTAL/fonts/Tajawal-Bold.ttf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"56568"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022yiyMoEC2cltrBYyEcP5bv1xMK3c1b\u002BjDjEFxbeyyBr0=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Bold.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Bold.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-yiyMoEC2cltrBYyEcP5bv1xMK3c1b\u002BjDjEFxbeyyBr0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"56568"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022yiyMoEC2cltrBYyEcP5bv1xMK3c1b\u002BjDjEFxbeyyBr0=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-ExtraBold.fwdjjrv0c2.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-ExtraBold.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"fwdjjrv0c2"},{"Name":"integrity","Value":"sha256-H/wqq8MvQrsgiQM36TLay4l5ZrDaDUawjJ9q3F0mhUQ="},{"Name":"label","Value":"_content/BADEAPORTAL/fonts/Tajawal-ExtraBold.ttf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"56292"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022H/wqq8MvQrsgiQM36TLay4l5ZrDaDUawjJ9q3F0mhUQ=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-ExtraBold.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-ExtraBold.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-H/wqq8MvQrsgiQM36TLay4l5ZrDaDUawjJ9q3F0mhUQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"56292"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022H/wqq8MvQrsgiQM36TLay4l5ZrDaDUawjJ9q3F0mhUQ=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-ExtraLight.ii6cgddz5n.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-ExtraLight.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ii6cgddz5n"},{"Name":"integrity","Value":"sha256-BmA7UQbmZ0nW1h1fejyzZ/3GG8OEbDjHNnK6vTcRy0g="},{"Name":"label","Value":"_content/BADEAPORTAL/fonts/Tajawal-ExtraLight.ttf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"52444"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022BmA7UQbmZ0nW1h1fejyzZ/3GG8OEbDjHNnK6vTcRy0g=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-ExtraLight.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-ExtraLight.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-BmA7UQbmZ0nW1h1fejyzZ/3GG8OEbDjHNnK6vTcRy0g="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"52444"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022BmA7UQbmZ0nW1h1fejyzZ/3GG8OEbDjHNnK6vTcRy0g=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Light.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Light.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-DhfXtyFpagwS25GPnZav3l7xqhIV/EP7B698uQNmmbc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"57320"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022DhfXtyFpagwS25GPnZav3l7xqhIV/EP7B698uQNmmbc=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Light.y349md31jp.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Light.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"y349md31jp"},{"Name":"integrity","Value":"sha256-DhfXtyFpagwS25GPnZav3l7xqhIV/EP7B698uQNmmbc="},{"Name":"label","Value":"_content/BADEAPORTAL/fonts/Tajawal-Light.ttf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"57320"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022DhfXtyFpagwS25GPnZav3l7xqhIV/EP7B698uQNmmbc=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Medium.sykd3n1g4a.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Medium.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"sykd3n1g4a"},{"Name":"integrity","Value":"sha256-ZFoqaGhcNvsiq2vnMPwUpzMRHcAv7tYZHuLCDz9Op98="},{"Name":"label","Value":"_content/BADEAPORTAL/fonts/Tajawal-Medium.ttf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"57360"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022ZFoqaGhcNvsiq2vnMPwUpzMRHcAv7tYZHuLCDz9Op98=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Medium.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Medium.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ZFoqaGhcNvsiq2vnMPwUpzMRHcAv7tYZHuLCDz9Op98="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"57360"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022ZFoqaGhcNvsiq2vnMPwUpzMRHcAv7tYZHuLCDz9Op98=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Regular.o4uh8zb3ye.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Regular.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"o4uh8zb3ye"},{"Name":"integrity","Value":"sha256-OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE="},{"Name":"label","Value":"_content/BADEAPORTAL/fonts/Tajawal-Regular.ttf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"56088"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/fonts/Tajawal-Regular.ttf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\fonts\Tajawal-Regular.ttf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"56088"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/icons/BADEAServicelogo.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\icons\BADEAServicelogo.png'))</AssetFile>
@@ -59,6 +143,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"z0q696c9x6"},{"Name":"integrity","Value":"sha256-Q0o5xfw5t\u002B8ZYQuLLroUrJJjGHM6pU3XpXzOVI4f37k="},{"Name":"label","Value":"_content/BADEAPORTAL/images/icons/Freshworks.png"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"374226"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Q0o5xfw5t\u002B8ZYQuLLroUrJJjGHM6pU3XpXzOVI4f37k=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 11:39:26 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/icons/kpimonitor.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\icons\kpimonitor.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-FvGzDKv5zfCtPLN\u002BYTbeneoz/vjz8\u002BQ3Hi5kIJmnPoA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"167038"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022FvGzDKv5zfCtPLN\u002BYTbeneoz/vjz8\u002BQ3Hi5kIJmnPoA=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:33:40 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/icons/kpimonitor.ujicav0wlf.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\icons\kpimonitor.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ujicav0wlf"},{"Name":"integrity","Value":"sha256-FvGzDKv5zfCtPLN\u002BYTbeneoz/vjz8\u002BQ3Hi5kIJmnPoA="},{"Name":"label","Value":"_content/BADEAPORTAL/images/icons/kpimonitor.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"167038"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022FvGzDKv5zfCtPLN\u002BYTbeneoz/vjz8\u002BQ3Hi5kIJmnPoA=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:33:40 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/icons/Laserfiche.7c6g8vjeig.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\icons\Laserfiche.png'))</AssetFile>

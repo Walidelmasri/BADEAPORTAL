@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "SYVLmLQWNxVxk4kR6UfGPqMkhMo8X+YJtnqPRoSYJSI=",
+  "Hash": "a2lTrHbxHCSbPXnAIH0I/b5R9uouV05fmgoQ4X2/RmY=",
   "Source": "BADEAPORTAL",
   "BasePath": "_content/BADEAPORTAL",
   "Mode": "Default",
@@ -668,12 +668,12 @@
       "OriginalItemSpec": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js"
     },
     {
-      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-b9sayid5wm.gz",
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-synollloij.gz",
       "SourceId": "BADEAPORTAL",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/",
       "BasePath": "_content/BADEAPORTAL",
-      "RelativePath": "css/site#[.{fingerprint=b9sayid5wm}]?.css.gz",
+      "RelativePath": "css/site#[.{fingerprint=synollloij}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -682,8 +682,8 @@
       "RelatedAsset": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/css/site.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "pw5l7j5n1s",
-      "Integrity": "KbRAtTdCZlkPQMEP8615MCQRMWQsaAwQYpxvPAoetmA=",
+      "Fingerprint": "citvk3d1sn",
+      "Integrity": "JDdRzF5P1NpcyITpys73tM33KzWXKonRxa1mY+pJ2RY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/css/site.css"
@@ -1417,8 +1417,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "b9sayid5wm",
-      "Integrity": "j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=",
+      "Fingerprint": "synollloij",
+      "Integrity": "rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/css/site.css"
@@ -1443,6 +1443,153 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/favicon.ico"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Black.ttf",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "fonts/Tajawal-Black#[.{fingerprint}]?.ttf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "pxtrqzpjzl",
+      "Integrity": "sxn/UvMV5BD3STbqe56a53owUE5iAlFidnezDvKLqJc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/fonts/Tajawal-Black.ttf"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Bold.ttf",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "fonts/Tajawal-Bold#[.{fingerprint}]?.ttf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "iyvswnwf70",
+      "Integrity": "yiyMoEC2cltrBYyEcP5bv1xMK3c1b+jDjEFxbeyyBr0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/fonts/Tajawal-Bold.ttf"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-ExtraBold.ttf",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "fonts/Tajawal-ExtraBold#[.{fingerprint}]?.ttf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "fwdjjrv0c2",
+      "Integrity": "H/wqq8MvQrsgiQM36TLay4l5ZrDaDUawjJ9q3F0mhUQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/fonts/Tajawal-ExtraBold.ttf"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-ExtraLight.ttf",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "fonts/Tajawal-ExtraLight#[.{fingerprint}]?.ttf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ii6cgddz5n",
+      "Integrity": "BmA7UQbmZ0nW1h1fejyzZ/3GG8OEbDjHNnK6vTcRy0g=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/fonts/Tajawal-ExtraLight.ttf"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Light.ttf",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "fonts/Tajawal-Light#[.{fingerprint}]?.ttf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "y349md31jp",
+      "Integrity": "DhfXtyFpagwS25GPnZav3l7xqhIV/EP7B698uQNmmbc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/fonts/Tajawal-Light.ttf"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Medium.ttf",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "fonts/Tajawal-Medium#[.{fingerprint}]?.ttf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "sykd3n1g4a",
+      "Integrity": "ZFoqaGhcNvsiq2vnMPwUpzMRHcAv7tYZHuLCDz9Op98=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/fonts/Tajawal-Medium.ttf"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Regular.ttf",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "fonts/Tajawal-Regular#[.{fingerprint}]?.ttf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "o4uh8zb3ye",
+      "Integrity": "OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/fonts/Tajawal-Regular.ttf"
     },
     {
       "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/BADEAServicelogo.png",
@@ -1485,6 +1632,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/icons/Freshworks.png"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/kpimonitor.png",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/icons/kpimonitor#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ujicav0wlf",
+      "Integrity": "FvGzDKv5zfCtPLN+YTbeneoz/vjz8+Q3Hi5kIJmnPoA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/icons/kpimonitor.png"
     },
     {
       "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Laserfiche.png",
@@ -3765,13 +3933,13 @@
       ]
     },
     {
-      "Route": "css/site.b9sayid5wm.css",
-      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-b9sayid5wm.gz",
+      "Route": "css/site.css",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-synollloij.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.003134796238"
+          "Quality": "0.001901140684"
         }
       ],
       "ResponseHeaders": [
@@ -3781,19 +3949,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "318"
+          "Value": "525"
         },
         {
           "Name": "ETag",
-          "Value": "\"KbRAtTdCZlkPQMEP8615MCQRMWQsaAwQYpxvPAoetmA=\""
+          "Value": "\"JDdRzF5P1NpcyITpys73tM33KzWXKonRxa1mY+pJ2RY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 07 Dec 2025 06:24:38 GMT"
+          "Value": "Mon, 08 Dec 2025 06:56:04 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -3809,26 +3977,18 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
+          "Value": "W/\"rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s=\""
         }
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "b9sayid5wm"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
+          "Value": "sha256-rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s="
         }
       ]
     },
     {
-      "Route": "css/site.b9sayid5wm.css",
+      "Route": "css/site.css",
       "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/css/site.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -3838,7 +3998,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "667"
+          "Value": "1885"
         },
         {
           "Name": "Content-Type",
@@ -3846,11 +4006,156 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
+          "Value": "\"rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 07 Dec 2025 06:24:38 GMT"
+          "Value": "Mon, 08 Dec 2025 06:56:04 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css.gz",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-synollloij.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "525"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JDdRzF5P1NpcyITpys73tM33KzWXKonRxa1mY+pJ2RY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:56:04 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JDdRzF5P1NpcyITpys73tM33KzWXKonRxa1mY+pJ2RY="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.synollloij.css",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-synollloij.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001901140684"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "525"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JDdRzF5P1NpcyITpys73tM33KzWXKonRxa1mY+pJ2RY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:56:04 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "synollloij"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.synollloij.css",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/css/site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1885"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:56:04 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3860,7 +4165,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "b9sayid5wm"
+          "Value": "synollloij"
         },
         {
           "Name": "label",
@@ -3868,13 +4173,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
+          "Value": "sha256-rHeUeZrUZu7PyIg3AHr4eE1w5hGv4oZkQq4bpsHDX9s="
         }
       ]
     },
     {
-      "Route": "css/site.b9sayid5wm.css.gz",
-      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-b9sayid5wm.gz",
+      "Route": "css/site.synollloij.css.gz",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-synollloij.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3883,7 +4188,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "318"
+          "Value": "525"
         },
         {
           "Name": "Content-Type",
@@ -3891,11 +4196,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"KbRAtTdCZlkPQMEP8615MCQRMWQsaAwQYpxvPAoetmA=\""
+          "Value": "\"JDdRzF5P1NpcyITpys73tM33KzWXKonRxa1mY+pJ2RY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 07 Dec 2025 06:24:38 GMT"
+          "Value": "Mon, 08 Dec 2025 06:56:04 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3913,7 +4218,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "b9sayid5wm"
+          "Value": "synollloij"
         },
         {
           "Name": "label",
@@ -3921,144 +4226,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-KbRAtTdCZlkPQMEP8615MCQRMWQsaAwQYpxvPAoetmA="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.css",
-      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-b9sayid5wm.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.003134796238"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "318"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KbRAtTdCZlkPQMEP8615MCQRMWQsaAwQYpxvPAoetmA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sun, 07 Dec 2025 06:24:38 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.css",
-      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/css/site.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "667"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sun, 07 Dec 2025 06:24:38 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.css.gz",
-      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/obj/Debug/net9.0/compressed/ili62fjtqd-b9sayid5wm.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "318"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KbRAtTdCZlkPQMEP8615MCQRMWQsaAwQYpxvPAoetmA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sun, 07 Dec 2025 06:24:38 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-KbRAtTdCZlkPQMEP8615MCQRMWQsaAwQYpxvPAoetmA="
+          "Value": "sha256-JDdRzF5P1NpcyITpys73tM33KzWXKonRxa1mY+pJ2RY="
         }
       ]
     },
@@ -4361,6 +4529,580 @@
       ]
     },
     {
+      "Route": "fonts/Tajawal-Black.pxtrqzpjzl.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Black.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "55712"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sxn/UvMV5BD3STbqe56a53owUE5iAlFidnezDvKLqJc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "pxtrqzpjzl"
+        },
+        {
+          "Name": "label",
+          "Value": "fonts/Tajawal-Black.ttf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sxn/UvMV5BD3STbqe56a53owUE5iAlFidnezDvKLqJc="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-Black.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Black.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "55712"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sxn/UvMV5BD3STbqe56a53owUE5iAlFidnezDvKLqJc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sxn/UvMV5BD3STbqe56a53owUE5iAlFidnezDvKLqJc="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-Bold.iyvswnwf70.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Bold.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56568"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yiyMoEC2cltrBYyEcP5bv1xMK3c1b+jDjEFxbeyyBr0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "iyvswnwf70"
+        },
+        {
+          "Name": "label",
+          "Value": "fonts/Tajawal-Bold.ttf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-yiyMoEC2cltrBYyEcP5bv1xMK3c1b+jDjEFxbeyyBr0="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-Bold.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Bold.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56568"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yiyMoEC2cltrBYyEcP5bv1xMK3c1b+jDjEFxbeyyBr0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-yiyMoEC2cltrBYyEcP5bv1xMK3c1b+jDjEFxbeyyBr0="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-ExtraBold.fwdjjrv0c2.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-ExtraBold.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56292"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"H/wqq8MvQrsgiQM36TLay4l5ZrDaDUawjJ9q3F0mhUQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "fwdjjrv0c2"
+        },
+        {
+          "Name": "label",
+          "Value": "fonts/Tajawal-ExtraBold.ttf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-H/wqq8MvQrsgiQM36TLay4l5ZrDaDUawjJ9q3F0mhUQ="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-ExtraBold.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-ExtraBold.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56292"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"H/wqq8MvQrsgiQM36TLay4l5ZrDaDUawjJ9q3F0mhUQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-H/wqq8MvQrsgiQM36TLay4l5ZrDaDUawjJ9q3F0mhUQ="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-ExtraLight.ii6cgddz5n.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-ExtraLight.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "52444"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"BmA7UQbmZ0nW1h1fejyzZ/3GG8OEbDjHNnK6vTcRy0g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ii6cgddz5n"
+        },
+        {
+          "Name": "label",
+          "Value": "fonts/Tajawal-ExtraLight.ttf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-BmA7UQbmZ0nW1h1fejyzZ/3GG8OEbDjHNnK6vTcRy0g="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-ExtraLight.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-ExtraLight.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "52444"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"BmA7UQbmZ0nW1h1fejyzZ/3GG8OEbDjHNnK6vTcRy0g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-BmA7UQbmZ0nW1h1fejyzZ/3GG8OEbDjHNnK6vTcRy0g="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-Light.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Light.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "57320"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DhfXtyFpagwS25GPnZav3l7xqhIV/EP7B698uQNmmbc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-DhfXtyFpagwS25GPnZav3l7xqhIV/EP7B698uQNmmbc="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-Light.y349md31jp.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Light.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "57320"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DhfXtyFpagwS25GPnZav3l7xqhIV/EP7B698uQNmmbc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y349md31jp"
+        },
+        {
+          "Name": "label",
+          "Value": "fonts/Tajawal-Light.ttf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-DhfXtyFpagwS25GPnZav3l7xqhIV/EP7B698uQNmmbc="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-Medium.sykd3n1g4a.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Medium.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "57360"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZFoqaGhcNvsiq2vnMPwUpzMRHcAv7tYZHuLCDz9Op98=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sykd3n1g4a"
+        },
+        {
+          "Name": "label",
+          "Value": "fonts/Tajawal-Medium.ttf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZFoqaGhcNvsiq2vnMPwUpzMRHcAv7tYZHuLCDz9Op98="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-Medium.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Medium.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "57360"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZFoqaGhcNvsiq2vnMPwUpzMRHcAv7tYZHuLCDz9Op98=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZFoqaGhcNvsiq2vnMPwUpzMRHcAv7tYZHuLCDz9Op98="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-Regular.o4uh8zb3ye.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Regular.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56088"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "o4uh8zb3ye"
+        },
+        {
+          "Name": "label",
+          "Value": "fonts/Tajawal-Regular.ttf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE="
+        }
+      ]
+    },
+    {
+      "Route": "fonts/Tajawal-Regular.ttf",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Regular.ttf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56088"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/x-font-ttf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:53:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE="
+        }
+      ]
+    },
+    {
       "Route": "images/icons/BADEAServicelogo.png",
       "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/BADEAServicelogo.png",
       "Selectors": [],
@@ -4521,6 +5263,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-Q0o5xfw5t+8ZYQuLLroUrJJjGHM6pU3XpXzOVI4f37k="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/kpimonitor.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/kpimonitor.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "167038"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FvGzDKv5zfCtPLN+YTbeneoz/vjz8+Q3Hi5kIJmnPoA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:33:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-FvGzDKv5zfCtPLN+YTbeneoz/vjz8+Q3Hi5kIJmnPoA="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/kpimonitor.ujicav0wlf.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/kpimonitor.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "167038"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FvGzDKv5zfCtPLN+YTbeneoz/vjz8+Q3Hi5kIJmnPoA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 06:33:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ujicav0wlf"
+        },
+        {
+          "Name": "label",
+          "Value": "images/icons/kpimonitor.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-FvGzDKv5zfCtPLN+YTbeneoz/vjz8+Q3Hi5kIJmnPoA="
         }
       ]
     },

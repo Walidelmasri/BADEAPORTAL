@@ -13,6 +13,34 @@
       "PackagePath": "staticwebassets/favicon.ico"
     },
     {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Black.ttf",
+      "PackagePath": "staticwebassets/fonts/Tajawal-Black.ttf"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Bold.ttf",
+      "PackagePath": "staticwebassets/fonts/Tajawal-Bold.ttf"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-ExtraBold.ttf",
+      "PackagePath": "staticwebassets/fonts/Tajawal-ExtraBold.ttf"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-ExtraLight.ttf",
+      "PackagePath": "staticwebassets/fonts/Tajawal-ExtraLight.ttf"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Light.ttf",
+      "PackagePath": "staticwebassets/fonts/Tajawal-Light.ttf"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Medium.ttf",
+      "PackagePath": "staticwebassets/fonts/Tajawal-Medium.ttf"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/fonts/Tajawal-Regular.ttf",
+      "PackagePath": "staticwebassets/fonts/Tajawal-Regular.ttf"
+    },
+    {
       "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/Picture1.png",
       "PackagePath": "staticwebassets/images/Picture1.png"
     },
@@ -43,6 +71,10 @@
     {
       "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/SAP-Success-Factor-HCM.png",
       "PackagePath": "staticwebassets/images/icons/SAP-Success-Factor-HCM.png"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/kpimonitor.png",
+      "PackagePath": "staticwebassets/images/icons/kpimonitor.png"
     },
     {
       "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/logo-en.png",
