@@ -46,7 +46,8 @@
 <style>
     /* ---------- SHARED TOKEN FOR GLASS ---------- */
     :root {
-        --portal-hero-glass-bg: rgba(0, 0, 0, 0.55); /* slightly darker so text always readable */
+        --portal-hero-glass-bg: rgba(0, 0, 0, 0.55);
+        /* slightly darker so text always readable */
     }
 
     /* ---------- HERO ---------- */
@@ -118,7 +119,8 @@
             var(--portal-hero-glass-bg);
         box-shadow:
             0 20px 55px rgba(0, 0, 0, 0.45),
-            0 0 18px rgba(0, 200, 120, 0.18); /* very subtle green glow */
+            0 0 18px rgba(0, 200, 120, 0.18);
+        /* very subtle green glow */
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         overflow: hidden;
@@ -362,8 +364,7 @@
                             For now, this page is the front door – later we’ll wire in the real links.
                         </p>
                         <div class="portal-hero-actions d-flex flex-wrap gap-2 mt-2">
-                            <a asp-area="" asp-controller="Home" asp-action="Index"
-                               class="btn btn-primary btn-sm px-4">
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary btn-sm px-4">
                                 Go to KPI Dashboard
                             </a>
                             <a href="#" class="btn btn-outline-light btn-sm px-4">
@@ -395,149 +396,166 @@
                 <span class="badge bg-success rounded-pill ms-1">BADEA</span>
             </span>
         </div>
-
         <div class="row g-3">
-            <!-- KPI Dashboard -->
+
+            <!-- 1. Missions Management -->
             <div class="col-lg-4 col-md-6">
-                <div class="portal-tool-card">
-                    <div class="portal-tool-layout">
-                        <div class="portal-tool-body">
-                            <h5 class="mb-1 portal-tool-title">KPI Dashboard</h5>
-                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
-                            <p class="mb-3 small text-muted">
-                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
-                            </p>
-                            <span class="portal-chip">Live data</span>
-                        </div>
-                        <div class="portal-tool-visual">
-                            <img src="~/images/icons/BADEAServicelogo.png"
-                                 alt="KPI icon"
-                                 class="portal-tool-logo-img" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- KPI Dashboard -->
-            <div class="col-lg-4 col-md-6">
-                <div class="portal-tool-card">
-                    <div class="portal-tool-layout">
-                        <div class="portal-tool-body">
-                            <h5 class="mb-1 portal-tool-title">KPI Dashboard</h5>
-                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
-                            <p class="mb-3 small text-muted">
-                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
-                            </p>
-                            <span class="portal-chip">Live data</span>
-                        </div>
-                        <div class="portal-tool-visual">
-                            <img src="~/images/icons/Freshworks.png"
-                                 alt="KPI icon"
-                                 class="portal-tool-logo-img" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        <!-- KPI Dashboard -->
-            <div class="col-lg-4 col-md-6">
-                <div class="portal-tool-card">
-                    <div class="portal-tool-layout">
-                        <div class="portal-tool-body">
-                            <h5 class="mb-1 portal-tool-title">KPI Dashboard</h5>
-                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
-                            <p class="mb-3 small text-muted">
-                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
-                            </p>
-                            <span class="portal-chip">Live data</span>
-                        </div>
-                        <div class="portal-tool-visual">
-                            <img src="~/images/icons/Laserfiche.png"
-                                 alt="KPI icon"
-                                 class="portal-tool-logo-img" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        <!-- KPI Dashboard -->
-            <div class="col-lg-4 col-md-6">
-                <div class="portal-tool-card">
+                <a href="https://portal.badea.org/ords/r/badea/mofad/missions-management?session=&SESSION." class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
                         <div class="portal-tool-body">
                             <h5 class="mb-1 portal-tool-title">Missions Management</h5>
-                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                            <div class="portal-tool-meta mb-2">Travel · Approvals</div>
                             <p class="mb-3 small text-muted">
-                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                                Submit and track mission requests, approvals, and travel workflows.
                             </p>
-                            <span class="portal-chip">Live data</span>
+                            <span class="portal-chip">Internal</span>
                         </div>
                         <div class="portal-tool-visual">
-                            <img src="~/images/icons/MOFAD.png"
-                                 alt="KPI icon"
-                                 class="portal-tool-logo-img" />
+                            <img src="~/images/icons/MOFAD.png" alt="Missions icon" class="portal-tool-logo-img" />
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
-                        <!-- KPI Dashboard -->
+
+            <!-- 2. SAP Employee Central -->
             <div class="col-lg-4 col-md-6">
-                <div class="portal-tool-card">
-                    <div class="portal-tool-layout">
-                        <div class="portal-tool-body">
-                            <h5 class="mb-1 portal-tool-title">Operational Risk Management</h5>
-                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
-                            <p class="mb-3 small text-muted">
-                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
-                            </p>
-                            <span class="portal-chip">Live data</span>
-                        </div>
-                        <div class="portal-tool-visual">
-                            <img src="~/images/icons/ORM.png"
-                                 alt="KPI icon"
-                                 class="portal-tool-logo-img" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        <!-- KPI Dashboard -->
-            <div class="col-lg-4 col-md-6">
-                <div class="portal-tool-card">
-                    <div class="portal-tool-layout">
-                        <div class="portal-tool-body">
-                            <h5 class="mb-1 portal-tool-title">SAP Fiori</h5>
-                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
-                            <p class="mb-3 small text-muted">
-                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
-                            </p>
-                            <span class="portal-chip">Live data</span>
-                        </div>
-                        <div class="portal-tool-visual">
-                            <img src="~/images/icons/SAP-FIORI-LOGO.png"
-                                 alt="KPI icon"
-                                 class="portal-tool-logo-img" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="portal-tool-card">
+                <a href="https://hcm55.sapsf.eu/login?company=arabbankfo&_s.crb=ucnoZgVwtxw7m4mncpVzAllNfSvR9S6JSu2rTdH68Ww%3d#/login%27,%27_blank%27);" class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
                         <div class="portal-tool-body">
                             <h5 class="mb-1 portal-tool-title">SAP Employee Central</h5>
-                            <div class="portal-tool-meta mb-2">Analytics · Live data</div>
+                            <div class="portal-tool-meta mb-2">HR · Profiles</div>
                             <p class="mb-3 small text-muted">
-                                Monitor key indicators, spot trends, and keep an eye on critical metrics across BADEA.
+                                Access personal data, leave balances, HR services, and employee records.
                             </p>
-                            <span class="portal-chip">Live data</span>
+                            <span class="portal-chip">SAP</span>
                         </div>
                         <div class="portal-tool-visual">
-                            <img src="~/images/icons/SAP-Success-Factor-HCM.png"
-                                 alt="KPI icon"
-                                 class="portal-tool-logo-img" />
+                            <img src="~/images/icons/SAP-Success-Factor-HCM.png" alt="SAP EC icon"
+                                class="portal-tool-logo-img" />
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
 
+            <!-- 3. Freshworks -->
+            <div class="col-lg-4 col-md-6">
+                <a href="/Freshworks" class="portal-tool-card text-decoration-none text-dark d-block">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Freshworks</h5>
+                            <div class="portal-tool-meta mb-2">Support · Tickets</div>
+                            <p class="mb-3 small text-muted">
+                                Submit IT tickets, track issues, and interact with support teams.
+                            </p>
+                            <span class="portal-chip">Support</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/Freshworks.png" alt="Freshworks icon"
+                                class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 4. Laserfiche -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://10.3.0.82/laserfiche%27,%27_blank%27);" class="portal-tool-card text-decoration-none text-dark d-block">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Laserfiche</h5>
+                            <div class="portal-tool-meta mb-2">Documents · Workflow</div>
+                            <p class="mb-3 small text-muted">
+                                Access automated workflows, forms, and digital archiving.
+                            </p>
+                            <span class="portal-chip">Docs</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/Laserfiche.png" alt="Laserfiche icon"
+                                class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 5. Operational Risk Management -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://portal.badea.org/ords/r/badea/operation-risk-events-management110/login?session=2605582807777%27,%27_blank%27);" class="portal-tool-card text-decoration-none text-dark d-block">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Operational Risk Management</h5>
+                            <div class="portal-tool-meta mb-2">Risk · Controls</div>
+                            <p class="mb-3 small text-muted">
+                                Review incidents, track controls, and manage operational risks.
+                            </p>
+                            <span class="portal-chip">Compliance</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/ORM.png" alt="ORM icon" class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 6. SAP Fiori -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://vharfws4wd01.sap.badea.org:44380/sap/bc/ui2/flp?sap-client=100&sap-language=EN%27,%27_blank%27);" class="portal-tool-card text-decoration-none text-dark d-block">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">SAP Fiori</h5>
+                            <div class="portal-tool-meta mb-2">SAP · Processes</div>
+                            <p class="mb-3 small text-muted">
+                                Open SAP Fiori apps for approvals, workflows, and daily operations.
+                            </p>
+                            <span class="portal-chip">SAP</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/SAP-FIORI-LOGO.png" alt="SAP Fiori icon"
+                                class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 7. BADEA Services Portal -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://support.badea.org/support/home%27,%27_blank%27);" class="portal-tool-card text-decoration-none text-dark d-block">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Services Portal</h5>
+                            <div class="portal-tool-meta mb-2">Dashboards · Insights</div>
+                            <p class="mb-3 small text-muted">
+                                View performance dashboards and track KPI progress in real time.
+                            </p>
+                            <span class="portal-chip">Analytics</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/BADEAServicelogo.png" alt="KPI Monitor icon"
+                                class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- 8. KPI Monitor (NEW) -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://kpimonitor.badea.org" class="portal-tool-card text-decoration-none text-dark d-block">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">KPI Monitor</h5>
+                            <div class="portal-tool-meta mb-2">Dashboards · Insights</div>
+                            <p class="mb-3 small text-muted">
+                                View performance dashboards and track KPI progress in real time.
+                            </p>
+                            <span class="portal-chip">Analytics</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/BADEAServicelogo.png" alt="KPI Monitor icon"
+                                class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
+
     </section>
 
     <!-- BLOG / UPDATES -->
