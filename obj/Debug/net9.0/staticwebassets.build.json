@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a2lTrHbxHCSbPXnAIH0I/b5R9uouV05fmgoQ4X2/RmY=",
+  "Hash": "YTgWvQuUfRbTmGJMgszJUHGkUmWFDsY0wPCHrlId/2M=",
   "Source": "BADEAPORTAL",
   "BasePath": "_content/BADEAPORTAL",
   "Mode": "Default",
@@ -1613,6 +1613,27 @@
       "OriginalItemSpec": "wwwroot/images/icons/BADEAServicelogo.png"
     },
     {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/ecm.png",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/icons/ecm#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "wd3724b1rn",
+      "Integrity": "5M6tgT24Ml0h338v3OQPS1B2OMN7m+6N++jvkCIkGSo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/icons/ecm.png"
+    },
+    {
       "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Freshworks.png",
       "SourceId": "BADEAPORTAL",
       "SourceType": "Discovered",
@@ -1942,8 +1963,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "x6k9kwuafi",
-      "Integrity": "eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5+YoWfAlM=",
+      "Fingerprint": "zbtbqavxmi",
+      "Integrity": "waQLS2dtKpjOw7kBmNEegNDn8iGwp6y9zFPpXukZeQY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/portal-hero2.jpg"
@@ -1963,11 +1984,53 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "x6k9kwuafi",
+      "Integrity": "eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5+YoWfAlM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/portal-hero3.jpg"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero4.jpg",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/portal-hero4#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "vxztfo1td5",
+      "Integrity": "zYVt7QKUpQD2V9/GXZ4kbFz+F0BJ0WQEiRyf0zTPXyk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/portal-hero4.jpg"
+    },
+    {
+      "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero5.jpg",
+      "SourceId": "BADEAPORTAL",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/",
+      "BasePath": "_content/BADEAPORTAL",
+      "RelativePath": "images/portal-hero5#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
       "Fingerprint": "hqil6rhekw",
       "Integrity": "5ws8DBG7EuT28L/EylzQRFYYeJPw/d3INMw822e/v+M=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/images/portal-hero3.jpg"
+      "OriginalItemSpec": "wwwroot/images/portal-hero5.jpg"
     },
     {
       "Identity": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/side-rail.jpg",
@@ -5185,6 +5248,88 @@
       ]
     },
     {
+      "Route": "images/icons/ecm.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/ecm.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "116754"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5M6tgT24Ml0h338v3OQPS1B2OMN7m+6N++jvkCIkGSo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 11:37:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5M6tgT24Ml0h338v3OQPS1B2OMN7m+6N++jvkCIkGSo="
+        }
+      ]
+    },
+    {
+      "Route": "images/icons/ecm.wd3724b1rn.png",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/ecm.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "116754"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5M6tgT24Ml0h338v3OQPS1B2OMN7m+6N++jvkCIkGSo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 11:37:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wd3724b1rn"
+        },
+        {
+          "Name": "label",
+          "Value": "images/icons/ecm.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-5M6tgT24Ml0h338v3OQPS1B2OMN7m+6N++jvkCIkGSo="
+        }
+      ]
+    },
+    {
       "Route": "images/icons/Freshworks.png",
       "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/Freshworks.png",
       "Selectors": [],
@@ -6425,6 +6570,88 @@
         },
         {
           "Name": "Content-Length",
+          "Value": "203051"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"waQLS2dtKpjOw7kBmNEegNDn8iGwp6y9zFPpXukZeQY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 08:23:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-waQLS2dtKpjOw7kBmNEegNDn8iGwp6y9zFPpXukZeQY="
+        }
+      ]
+    },
+    {
+      "Route": "images/portal-hero2.zbtbqavxmi.jpg",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero2.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "203051"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"waQLS2dtKpjOw7kBmNEegNDn8iGwp6y9zFPpXukZeQY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 08:23:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zbtbqavxmi"
+        },
+        {
+          "Name": "label",
+          "Value": "images/portal-hero2.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-waQLS2dtKpjOw7kBmNEegNDn8iGwp6y9zFPpXukZeQY="
+        }
+      ]
+    },
+    {
+      "Route": "images/portal-hero3.jpg",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
           "Value": "464611"
         },
         {
@@ -6452,8 +6679,8 @@
       ]
     },
     {
-      "Route": "images/portal-hero2.x6k9kwuafi.jpg",
-      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero2.jpg",
+      "Route": "images/portal-hero3.x6k9kwuafi.jpg",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero3.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6488,7 +6715,7 @@
         },
         {
           "Name": "label",
-          "Value": "images/portal-hero2.jpg"
+          "Value": "images/portal-hero3.jpg"
         },
         {
           "Name": "integrity",
@@ -6497,8 +6724,90 @@
       ]
     },
     {
-      "Route": "images/portal-hero3.hqil6rhekw.jpg",
-      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero3.jpg",
+      "Route": "images/portal-hero4.jpg",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "376871"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zYVt7QKUpQD2V9/GXZ4kbFz+F0BJ0WQEiRyf0zTPXyk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 08:25:02 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zYVt7QKUpQD2V9/GXZ4kbFz+F0BJ0WQEiRyf0zTPXyk="
+        }
+      ]
+    },
+    {
+      "Route": "images/portal-hero4.vxztfo1td5.jpg",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "376871"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zYVt7QKUpQD2V9/GXZ4kbFz+F0BJ0WQEiRyf0zTPXyk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 08 Dec 2025 08:25:02 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "vxztfo1td5"
+        },
+        {
+          "Name": "label",
+          "Value": "images/portal-hero4.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zYVt7QKUpQD2V9/GXZ4kbFz+F0BJ0WQEiRyf0zTPXyk="
+        }
+      ]
+    },
+    {
+      "Route": "images/portal-hero5.hqil6rhekw.jpg",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero5.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6533,7 +6842,7 @@
         },
         {
           "Name": "label",
-          "Value": "images/portal-hero3.jpg"
+          "Value": "images/portal-hero5.jpg"
         },
         {
           "Name": "integrity",
@@ -6542,8 +6851,8 @@
       ]
     },
     {
-      "Route": "images/portal-hero3.jpg",
-      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero3.jpg",
+      "Route": "images/portal-hero5.jpg",
+      "AssetFile": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero5.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {

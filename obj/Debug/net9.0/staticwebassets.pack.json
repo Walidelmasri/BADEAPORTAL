@@ -73,6 +73,10 @@
       "PackagePath": "staticwebassets/images/icons/SAP-Success-Factor-HCM.png"
     },
     {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/ecm.png",
+      "PackagePath": "staticwebassets/images/icons/ecm.png"
+    },
+    {
       "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/icons/kpimonitor.png",
       "PackagePath": "staticwebassets/images/icons/kpimonitor.png"
     },
@@ -111,6 +115,14 @@
     {
       "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero3.jpg",
       "PackagePath": "staticwebassets/images/portal-hero3.jpg"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero4.jpg",
+      "PackagePath": "staticwebassets/images/portal-hero4.jpg"
+    },
+    {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/portal-hero5.jpg",
+      "PackagePath": "staticwebassets/images/portal-hero5.jpg"
     },
     {
       "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/side-rail.jpg",

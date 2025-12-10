@@ -115,6 +115,12 @@
         border-radius: 999px;
         font-size: 0.7rem;
     }
+        /* Make the sidebar toggle button visible on desktop as well */
+        #portalToggleBtn {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+        }
 
     /* --------------- MAIN AREA --------------- */
     .portal-main {
@@ -149,13 +155,19 @@
 
     /* ---------- responsive sidebar / hamburger ---------- */
 
-    /* desktop: sidebar always visible */
-    @@media (min-width: 768px) {
-        .portal-sidebar {
-            transform: none !important;
-            position: relative;
+        /* desktop: sidebar visible by default, but can be hidden with a body class */
+        @@media (min-width: 768px) {
+            .portal-sidebar {
+                position: relative;
+                transform: translateX(0);
+                transition: transform .25s ease-in-out;
+            }
+
+            body.portal-sidebar-hidden .portal-sidebar {
+                transform: translateX(-100%);
+            }
         }
-    }
+
 
     /* mobile: sidebar slides over content */
     @@media (max-width: 767.98px) {
@@ -266,24 +278,30 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script>
-        // mobile sidebar toggle
+        // sidebar toggle (mobile + desktop)
         (function () {
             const btn = document.getElementById('portalToggleBtn');
-            if (!btn) return;
-            btn.addEventListener('click', function () {
+            const sidebar = document.getElementById('portalSidebar');
+            if (!btn || !sidebar) return;
+
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                // mobile slide-in
                 document.body.classList.toggle('portal-sidebar-open');
+                // desktop hide/show
+                document.body.classList.toggle('portal-sidebar-hidden');
             });
 
-            // close sidebar when backdrop is clicked
+            // close sidebar when backdrop is clicked (mobile only)
             document.addEventListener('click', function (e) {
                 if (!document.body.classList.contains('portal-sidebar-open')) return;
-                const sidebar = document.getElementById('portalSidebar');
                 if (!sidebar.contains(e.target) && e.target !== btn) {
                     document.body.classList.remove('portal-sidebar-open');
                 }
             });
         })();
     </script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

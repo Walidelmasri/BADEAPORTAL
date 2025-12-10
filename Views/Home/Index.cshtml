@@ -274,6 +274,25 @@
         background: linear-gradient(145deg, #ffffff, #f3f8ff);
         transform: translateY(-4px);
     }
+    /* ---------- CARD HEIGHT NORMALIZATION ---------- */
+
+    /* Make each column act as a flex container so the card can stretch full height */
+    #tools-section .row.g-3 > [class*="col-"] {
+        display: flex;
+    }
+
+    /* Make the card fill the column height */
+    #tools-section .portal-tool-card {
+        width: 100%;
+    }
+
+    /* Clamp the description text to 3 lines with ellipsis */
+    .portal-tool-body p.small.text-muted {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 
     /* new flex layout: text on left, logo/icon on right */
     .portal-tool-layout {
@@ -630,7 +649,26 @@
                     </div>
                 </a>
             </div>
-
+            <!-- 9. ECM -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://ecm.badea.org/WebPortal" target="_blank" rel="noopener noreferrer"
+                    class="portal-tool-card text-decoration-none text-dark d-block">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Enterprise Content Management</h5>
+                            <div class="portal-tool-meta mb-2">Dashboards · Insights</div>
+                            <p class="mb-3 small text-muted">
+                                View KPI dashboards, monitor performance, and follow up on strategic indicators.
+                            </p>
+                            <span class="portal-chip">Analytics</span>
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/ecm.png" alt="KPI Monitor icon"
+                                class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
 
 

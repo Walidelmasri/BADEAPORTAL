@@ -132,6 +132,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"x5h1ldtktw"},{"Name":"integrity","Value":"sha256-JWZ0ZEyqF5gBJgDiOO1Xrd/xeNPlJ/wwYEcJjtjpLIU="},{"Name":"label","Value":"_content/BADEAPORTAL/images/icons/BADEAServicelogo.png"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1547149"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022JWZ0ZEyqF5gBJgDiOO1Xrd/xeNPlJ/wwYEcJjtjpLIU=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 11:38:40 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/icons/ecm.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\icons\ecm.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-5M6tgT24Ml0h338v3OQPS1B2OMN7m\u002B6N\u002B\u002BjvkCIkGSo="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"116754"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00225M6tgT24Ml0h338v3OQPS1B2OMN7m\u002B6N\u002B\u002BjvkCIkGSo=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 11:37:00 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/icons/ecm.wd3724b1rn.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\icons\ecm.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"wd3724b1rn"},{"Name":"integrity","Value":"sha256-5M6tgT24Ml0h338v3OQPS1B2OMN7m\u002B6N\u002B\u002BjvkCIkGSo="},{"Name":"label","Value":"_content/BADEAPORTAL/images/icons/ecm.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"116754"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00225M6tgT24Ml0h338v3OQPS1B2OMN7m\u002B6N\u002B\u002BjvkCIkGSo=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 11:37:00 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/icons/Freshworks.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\icons\Freshworks.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -315,23 +327,47 @@
     <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero2.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\portal-hero2.jpg'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5\u002BYoWfAlM="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"464611"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5\u002BYoWfAlM=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 09:07:01 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-waQLS2dtKpjOw7kBmNEegNDn8iGwp6y9zFPpXukZeQY="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"203051"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022waQLS2dtKpjOw7kBmNEegNDn8iGwp6y9zFPpXukZeQY=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 08:23:54 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero2.x6k9kwuafi.jpg">
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero2.zbtbqavxmi.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\portal-hero2.jpg'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"x6k9kwuafi"},{"Name":"integrity","Value":"sha256-eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5\u002BYoWfAlM="},{"Name":"label","Value":"_content/BADEAPORTAL/images/portal-hero2.jpg"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"464611"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5\u002BYoWfAlM=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 09:07:01 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero3.hqil6rhekw.jpg">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\portal-hero3.jpg'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"hqil6rhekw"},{"Name":"integrity","Value":"sha256-5ws8DBG7EuT28L/EylzQRFYYeJPw/d3INMw822e/v\u002BM="},{"Name":"label","Value":"_content/BADEAPORTAL/images/portal-hero3.jpg"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"313495"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u00225ws8DBG7EuT28L/EylzQRFYYeJPw/d3INMw822e/v\u002BM=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 09:07:52 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"zbtbqavxmi"},{"Name":"integrity","Value":"sha256-waQLS2dtKpjOw7kBmNEegNDn8iGwp6y9zFPpXukZeQY="},{"Name":"label","Value":"_content/BADEAPORTAL/images/portal-hero2.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"203051"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022waQLS2dtKpjOw7kBmNEegNDn8iGwp6y9zFPpXukZeQY=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 08:23:54 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero3.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\portal-hero3.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5\u002BYoWfAlM="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"464611"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5\u002BYoWfAlM=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 09:07:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero3.x6k9kwuafi.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\portal-hero3.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"x6k9kwuafi"},{"Name":"integrity","Value":"sha256-eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5\u002BYoWfAlM="},{"Name":"label","Value":"_content/BADEAPORTAL/images/portal-hero3.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"464611"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022eUIlEP4ZcEU7ZtTf1WmzKBUmy4JBjqBuMD5\u002BYoWfAlM=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 09:07:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero4.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\portal-hero4.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-zYVt7QKUpQD2V9/GXZ4kbFz\u002BF0BJ0WQEiRyf0zTPXyk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"376871"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022zYVt7QKUpQD2V9/GXZ4kbFz\u002BF0BJ0WQEiRyf0zTPXyk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 08:25:02 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero4.vxztfo1td5.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\portal-hero4.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"vxztfo1td5"},{"Name":"integrity","Value":"sha256-zYVt7QKUpQD2V9/GXZ4kbFz\u002BF0BJ0WQEiRyf0zTPXyk="},{"Name":"label","Value":"_content/BADEAPORTAL/images/portal-hero4.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"376871"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022zYVt7QKUpQD2V9/GXZ4kbFz\u002BF0BJ0WQEiRyf0zTPXyk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 08:25:02 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero5.hqil6rhekw.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\portal-hero5.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"hqil6rhekw"},{"Name":"integrity","Value":"sha256-5ws8DBG7EuT28L/EylzQRFYYeJPw/d3INMw822e/v\u002BM="},{"Name":"label","Value":"_content/BADEAPORTAL/images/portal-hero5.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"313495"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u00225ws8DBG7EuT28L/EylzQRFYYeJPw/d3INMw822e/v\u002BM=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 09:07:52 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/portal-hero5.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\portal-hero5.jpg'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-5ws8DBG7EuT28L/EylzQRFYYeJPw/d3INMw822e/v\u002BM="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"313495"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u00225ws8DBG7EuT28L/EylzQRFYYeJPw/d3INMw822e/v\u002BM=\u0022"},{"Name":"Last-Modified","Value":"Sun, 07 Dec 2025 09:07:52 GMT"}]]]></ResponseHeaders>
