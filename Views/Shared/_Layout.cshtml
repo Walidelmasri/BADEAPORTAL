@@ -221,6 +221,11 @@
 
 <body class="portal-body">
     <div class="portal-root d-flex">
+        @{
+            var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+            var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
+        }
+
         <!-- SIDEBAR -->
         <aside class="portal-sidebar" id="portalSidebar">
             <div class="portal-brand">
@@ -229,27 +234,30 @@
                     <img src="~/images/logo-negative.png" alt="BADEA" class="portal-logo-banner" />
                 </a>
             </div>
-<nav>
-    <div class="portal-sidebar-section-label">Portal</div>
-    <ul class="nav nav-pills flex-column gap-1">
-        <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Portal" ? "active" : "")"
-               asp-area=""
-               asp-controller="Home"
-               asp-action="Index">
-                Overview
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Announcements" ? "active" : "")"
-               asp-area=""
-               asp-controller="Announcements"
-               asp-action="Index">
-                Announcements
-            </a>
-        </li>
-    </ul>
-</nav>
+            <nav>
+                <div class="portal-sidebar-section-label">Portal</div>
+                <ul class="nav nav-pills flex-column gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")"
+                            asp-area="" asp-controller="Home" asp-action="Index">
+                            Overview
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Portal" && currentAction == "Index" ? "" : "")"
+                            href="#tools-section">
+                            Phone Directory
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Announcements" && currentAction == "Index" ? "active" : "")"
+                            asp-area="" asp-controller="Announcements" asp-action="Index">
+                            Announcements
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
 
 
             <div class="portal-sidebar-footer">

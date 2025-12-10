@@ -2,262 +2,157 @@
     ViewData["Title"] = "BADEA Announcements";
 }
 
+@section Scripts {
+    <!-- No special JS needed for this hero right now -->
+}
+
 <style>
-    /* --- Announcements page specific styling --- */
+    /* --- Announcements hero (reuses the same vibe as portal hero) --- */
 
     .ann-hero {
-        max-width: 960px;
-        margin: 0 auto 1.5rem auto;
+        border-radius: 2rem;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 26px 80px rgba(0, 0, 0, 0.20);
+        background-color: #000;
+        margin-bottom: 1.75rem;
+    }
+
+    .ann-hero-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.92;
+    }
+
+    .ann-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(90deg,
+                rgba(0, 0, 0, 0.85) 0%,
+                rgba(0, 0, 0, 0.65) 38%,
+                rgba(0, 0, 0, 0.18) 100%);
+    }
+
+    .ann-hero-inner {
+        position: relative;
+        z-index: 1;
+        padding: 2.3rem 2.7rem;
+        color: #fff;
+        max-width: 540px;
+        display: flex;
+        flex-direction: column;
+        gap: .7rem;
     }
 
     .ann-hero-pill {
         display: inline-flex;
         align-items: center;
         gap: 0.35rem;
-        padding: 0.15rem 0.7rem;
+        padding: 0.18rem 0.85rem;
         border-radius: 999px;
         font-size: 0.7rem;
         text-transform: uppercase;
-        letter-spacing: .08em;
-        background: rgba(0, 0, 0, 0.03);
-        color: #6b7280;
-    }
-
-    .ann-hero-card {
-        border-radius: 1.5rem;
-        padding: 1.3rem 1.5rem;
-        background:
-            radial-gradient(circle at top left, rgba(255, 255, 255, 0.85), #f5f7fb);
-        box-shadow:
-            0 18px 40px rgba(15, 29, 45, 0.10),
-            0 0 0 rgba(0, 150, 57, 0.0);
-        border: 1px solid rgba(148, 163, 184, 0.25);
+        letter-spacing: 0.08em;
+        background: rgba(0, 0, 0, 0.70);
+        color: #d7f7e4;
+        border: 1px solid rgba(215, 247, 228, 0.55);
     }
 
     .ann-hero-title {
-        font-size: 1.55rem;
-        font-weight: 700;
-        margin-bottom: .2rem;
+        font-size: 1.9rem;
+        font-weight: 800;
+        line-height: 1.17;
+        text-shadow: 0 5px 18px rgba(0, 0, 0, 0.9);
     }
 
     .ann-hero-sub {
-        font-size: 0.9rem;
-        color: #6b7280;
-        max-width: 560px;
-    }
-
-    /* feed cards container */
-    .ann-feed-wrapper {
-        max-width: 960px;
-        margin: 0 auto;
-    }
-
-    .ann-section-title {
-        font-size: 0.78rem;
-        letter-spacing: .16em;
-        text-transform: uppercase;
-        color: #9ca3af;
-        margin-bottom: .5rem;
-    }
-
-    .ann-card {
-        border-radius: 1.25rem;
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        padding: 1.1rem 1.3rem;
-        display: flex;
-        gap: 1rem;
-        align-items: flex-start;
-        box-shadow: 0 14px 30px rgba(15, 29, 45, 0.06);
-        margin-bottom: 0.9rem;
-    }
-
-    .ann-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 999px;
-        background: #e7f7ee;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.8rem;
-        font-weight: 700;
-        color: #047857;
-        flex-shrink: 0;
-    }
-
-    .ann-meta-line {
-        font-size: 0.72rem;
-        text-transform: uppercase;
-        letter-spacing: .12em;
-        color: #9ca3af;
-    }
-
-    .ann-title {
         font-size: 0.95rem;
-        font-weight: 600;
-        margin-bottom: 0.15rem;
+        opacity: 0.92;
     }
 
-    .ann-body {
-        font-size: 0.85rem;
-        color: #4b5563;
-        margin-bottom: 0;
+    .ann-hero-meta {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        opacity: 0.85;
     }
 
-    .ann-pill {
-        font-size: 0.7rem;
-        padding: 0.15rem 0.65rem;
-        border-radius: 999px;
-        border: 1px solid #bbf7d0;
-        background: #ecfdf3;
-        color: #15803d;
-        white-space: nowrap;
+    @@media (max-width: 767.98px) {
+        .ann-hero-inner {
+            padding: 1.8rem 1.6rem;
+        }
+
+        .ann-hero-title {
+            font-size: 1.6rem;
+        }
     }
 
-    .ann-card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 0.5rem;
+    /* Feed section spacing to avoid sticking to hero */
+    .ann-feed-section {
+        margin-top: 0.75rem;
     }
 
-    /* load more button */
-    .ann-load-more-wrapper {
-        max-width: 960px;
-        margin: 1.2rem auto 0 auto;
-        text-align: center;
+    .ann-section-label {
+        font-size: 0.78rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: #6c757d;
+        margin-bottom: 0.35rem;
     }
 
+    .ann-section-sub {
+        font-size: 0.8rem;
+        color: #9aa0a6;
+        margin-bottom: 0.85rem;
+    }
+
+    /* Load more button */
     .ann-load-more-btn {
         border-radius: 999px;
-        padding: 0.48rem 1.7rem;
-        font-size: 0.9rem;
-        font-weight: 600;
-        border: 1px solid #d1d5db;
-        background: linear-gradient(145deg, #ffffff, #f5f7fb);
-        color: #374151;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.09);
-        transition: all .22s ease;
-    }
-
-    .ann-load-more-btn:hover {
-        border-color: #9ca3af;
-        transform: translateY(-1px);
-        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
-        background: #ffffff;
-    }
-
-    .ann-load-more-btn:active {
-        transform: scale(0.97);
+        font-size: 0.85rem;
+        padding: 0.45rem 1.4rem;
     }
 </style>
 
 <div class="container-fluid px-0">
+    <!-- HERO -->
+    <section class="mb-2">
+        <div class="ann-hero">
+            <img src="~/images/announcements-hero.jpg" alt="Announcements hero" class="ann-hero-bg" />
+            <div class="ann-hero-overlay"></div>
 
-    <!-- Slim hero / banner -->
-    <section class="mb-3 ann-hero">
-        <div class="ann-hero-card">
-            <div class="ann-hero-pill mb-1">
-                BADEA · Internal announcements
+            <div class="ann-hero-inner">
+                <span class="ann-hero-pill">BADEA · Internal announcements</span>
+                <h1 class="ann-hero-title mb-1">
+                    Announcements feed
+                </h1>
+                <p class="ann-hero-sub mb-1">
+                    A simple, focused stream of BADEA internal announcements. Content is static for now – later this can
+                    hook into your backend.
+                </p>
+                <div class="ann-hero-meta">
+                    Latest updates · Internal staff
+                </div>
             </div>
-            <h1 class="ann-hero-title">
-                Announcements feed
-            </h1>
-            <p class="ann-hero-sub mb-0">
-                A clean stream of internal BADEA announcements. Content is static for now –
-                later this page can connect directly to your backend and show the latest 10 items at a time.
-            </p>
         </div>
     </section>
 
-    <!-- Feed -->
-    <section class="ann-feed-wrapper">
-        <div class="ann-section-title mb-2">
-            Latest announcements
+    <!-- FEED -->
+    <section class="ann-feed-section">
+        <div class="ann-section-label">Latest announcements</div>
+        <div class="ann-section-sub">
+            Showing recent internal messages. Later you can filter by department or date.
         </div>
 
-        <!-- Card 1 -->
-        <article class="ann-card">
-            <div class="ann-avatar">
-                BA
-            </div>
-            <div class="flex-grow-1">
-                <div class="ann-card-header mb-1">
-                    <div>
-                        <div class="fw-semibold small">BADEA Communications</div>
-                        <div class="ann-meta-line">
-                            INTERNAL · MARCH 2025
-                        </div>
-                    </div>
-                    <span class="ann-pill">General</span>
-                </div>
-                <div class="ann-title">
-                    BADEA internal portal design draft ready
-                </div>
-                <p class="ann-body">
-                    The first version of the BADEA internal portal is now available for preview. You can browse key
-                    tools, mission workflows, HR systems, and KPI dashboards from one place while we continue wiring it
-                    into production systems.
-                </p>
-            </div>
-        </article>
-
-        <!-- Card 2 -->
-        <article class="ann-card">
-            <div class="ann-avatar">
-                IT
-            </div>
-            <div class="flex-grow-1">
-                <div class="ann-card-header mb-1">
-                    <div>
-                        <div class="fw-semibold small">IT &amp; Digital Transformation</div>
-                        <div class="ann-meta-line">
-                            SYSTEMS · COMING SOON
-                        </div>
-                    </div>
-                    <span class="ann-pill">Systems</span>
-                </div>
-                <div class="ann-title">
-                    Single entry point for KPIs &amp; actions
-                </div>
-                <p class="ann-body">
-                    The portal will become the primary entry for KPI dashboards, RedBoard views, and action plans.
-                    During the pilot phase, existing tools remain available via their usual URLs while we monitor usage
-                    and collect feedback.
-                </p>
-            </div>
-        </article>
-
-        <!-- Card 3 -->
-        <article class="ann-card">
-            <div class="ann-avatar">
-                HR
-            </div>
-            <div class="flex-grow-1">
-                <div class="ann-card-header mb-1">
-                    <div>
-                        <div class="fw-semibold small">Human Resources</div>
-                        <div class="ann-meta-line">
-                            PEOPLE · COMING SOON
-                        </div>
-                    </div>
-                    <span class="ann-pill">People</span>
-                </div>
-                <div class="ann-title">
-                    Central space for BADEA guidelines &amp; resources
-                </div>
-                <p class="ann-body">
-                    A dedicated section for policies, templates, and reference documents is planned inside the portal.
-                    The goal is to reduce scattered links and ensure staff can always find the latest approved versions
-                    of BADEA guidelines.
-                </p>
-            </div>
-        </article>
-
-        <!-- Load more -->
-        <div class="ann-load-more-wrapper">
-            <button type="button" class="ann-load-more-btn">
+        <!-- your existing announcement cards go here -->
+        <!-- ... -->
+        <!-- at the very end of the feed cards: -->
+        <div class="text-center mt-3 mb-2">
+            <button type="button" class="btn btn-outline-secondary ann-load-more-btn">
                 Load more announcements
             </button>
         </div>

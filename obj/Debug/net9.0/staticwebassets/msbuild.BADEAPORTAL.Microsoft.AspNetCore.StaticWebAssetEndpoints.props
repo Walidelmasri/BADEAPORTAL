@@ -120,6 +120,18 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"56088"},{"Name":"Content-Type","Value":"application/x-font-ttf"},{"Name":"ETag","Value":"\u0022OGmX/PzSICC0cmX5wCWHeRhn5N9fdKNr42rWJkpQ0yE=\u0022"},{"Name":"Last-Modified","Value":"Mon, 08 Dec 2025 06:53:07 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/announcements-hero.7f5x1fibmk.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\announcements-hero.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"7f5x1fibmk"},{"Name":"integrity","Value":"sha256-s7YixQOkcKpJhVkT14iRgLbs3f0J2h7CsEM2V\u002ByZXRc="},{"Name":"label","Value":"_content/BADEAPORTAL/images/announcements-hero.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"167559"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022s7YixQOkcKpJhVkT14iRgLbs3f0J2h7CsEM2V\u002ByZXRc=\u0022"},{"Name":"Last-Modified","Value":"Wed, 10 Dec 2025 10:16:10 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/announcements-hero.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\announcements-hero.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-s7YixQOkcKpJhVkT14iRgLbs3f0J2h7CsEM2V\u002ByZXRc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"167559"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022s7YixQOkcKpJhVkT14iRgLbs3f0J2h7CsEM2V\u002ByZXRc=\u0022"},{"Name":"Last-Modified","Value":"Wed, 10 Dec 2025 10:16:10 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BADEAPORTAL/images/icons/BADEAServicelogo.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\icons\BADEAServicelogo.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
