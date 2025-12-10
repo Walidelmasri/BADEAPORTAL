@@ -13,108 +13,115 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BADEAPORTAL.styles.css" asp-append-version="true" />
 
-<style>
-    :root {
-        /* BADEA greens */
-        --badea-green: #009639;
-        --badea-green-dark: #006b2a;
-        --badea-green-soft: #e6f4ec;
-        --portal-bg: #f3f5f7;
-    }
+    <style>
+        :root {
+            /* BADEA greens */
+            --badea-green: #009639;
+            --badea-green-dark: #006b2a;
+            --badea-green-soft: #e6f4ec;
+            --portal-bg: #f3f5f7;
+        }
 
-    body.portal-body {
-        background: var(--portal-bg);
-    }
+        body.portal-body {
+            background: var(--portal-bg);
+        }
 
-    .portal-root {
-        min-height: 100vh;
-    }
+        .portal-root {
+            min-height: 100vh;
+        }
 
-    /* ----------------- SIDEBAR ----------------- */
-    .portal-sidebar {
-        width: 240px; /* slightly narrower */
-        background: radial-gradient(circle at top left, #018f38 0, #006b2a 35%, #004118 100%);
-        color: #fff;
-        box-shadow: 4px 0 22px rgba(0, 0, 0, 0.25);
-        position: relative;
-        z-index: 10;
-        transition: transform .25s ease-in-out;
-    }
+        /* ----------------- SIDEBAR ----------------- */
+        .portal-sidebar {
+            width: 240px;
+            /* slightly narrower */
+            background: radial-gradient(circle at top left, #018f38 0, #006b2a 35%, #004118 100%);
+            color: #fff;
+            box-shadow: 4px 0 22px rgba(0, 0, 0, 0.25);
+            position: relative;
+            z-index: 10;
+            transition: transform .72s cubic-bezier(0.22, 0.61, 0.36, 1),
+                opacity .72s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
 
-    /* top strip = logo only */
-    .portal-brand {
-        background: #00481d;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        height: 88px;              /* height of the strip */
-        display: flex;
-        align-items: center;       /* vertically center logo */
-        padding: 0 16px;           /* nice left/right breathing room */
-    }
+        /* top strip = logo only */
+        .portal-brand {
+            background: #00481d;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            height: 88px;
+            /* height of the strip */
+            display: flex;
+            align-items: center;
+            /* vertically center logo */
+            padding: 0 16px;
+            /* nice left/right breathing room */
+        }
 
-    /* link just wraps the logo */
-    .portal-brand-link {
-        display: inline-flex;
-        align-items: center;
-        height: 100%;
-    }
+        /* link just wraps the logo */
+        .portal-brand-link {
+            display: inline-flex;
+            align-items: center;
+            height: 100%;
+        }
 
-    /* logo fills the strip without looking crushed */
-    .portal-logo-banner {
-        display: block;
-        height: 64px;             /* tweak this up/down if you want bigger/smaller */
-        width: auto;
-        object-fit: contain;
-    }
+        /* logo fills the strip without looking crushed */
+        .portal-logo-banner {
+            display: block;
+            height: 64px;
+            /* tweak this up/down if you want bigger/smaller */
+            width: auto;
+            object-fit: contain;
+        }
 
-    .portal-sidebar nav {
-        padding: 1.2rem 1.25rem 1.1rem 1.25rem;
-    }
+        .portal-sidebar nav {
+            padding: 1.2rem 1.25rem 1.1rem 1.25rem;
+        }
 
-    .portal-sidebar-section-label {
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        letter-spacing: .08em;
-        color: rgba(255, 255, 255, 0.75);
-        margin-bottom: .5rem;
-    }
+        .portal-sidebar-section-label {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: .08em;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: .5rem;
+        }
 
-    .portal-sidebar .nav-link {
-        border-radius: 999px;
-        color: #e4f7eb;
-        font-size: 0.9rem;
-        padding: 0.45rem 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: .4rem;
-        transition: background .18s ease, color .18s ease, box-shadow .18s ease, transform .18s ease;
-    }
+        .portal-sidebar .nav-link {
+            border-radius: 999px;
+            color: #e4f7eb;
+            font-size: 0.9rem;
+            padding: 0.45rem 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            transition: background .18s ease, color .18s ease, box-shadow .18s ease, transform .18s ease;
+        }
 
-    .portal-sidebar .nav-link.active {
-        background: #ffffff;
-        color: var(--badea-green-dark);
-        font-weight: 600;
-        box-shadow: 0 10px 26px rgba(0, 0, 0, .35);
-        transform: translateY(-1px);
-    }
+        .portal-sidebar .nav-link.active {
+            background: #ffffff;
+            color: var(--badea-green-dark);
+            font-weight: 600;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, .35);
+            transform: translateY(-1px);
+        }
 
-    .portal-sidebar .nav-link:hover:not(.active) {
-        background: rgba(255, 255, 255, 0.10);
-    }
+        .portal-sidebar .nav-link:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.10);
+        }
 
-    .portal-sidebar-footer {
-        font-size: 0.8rem;
-        padding: 0.65rem 1.1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.25);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: linear-gradient(90deg, rgba(0, 0, 0, .16), rgba(0, 0, 0, .08));
-    }
+        .portal-sidebar-footer {
+            font-size: 0.8rem;
+            padding: 0.65rem 1.1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, rgba(0, 0, 0, .16), rgba(0, 0, 0, .08));
+        }
 
-    .portal-sidebar-footer .badge {
-        border-radius: 999px;
-        font-size: 0.7rem;
-    }
+        .portal-sidebar-footer .badge {
+            border-radius: 999px;
+            font-size: 0.7rem;
+        }
+
         /* Make the sidebar toggle button visible on desktop as well */
         #portalToggleBtn {
             display: inline-flex !important;
@@ -122,86 +129,93 @@
             justify-content: center;
         }
 
-    /* --------------- MAIN AREA --------------- */
-    .portal-main {
-        background: var(--portal-bg);
-    }
+        /* --------------- MAIN AREA --------------- */
+        .portal-main {
+            background: var(--portal-bg);
+        }
 
-    .portal-topbar {
-        background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(10px);
-        position: sticky;
-        top: 0;
-        z-index: 5;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    }
+        .portal-topbar {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
 
-    .portal-content {
-        padding: 1.5rem 1.5rem 2.5rem 1.5rem;
-    }
+        .portal-content {
+            padding: 1.5rem 1.5rem 2.5rem 1.5rem;
+        }
 
-    .portal-pill-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        padding: 0.15rem 0.75rem;
-        border-radius: 999px;
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        background: rgba(0, 0, 0, 0.05);
-        color: #555;
-    }
+        .portal-pill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.15rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            background: rgba(0, 0, 0, 0.05);
+            color: #555;
+        }
 
-    /* ---------- responsive sidebar / hamburger ---------- */
+        /* ---------- responsive sidebar / hamburger ---------- */
 
-        /* desktop: sidebar visible by default, but can be hidden with a body class */
         @@media (min-width: 768px) {
             .portal-sidebar {
                 position: relative;
                 transform: translateX(0);
-                transition: transform .25s ease-in-out;
+                opacity: 1;
             }
 
+            /* when hidden on desktop, slide it out smoothly */
             body.portal-sidebar-hidden .portal-sidebar {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+
+
+        /* mobile: sidebar slides over content */
+        @@media (max-width: 767.98px) {
+            .portal-root {
+                flex-direction: column;
+            }
+
+            .portal-sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 230px;
+                /* mobile width, also slightly slimmer */
                 transform: translateX(-100%);
             }
-        }
 
+            body.portal-sidebar-open .portal-sidebar {
+                transform: translateX(0);
+            }
 
-    /* mobile: sidebar slides over content */
-    @@media (max-width: 767.98px) {
-        .portal-root {
-            flex-direction: column;
-        }
+            /* dimmed backdrop when menu is open */
+            body.portal-sidebar-open::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.45);
+                z-index: 9;
+            }
 
-        .portal-sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 230px; /* mobile width, also slightly slimmer */
-            transform: translateX(-100%);
+            .portal-main {
+                width: 100%;
+            }
         }
-
-        body.portal-sidebar-open .portal-sidebar {
-            transform: translateX(0);
-        }
-
-        /* dimmed backdrop when menu is open */
-        body.portal-sidebar-open::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.45);
-            z-index: 9;
-        }
-
-        .portal-main {
-            width: 100%;
-        }
-    }
-</style>
+    </style>
 
 </head>
 
@@ -215,27 +229,28 @@
                     <img src="~/images/logo-negative.png" alt="BADEA" class="portal-logo-banner" />
                 </a>
             </div>
+<nav>
+    <div class="portal-sidebar-section-label">Portal</div>
+    <ul class="nav nav-pills flex-column gap-1">
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Portal" ? "active" : "")"
+               asp-area=""
+               asp-controller="Home"
+               asp-action="Index">
+                Overview
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Announcements" ? "active" : "")"
+               asp-area=""
+               asp-controller="Announcements"
+               asp-action="Index">
+                Announcements
+            </a>
+        </li>
+    </ul>
+</nav>
 
-            <nav>
-                <div class="portal-sidebar-section-label">Portal</div>
-                <ul class="nav nav-pills flex-column gap-1">
-                    <li class="nav-item">
-                        <a class="nav-link active" asp-area="" asp-controller="Portal" asp-action="Index">
-                            Overview
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Tools &amp; apps
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            BADEA updates
-                        </a>
-                    </li>
-                </ul>
-            </nav>
 
             <div class="portal-sidebar-footer">
                 <span>Logged in to BADEA</span>

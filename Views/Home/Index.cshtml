@@ -243,12 +243,29 @@
 
     /* ---------- CARDS / BLOG ---------- */
 
-    .portal-section-title {
-        font-size: 0.8rem;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-        color: #6c757d;
-    }
+.portal-section-title {
+    margin-top: 2.2rem;
+    font-size: 0.9 rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    color: #9ca3af;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-rendering: optimizeLegibility;
+}
+
+/* subtle leading line, very “settings section” / Apple vibes */
+.portal-section-title::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.28));
+}
+
 
     .portal-tool-card {
         border-radius: 1.5rem;
@@ -277,14 +294,22 @@
     /* ---------- CARD HEIGHT NORMALIZATION ---------- */
 
     /* Make each column act as a flex container so the card can stretch full height */
-    #tools-section .row.g-3 > [class*="col-"] {
-        display: flex;
-    }
+#updates-section .row.g-3 > [class*="col-"] {
+    display: flex;
+}
 
-    /* Make the card fill the column height */
-    #tools-section .portal-tool-card {
-        width: 100%;
-    }
+#updates-section .portal-blog-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#updates-section .portal-blog-card p.small {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;      /* number of lines before truncating */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
     /* Clamp the description text to 3 lines with ellipsis */
     .portal-tool-body p.small.text-muted {
@@ -466,7 +491,45 @@
             </div>
         </div>
     </section>
+    <!-- BLOG / UPDATES -->
+    <section id="updates-section" class="mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <div class="portal-section-title">BADEA updates</div>
+                @* <div class="text-muted small">Lightweight internal news stream (static for now).</div> *@
+            </div>
+        </div>
 
+        <div class="row g-3">
+            <div class="col-lg-4 col-md-6">
+                <article class="portal-blog-card">
+                    <div class="small text-muted mb-1">March 2025</div>
+                    <h6 class="mb-1">Portal design draft ready</h6>
+                    <p class="small mb-0 text-muted">
+                        First version of the BADEA internal portal layout – we’ll plug it into existing tools next.
+                    </p>
+                </article>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <article class="portal-blog-card">
+                    <div class="small text-muted mb-1">Coming soon</div>
+                    <h6 class="mb-1">Single entry for KPIs &amp; actions</h6>
+                    <p class="small mb-0 text-muted">
+                        The portal will become the front entry for dashboards, RedBoard, and action plans.
+                    </p>
+                </article>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <article class="portal-blog-card">
+                    <div class="small text-muted mb-1">Coming soon</div>
+                    <h6 class="mb-1">BADEA guidelines &amp; resources</h6>
+                    <p class="small mb-0 text-muted">
+                        A space for templates, policies, and reference documents – one place instead of many links.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
     <!-- TOOLS & WORKSPACES -->
     <section id="tools-section" class="mb-4">
         <div class="d-flex justify-content-between align-items-end mb-2">
@@ -670,47 +733,7 @@
                 </a>
             </div>
         </div>
-
-
     </section>
 
-    <!-- BLOG / UPDATES -->
-    <section id="updates-section" class="mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            <div>
-                <div class="portal-section-title">BADEA updates</div>
-                <div class="text-muted small">Lightweight internal news stream (static for now).</div>
-            </div>
-        </div>
 
-        <div class="row g-3">
-            <div class="col-lg-4 col-md-6">
-                <article class="portal-blog-card">
-                    <div class="small text-muted mb-1">March 2025</div>
-                    <h6 class="mb-1">Portal design draft ready</h6>
-                    <p class="small mb-0 text-muted">
-                        First version of the BADEA internal portal layout – we’ll plug it into existing tools next.
-                    </p>
-                </article>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <article class="portal-blog-card">
-                    <div class="small text-muted mb-1">Coming soon</div>
-                    <h6 class="mb-1">Single entry for KPIs &amp; actions</h6>
-                    <p class="small mb-0 text-muted">
-                        The portal will become the front entry for dashboards, RedBoard, and action plans.
-                    </p>
-                </article>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <article class="portal-blog-card">
-                    <div class="small text-muted mb-1">Coming soon</div>
-                    <h6 class="mb-1">BADEA guidelines &amp; resources</h6>
-                    <p class="small mb-0 text-muted">
-                        A space for templates, policies, and reference documents – one place instead of many links.
-                    </p>
-                </article>
-            </div>
-        </div>
-    </section>
 </div>
