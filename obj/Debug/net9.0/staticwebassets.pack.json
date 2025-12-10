@@ -45,6 +45,10 @@
       "PackagePath": "staticwebassets/images/Picture1.png"
     },
     {
+      "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/announcement-hero.jpg",
+      "PackagePath": "staticwebassets/images/announcement-hero.jpg"
+    },
+    {
       "Id": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/wwwroot/images/announcements-hero.jpg",
       "PackagePath": "staticwebassets/images/announcements-hero.jpg"
     },

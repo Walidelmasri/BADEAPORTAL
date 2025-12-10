@@ -3,158 +3,481 @@
 }
 
 @section Scripts {
-    <!-- No special JS needed for this hero right now -->
+    <script>
+        // Card hover tilt (re-use for announcement cards if you want later)
+        document.addEventListener('DOMContentLoaded', () => {
+            // hero bg – same small helper as home; safe even with one image
+            const heroImgs = document.querySelectorAll('.portal-hero-bg-carousel img');
+            if (heroImgs.length > 0) {
+                let idx = 0;
+
+                function showHero(i) {
+                    heroImgs.forEach((img, k) => {
+                        img.classList.toggle('active', k === i);
+                    });
+                }
+
+                showHero(idx);
+
+                // with a single image this effectively does nothing, but it’s harmless
+                setInterval(() => {
+                    idx = (idx + 1) % heroImgs.length;
+                    showHero(idx);
+                }, 2500);
+            }
+        });
+    </script>
 }
 
 <style>
-    /* --- Announcements hero (reuses the same vibe as portal hero) --- */
+    /* Reuse same hero styling as portal home ----------------------------- */
 
-    .ann-hero {
+    :root {
+        --portal-hero-glass-bg: rgba(0, 0, 0, 0.55);
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body,
+    button,
+    a,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Tajawal', sans-serif !important;
+    }
+
+    .portal-hero {
         border-radius: 2rem;
         overflow: hidden;
         position: relative;
-        box-shadow: 0 26px 80px rgba(0, 0, 0, 0.20);
+        box-shadow: 0 26px 80px rgba(0, 0, 0, 0.25);
         background-color: #000;
-        margin-bottom: 1.75rem;
+        min-height: 400px; /* or 380 / 400 – tweak until it matches what you like */
+
     }
 
-    .ann-hero-bg {
+    .portal-hero-bg-carousel {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+    }
+
+    .portal-hero-bg-carousel img {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        opacity: 0.92;
+        opacity: 0;
+        transition: opacity 0.9s ease-in-out;
     }
 
-    .ann-hero-overlay {
+    .portal-hero-bg-carousel img.active {
+        opacity: 1;
+    }
+
+    .portal-hero-overlay {
         position: absolute;
         inset: 0;
         background:
             linear-gradient(90deg,
                 rgba(0, 0, 0, 0.85) 0%,
-                rgba(0, 0, 0, 0.65) 38%,
-                rgba(0, 0, 0, 0.18) 100%);
+                rgba(0, 0, 0, 0.65) 30%,
+                rgba(0, 0, 0, 0.25) 60%,
+                rgba(0, 0, 0, 0.05) 100%),
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 60%);
+        mix-blend-mode: normal;
     }
 
-    .ann-hero-inner {
+    .portal-hero-inner {
         position: relative;
         z-index: 1;
-        padding: 2.3rem 2.7rem;
+        padding: 2.75rem 3.5rem;
         color: #fff;
-        max-width: 540px;
         display: flex;
-        flex-direction: column;
-        gap: .7rem;
+        gap: 2.25rem;
+        align-items: center;
     }
 
-    .ann-hero-pill {
+    .portal-hero-left {
+        max-width: 460px;
+    }
+
+    .portal-hero-main-card {
+        position: relative;
+        border-radius: 2rem;
+        padding: 1.9rem 2.3rem;
+        background:
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 55%),
+            var(--portal-hero-glass-bg);
+        box-shadow:
+            0 20px 55px rgba(0, 0, 0, 0.45),
+            0 0 18px rgba(0, 200, 120, 0.18);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        overflow: hidden;
+    }
+
+    .portal-hero-main-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        box-shadow: inset 0 0 14px rgba(0, 255, 160, 0.15);
+        pointer-events: none;
+    }
+
+    .portal-pill-badge {
         display: inline-flex;
         align-items: center;
         gap: 0.35rem;
-        padding: 0.18rem 0.85rem;
+        padding: 0.2rem 0.8rem;
         border-radius: 999px;
         font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        background: rgba(0, 0, 0, 0.70);
-        color: #d7f7e4;
-        border: 1px solid rgba(215, 247, 228, 0.55);
+        background: rgba(0, 0, 0, 0.6);
+        color: #c0f3d2;
+        border: 1px solid rgba(192, 243, 210, 0.45);
     }
 
-    .ann-hero-title {
-        font-size: 1.9rem;
+    .portal-hero-title {
+        font-size: 2.5rem;
         font-weight: 800;
-        line-height: 1.17;
-        text-shadow: 0 5px 18px rgba(0, 0, 0, 0.9);
+        line-height: 1.15;
+        text-shadow: 0 6px 24px rgba(0, 0, 0, 0.8);
     }
 
-    .ann-hero-sub {
+    .portal-hero-sub {
         font-size: 0.95rem;
         opacity: 0.92;
     }
 
-    .ann-hero-meta {
-        font-size: 0.78rem;
+    .portal-hero-actions .btn {
+        font-family: 'Tajawal', sans-serif !important;
+        font-weight: 600;
+        letter-spacing: .25px;
+        padding: 0.48rem 1.45rem;
+        border-radius: 2.5rem;
+        transition: all .22s ease;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+    }
+
+    .portal-hero-actions .btn-primary {
+        background: #0a9c50;
+        border-color: #0a9c50;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+    }
+
+    .portal-hero-actions .btn-primary:hover {
+        background: #07b55d;
+        border-color: #07b55d;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.30);
+    }
+
+    .portal-hero-actions .btn-outline-light {
+        color: #ffffff !important;
+        border-color: rgba(255, 255, 255, 0.55);
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .portal-hero-actions .btn-outline-light:hover {
+        background: #ffffff;
+        color: #000000 !important;
+        border-color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.30);
+    }
+
+    .portal-hero-actions .btn:active {
+        transform: scale(0.97);
+    }
+
+    #announcements-feed {
+        scroll-margin-top: 96px;
+    }
+
+    /* Announcements feed -------------------------------------------------- */
+
+    .ann-shell {
+        max-width: 1040px;
+        margin: 1.75rem auto 0 auto;
+    }
+
+    .ann-meta-pill {
+        font-size: 0.7rem;
         text-transform: uppercase;
-        letter-spacing: .1em;
-        opacity: 0.85;
+        letter-spacing: .12em;
+        color: #9ca3af;
+        margin-bottom: .25rem;
     }
 
-    @@media (max-width: 767.98px) {
-        .ann-hero-inner {
-            padding: 1.8rem 1.6rem;
-        }
-
-        .ann-hero-title {
-            font-size: 1.6rem;
-        }
-    }
-
-    /* Feed section spacing to avoid sticking to hero */
-    .ann-feed-section {
+    .ann-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
         margin-top: 0.75rem;
     }
 
-    .ann-section-label {
-        font-size: 0.78rem;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-        color: #6c757d;
-        margin-bottom: 0.35rem;
+    .ann-card {
+        border-radius: 1.4rem;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 16px 40px rgba(15, 29, 45, 0.08);
+        padding: 1.1rem 1.3rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
     }
 
-    .ann-section-sub {
-        font-size: 0.8rem;
-        color: #9aa0a6;
-        margin-bottom: 0.85rem;
+    .ann-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 22px 55px rgba(15, 29, 45, 0.14);
+        border-color: rgba(0, 150, 57, 0.24);
+        background: linear-gradient(145deg, #ffffff, #f9fbff);
     }
 
-    /* Load more button */
-    .ann-load-more-btn {
+    .ann-avatar {
+        width: 40px;
+        height: 40px;
         border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e6f4ec;
+        color: #006b2a;
+        font-size: 0.8rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .ann-main {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .ann-main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: .75rem;
+    }
+
+    .ann-author-line {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: .09em;
+        color: #6b7280;
+    }
+
+    .ann-tag-pill {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: .12em;
+        padding: 0.15rem 0.7rem;
+        border-radius: 999px;
+        background: #ecfdf3;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+    }
+
+    .ann-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .ann-body {
         font-size: 0.85rem;
-        padding: 0.45rem 1.4rem;
+        color: #4b5563;
+        margin-bottom: 0;
+    }
+
+    .ann-body {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .ann-load-more {
+        text-align: center;
+        margin-top: 1.75rem;
+    }
+
+    .ann-load-more .btn {
+        border-radius: 999px;
+        padding: 0.5rem 1.6rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    @@media (max-width: 767.98px) {
+        .portal-hero-inner {
+            padding: 2rem 1.5rem;
+        }
+
+        .portal-hero-title {
+            font-size: 2.05rem;
+        }
+
+        .portal-hero-main-card {
+            padding: 1.5rem 1.6rem;
+        }
+
+        .ann-card {
+            padding: 1rem 1rem;
+        }
     }
 </style>
 
 <div class="container-fluid px-0">
-    <!-- HERO -->
-    <section class="mb-2">
-        <div class="ann-hero">
-            <img src="~/images/announcements-hero.jpg" alt="Announcements hero" class="ann-hero-bg" />
-            <div class="ann-hero-overlay"></div>
+    <!-- HERO (same width / look as portal home) -->
+    <section class="mb-4">
+        <div class="portal-hero">
+            <div class="portal-hero-bg-carousel">
+                <!-- single hero image for announcements -->
+                <img src="~/images/announcement-hero.jpg"
+                     alt="BADEA announcements hero"
+                     class="active" />
+            </div>
 
-            <div class="ann-hero-inner">
-                <span class="ann-hero-pill">BADEA · Internal announcements</span>
-                <h1 class="ann-hero-title mb-1">
-                    Announcements feed
-                </h1>
-                <p class="ann-hero-sub mb-1">
-                    A simple, focused stream of BADEA internal announcements. Content is static for now – later this can
-                    hook into your backend.
-                </p>
-                <div class="ann-hero-meta">
-                    Latest updates · Internal staff
+            <div class="portal-hero-overlay"></div>
+
+            <div class="portal-hero-inner">
+                <div class="portal-hero-left">
+                    <div class="portal-hero-main-card">
+                        <div class="portal-pill-badge mb-2">
+                            <span>BADEA · Internal announcements</span>
+                        </div>
+                        <h1 class="portal-hero-title mb-2">
+                            Announcements feed.
+                        </h1>
+                        <p class="portal-hero-sub mb-3">
+                            A simple stream of internal BADEA announcements. Content is static for now – later this page
+                            can connect directly to your backend.
+                        </p>
+                        <div class="portal-hero-actions d-flex flex-wrap gap-2 mt-2">
+                            <a href="#announcements-feed" class="btn btn-primary btn-sm px-4">
+                                Browse announcements
+                            </a>
+                            <a asp-controller="Portal" asp-action="Index"
+                               class="btn btn-outline-light btn-sm px-4">
+                                Back to overview
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FEED -->
-    <section class="ann-feed-section">
-        <div class="ann-section-label">Latest announcements</div>
-        <div class="ann-section-sub">
-            Showing recent internal messages. Later you can filter by department or date.
-        </div>
+    <!-- ANNOUNCEMENTS FEED -->
+    <section id="announcements-feed" class="mb-4">
+        <div class="ann-shell">
+            <div class="ann-meta-pill mb-2">
+                BADEA · Announcements feed
+            </div>
 
-        <!-- your existing announcement cards go here -->
-        <!-- ... -->
-        <!-- at the very end of the feed cards: -->
-        <div class="text-center mt-3 mb-2">
-            <button type="button" class="btn btn-outline-secondary ann-load-more-btn">
-                Load more announcements
-            </button>
+            <div class="ann-list">
+                <!-- Dummy card 1 -->
+                <article class="ann-card">
+                    <div class="ann-avatar">
+                        BA
+                    </div>
+                    <div class="ann-main">
+                        <div class="ann-main-header">
+                            <div>
+                                <div class="ann-author-line">
+                                    BADEA Communications · Internal · March 2025
+                                </div>
+                                <div class="ann-title">
+                                    BADEA internal portal design draft ready
+                                </div>
+                            </div>
+                            <span class="ann-tag-pill">General</span>
+                        </div>
+                        <p class="ann-body">
+                            The first version of the BADEA internal portal is now available for preview. You can browse
+                            key tools, mission workflows, HR systems, and KPI dashboards from one place while we
+                            continue wiring it into production systems.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Dummy card 2 -->
+                <article class="ann-card">
+                    <div class="ann-avatar">
+                        IT
+                    </div>
+                    <div class="ann-main">
+                        <div class="ann-main-header">
+                            <div>
+                                <div class="ann-author-line">
+                                    IT &amp; Digital Transformation · Systems · Coming soon
+                                </div>
+                                <div class="ann-title">
+                                    Single entry point for KPIs &amp; actions
+                                </div>
+                            </div>
+                            <span class="ann-tag-pill">Systems</span>
+                        </div>
+                        <p class="ann-body">
+                            The portal will become the primary entry for KPI dashboards, RedBoard views, and action
+                            plans. During the pilot phase, existing tools remain available via their usual URLs while
+                            we monitor usage and collect feedback.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Dummy card 3 -->
+                <article class="ann-card">
+                    <div class="ann-avatar">
+                        HR
+                    </div>
+                    <div class="ann-main">
+                        <div class="ann-main-header">
+                            <div>
+                                <div class="ann-author-line">
+                                    Human Resources · People · Coming soon
+                                </div>
+                                <div class="ann-title">
+                                    Central space for BADEA guidelines &amp; resources
+                                </div>
+                            </div>
+                            <span class="ann-tag-pill">People</span>
+                        </div>
+                        <p class="ann-body">
+                            A dedicated section for policies, templates, and reference documents is planned inside the
+                            portal. The goal is to reduce scattered links and ensure staff can always find the latest
+                            approved versions of BADEA guidelines.
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Load more (static for now) -->
+            <div class="ann-load-more">
+                <button type="button" class="btn btn-outline-secondary btn-sm">
+                    Load more announcements
+                </button>
+            </div>
         </div>
     </section>
 </div>
