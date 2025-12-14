@@ -1,0 +1,209 @@
+@{
+    ViewData["Title"] = "Sign in – BADEA Portal";
+    var returnUrl = ViewData["ReturnUrl"] as string ?? "/";
+}
+
+@section Scripts {
+    <!-- No special JS needed here, reuse base if you want -->
+}
+
+<style>
+    /* reuse same Tajawal & hero styles as on Home/Index */
+
+    :root {
+        --portal-hero-glass-bg: rgba(0, 0, 0, 0.55);
+    }
+
+    body,
+    button,
+    a,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Tajawal', sans-serif !important;
+    }
+
+    .portal-hero {
+        border-radius: 2rem;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 26px 80px rgba(0, 0, 0, 0.25);
+        background-color: #000;
+    }
+
+    .portal-hero-bg-carousel {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+    }
+
+    .portal-hero-bg-carousel img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.9s ease-in-out;
+    }
+
+    .portal-hero-bg-carousel img.active {
+        opacity: 1;
+    }
+
+    .portal-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(90deg,
+                rgba(0, 0, 0, 0.85) 0%,
+                rgba(0, 0, 0, 0.65) 30%,
+                rgba(0, 0, 0, 0.25) 60%,
+                rgba(0, 0, 0, 0.05) 100%),
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 60%);
+    }
+
+    .portal-hero-inner {
+        position: relative;
+        z-index: 1;
+        padding: 2.75rem 3.5rem;
+        color: #fff;
+        display: flex;
+        gap: 2.25rem;
+        align-items: center;
+    }
+
+    .portal-hero-left {
+        max-width: 460px;
+    }
+
+    .portal-hero-main-card {
+        position: relative;
+        border-radius: 2rem;
+        padding: 1.9rem 2.3rem;
+        background:
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 55%),
+            var(--portal-hero-glass-bg);
+        box-shadow:
+            0 20px 55px rgba(0, 0, 0, 0.45),
+            0 0 18px rgba(0, 200, 120, 0.18);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        overflow: hidden;
+    }
+
+    .portal-hero-main-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        box-shadow: inset 0 0 14px rgba(0, 255, 160, 0.15);
+        pointer-events: none;
+    }
+
+    .portal-pill-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.2rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: rgba(0, 0, 0, 0.6);
+        color: #c0f3d2;
+        border: 1px solid rgba(192, 243, 210, 0.45);
+    }
+
+    .portal-hero-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        line-height: 1.15;
+        text-shadow: 0 6px 24px rgba(0, 0, 0, 0.8);
+    }
+
+    .portal-hero-sub {
+        font-size: 0.95rem;
+        opacity: 0.92;
+    }
+
+    .portal-hero-actions .btn {
+        font-family: 'Tajawal', sans-serif !important;
+        font-weight: 600;
+        padding: 0.48rem 1.45rem;
+        border-radius: 2.5rem;
+        transition: all .22s ease;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+    }
+
+    .portal-hero-actions .btn-primary {
+        background: #0a9c50;
+        border-color: #0a9c50;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+    }
+
+    .portal-hero-actions .btn-primary:hover {
+        background: #07b55d;
+        border-color: #07b55d;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.30);
+    }
+
+    .portal-hero-actions .btn-outline-light {
+        color: #ffffff !important;
+        border-color: rgba(255, 255, 255, 0.55);
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+</style>
+
+<div class="container-fluid px-0">
+    <section class="mb-4">
+        <div class="portal-hero">
+            <div class="portal-hero-bg-carousel">
+                <img src="~/images/portal-hero.jpg" alt="BADEA login hero" class="active" />
+            </div>
+
+            <div class="portal-hero-overlay"></div>
+
+            <div class="portal-hero-inner">
+                <div class="portal-hero-left">
+                    <div class="portal-hero-main-card">
+                        <div class="portal-pill-badge mb-2">
+                            <span>BADEA internal portal</span>
+                        </div>
+                        <h1 class="portal-hero-title mb-2">
+                            Sign in with your BADEA account.
+                        </h1>
+                        <p class="portal-hero-sub mb-3">
+                            Use your @@badea.org Microsoft credentials to access missions, HR tools,
+                            workflows, and strategic KPIs from one place.
+                        </p>
+
+                        <div class="portal-hero-actions d-flex flex-wrap gap-2 mt-2">
+                            <form asp-controller="Account" asp-action="SignIn" method="post" class="m-0 p-0">
+                                <input type="hidden" name="returnUrl" value="@returnUrl" />
+                                <button type="submit" class="btn btn-primary btn-sm px-4">
+                                    Sign in with Microsoft
+                                </button>
+                            </form>
+                            <a asp-controller="Home" asp-action="Index"
+                               class="btn btn-outline-light btn-sm px-4">
+                                Back to overview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
