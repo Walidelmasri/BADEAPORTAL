@@ -1,6 +1,9 @@
 ﻿@*
   Views/Shared/_Layout.cshtml  (BADEAPORTAL)
 *@
+@using BADEAPORTAL.Services
+@inject IUserProfileService UserProfileService
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -256,6 +259,10 @@
                 <span class="badge bg-success border border-light">Online</span>
             </div>
         </aside>
+@{
+    var userProfile = UserProfileService.GetCurrentUser();
+    var greetingName = userProfile.FullName ?? userProfile.DisplayName ?? "BADEA";
+}
 
         <!-- MAIN -->
         <div class="portal-main flex-grow-1 d-flex flex-column">
@@ -268,7 +275,7 @@
                             ☰
                         </button>
                         <div class="fw-semibold text-secondary">
-                            Welcome to <span class="text-dark">BADEA</span>
+                            Welcome to <span class="text-dark">BADEA</span>, @greetingName
                         </div>
                     </div>
                     <div class="small text-muted d-none d-sm-block">

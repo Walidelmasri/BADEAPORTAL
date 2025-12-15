@@ -1,8 +1,14 @@
 namespace BADEAPORTAL.Models
 {
-    public class UserProfileDto
+    public sealed class UserProfileDto
     {
-        public string? DisplayName { get; set; }
-        public string? Email { get; set; }
+        // Formal name: "First Last" when available
+        public string? FullName { get; init; }
+
+        // Display name from Entra ID (fallback)
+        public string? DisplayName { get; init; }
+
+        // Useful identifier (often UPN/email)
+        public string? EmailOrUpn { get; init; }
     }
 }
