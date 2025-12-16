@@ -1,3 +1,5 @@
+@model BADEAPORTAL.Models.Announcements.AnnouncementsIndexVm
+
 @{
     ViewData["Title"] = "BADEA Announcements";
 }
@@ -394,83 +396,74 @@
             <div class="ann-meta-pill mb-2">
                 BADEA · Announcements feed
             </div>
+<a asp-action="Create" class="btn btn-outline-light btn-sm px-4">New announcement</a>
 
-            <div class="ann-list">
-                <!-- Dummy card 1 -->
+<div class="ann-list">
+    @if (Model.Items.Count == 0)
+    {
+        <div class="alert alert-info">No announcements yet.</div>
+    }
+    else
+    {
+        @foreach (var a in Model.Items)
+        {
+            <a asp-action="Details" asp-route-id="@a.Id" style="text-decoration:none;">
                 <article class="ann-card">
                     <div class="ann-avatar">
-                        BA
+                        @(string.IsNullOrWhiteSpace(a.CreatedByName) ? "BA" : a.CreatedByName.Trim().Take(2))
                     </div>
+
                     <div class="ann-main">
                         <div class="ann-main-header">
                             <div>
                                 <div class="ann-author-line">
-                                    BADEA Communications · Internal · March 2025
+                                    @a.CreatedByName · @a.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy HH:mm")
                                 </div>
-                                <div class="ann-title">
-                                    BADEA internal portal design draft ready
-                                </div>
+                                <div class="ann-title">@a.Title</div>
                             </div>
-                            <span class="ann-tag-pill">General</span>
-                        </div>
-                        <p class="ann-body">
-                            The first version of the BADEA internal portal is now available for preview. You can browse
-                            key tools, mission workflows, HR systems, and KPI dashboards from one place while we
-                            continue wiring it into production systems.
-                        </p>
-                    </div>
-                </article>
 
-                <!-- Dummy card 2 -->
-                <article class="ann-card">
-                    <div class="ann-avatar">
-                        IT
-                    </div>
-                    <div class="ann-main">
-                        <div class="ann-main-header">
-                            <div>
-                                <div class="ann-author-line">
-                                    IT &amp; Digital Transformation · Systems · Coming soon
-                                </div>
-                                <div class="ann-title">
-                                    Single entry point for KPIs &amp; actions
-                                </div>
-                            </div>
-                            <span class="ann-tag-pill">Systems</span>
+                            @if (a.IsMemo)
+                            {
+                                <span class="ann-tag-pill">Memo</span>
+                            }
+                            else
+                            {
+                                <span class="ann-tag-pill">General</span>
+                            }
                         </div>
-                        <p class="ann-body">
-                            The portal will become the primary entry for KPI dashboards, RedBoard views, and action
-                            plans. During the pilot phase, existing tools remain available via their usual URLs while
-                            we monitor usage and collect feedback.
-                        </p>
-                    </div>
-                </article>
 
-                <!-- Dummy card 3 -->
-                <article class="ann-card">
-                    <div class="ann-avatar">
-                        HR
-                    </div>
-                    <div class="ann-main">
-                        <div class="ann-main-header">
-                            <div>
-                                <div class="ann-author-line">
-                                    Human Resources · People · Coming soon
-                                </div>
-                                <div class="ann-title">
-                                    Central space for BADEA guidelines &amp; resources
-                                </div>
-                            </div>
-                            <span class="ann-tag-pill">People</span>
-                        </div>
-                        <p class="ann-body">
-                            A dedicated section for policies, templates, and reference documents is planned inside the
-                            portal. The goal is to reduce scattered links and ensure staff can always find the latest
-                            approved versions of BADEA guidelines.
-                        </p>
+                        <p class="ann-body">@a.Excerpt</p>
                     </div>
                 </article>
-            </div>
+            </a>
+        }
+    }
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="ann-load-more">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)">Previous</a>
+                </li>
+
+                @for (var p = 1; p <= Model.TotalPages; p++)
+                {
+                    <li class="page-item @(p == Model.Page ? "active" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@p">@p</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+}
+
 
             <!-- Load more (static for now) -->
             <div class="ann-load-more">

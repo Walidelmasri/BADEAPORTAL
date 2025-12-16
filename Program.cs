@@ -1,45 +1,51 @@
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.Identity.Web;
-using BADEAPORTAL.Models;
+using BADEAPORTAL.Data;
 using BADEAPORTAL.Services;
-
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// MVC
 builder.Services.AddControllersWithViews();
 
+// HttpContext + user profile
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 
-// 2) Authentication with Entra ID
+// Announcements + PDF
+builder.Services.AddScoped<IAnnouncementsService, AnnouncementsService>();
+builder.Services.AddScoped<IMemoPdfService, QuestPdfMemoService>();
+
+// Oracle EF Core
+builder.Services.AddDbContext<PortalDbContext>(options =>
+    options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection")));
+
+// Entra ID auth
 builder.Services
     .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAd"));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+
+// Static files MUST be before routing
+app.UseStaticFiles();
+
 app.UseRouting();
+
 app.UseAuthentication();
-
 app.UseAuthorization();
-
-app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-app.UseStaticFiles();
-
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

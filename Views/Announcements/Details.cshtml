@@ -1,0 +1,45 @@
+@model BADEAPORTAL.Models.Announcements.AnnouncementDetailsVm
+
+@{
+    ViewData["Title"] = "Announcement";
+}
+
+<h1 class="mb-2">@Model.Title</h1>
+
+<div class="text-muted mb-3">
+    <span>Created by <strong>@Model.CreatedByName</strong></span>
+    <span class="mx-2">•</span>
+    <span>@Model.CreatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</span>
+</div>
+
+@if (Model.IsMemo)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <div><strong>To:</strong> @Model.MemoTo</div>
+            @if (!string.IsNullOrWhiteSpace(Model.MemoThrough))
+            {
+                <div><strong>Through:</strong> @Model.MemoThrough</div>
+            }
+            <div><strong>From:</strong> @Model.MemoFrom</div>
+            <div><strong>Subject:</strong> @Model.MemoSubject</div>
+            <div><strong>Classification:</strong> @Model.MemoClassification</div>
+
+            <div class="mt-3">
+                <a asp-action="DownloadMemo" asp-route-id="@Model.Id" class="btn btn-outline-primary">
+                    Download Memo PDF
+                </a>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="card">
+    <div class="card-body">
+        @Html.Raw(Model.BodyHtml)
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</div>
