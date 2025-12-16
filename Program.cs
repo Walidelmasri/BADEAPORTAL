@@ -19,7 +19,7 @@ builder.Services.AddScoped<IMemoPdfService, QuestPdfMemoService>();
 
 // Oracle EF Core
 builder.Services.AddDbContext<PortalDbContext>(options =>
-    options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection")));
+    options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Entra ID auth
 builder.Services
