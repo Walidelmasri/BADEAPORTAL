@@ -6,22 +6,17 @@
 
 @section Scripts {
     <script>
-        // Card hover tilt (re-use for announcement cards if you want later)
         document.addEventListener('DOMContentLoaded', () => {
-            // hero bg – same small helper as home; safe even with one image
             const heroImgs = document.querySelectorAll('.portal-hero-bg-carousel img');
             if (heroImgs.length > 0) {
                 let idx = 0;
 
                 function showHero(i) {
-                    heroImgs.forEach((img, k) => {
-                        img.classList.toggle('active', k === i);
-                    });
+                    heroImgs.forEach((img, k) => img.classList.toggle('active', k === i));
                 }
 
                 showHero(idx);
 
-                // with a single image this effectively does nothing, but it’s harmless
                 setInterval(() => {
                     idx = (idx + 1) % heroImgs.length;
                     showHero(idx);
@@ -32,44 +27,27 @@
 }
 
 <style>
-    /* Reuse same hero styling as portal home ----------------------------- */
-
     :root {
         --portal-hero-glass-bg: rgba(0, 0, 0, 0.55);
     }
 
-    html {
-        scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
-    body,
-    button,
-    a,
-    p,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
+    body, button, a, p, h1, h2, h3, h4, h5, h6 {
         font-family: 'Tajawal', sans-serif !important;
     }
 
+    /* HERO --------------------------------------------------------------- */
     .portal-hero {
         border-radius: 2rem;
         overflow: hidden;
         position: relative;
         box-shadow: 0 26px 80px rgba(0, 0, 0, 0.25);
         background-color: #000;
-        min-height: 400px; /* or 380 / 400 – tweak until it matches what you like */
-
+        min-height: 400px;
     }
 
-    .portal-hero-bg-carousel {
-        position: absolute;
-        inset: 0;
-        overflow: hidden;
-    }
+    .portal-hero-bg-carousel { position: absolute; inset: 0; overflow: hidden; }
 
     .portal-hero-bg-carousel img {
         position: absolute;
@@ -81,9 +59,7 @@
         transition: opacity 0.9s ease-in-out;
     }
 
-    .portal-hero-bg-carousel img.active {
-        opacity: 1;
-    }
+    .portal-hero-bg-carousel img.active { opacity: 1; }
 
     .portal-hero-overlay {
         position: absolute;
@@ -108,9 +84,7 @@
         align-items: center;
     }
 
-    .portal-hero-left {
-        max-width: 460px;
-    }
+    .portal-hero-left { max-width: 460px; }
 
     .portal-hero-main-card {
         position: relative;
@@ -158,10 +132,7 @@
         text-shadow: 0 6px 24px rgba(0, 0, 0, 0.8);
     }
 
-    .portal-hero-sub {
-        font-size: 0.95rem;
-        opacity: 0.92;
-    }
+    .portal-hero-sub { font-size: 0.95rem; opacity: 0.92; }
 
     .portal-hero-actions .btn {
         font-family: 'Tajawal', sans-serif !important;
@@ -205,19 +176,19 @@
         box-shadow: 0 14px 32px rgba(0, 0, 0, 0.30);
     }
 
-    .portal-hero-actions .btn:active {
-        transform: scale(0.97);
-    }
+    .portal-hero-actions .btn:active { transform: scale(0.97); }
 
-    #announcements-feed {
-        scroll-margin-top: 96px;
-    }
+    #announcements-feed { scroll-margin-top: 96px; }
 
-    /* Announcements feed -------------------------------------------------- */
+    /* FEED --------------------------------------------------------------- */
+    .ann-shell { max-width: 1040px; margin: 1.75rem auto 0 auto; }
 
-    .ann-shell {
-        max-width: 1040px;
-        margin: 1.75rem auto 0 auto;
+    .ann-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: .75rem;
     }
 
     .ann-meta-pill {
@@ -268,10 +239,7 @@
         flex-shrink: 0;
     }
 
-    .ann-main {
-        flex: 1;
-        min-width: 0;
-    }
+    .ann-main { flex: 1; min-width: 0; }
 
     .ann-main-header {
         display: flex;
@@ -296,6 +264,7 @@
         background: #ecfdf3;
         color: #15803d;
         border: 1px solid #bbf7d0;
+        flex-shrink: 0;
     }
 
     .ann-title {
@@ -309,19 +278,13 @@
         font-size: 0.85rem;
         color: #4b5563;
         margin-bottom: 0;
-    }
-
-    .ann-body {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
-    .ann-load-more {
-        text-align: center;
-        margin-top: 1.75rem;
-    }
+    .ann-load-more { text-align: center; margin-top: 1.75rem; }
 
     .ann-load-more .btn {
         border-radius: 999px;
@@ -331,30 +294,17 @@
     }
 
     @@media (max-width: 767.98px) {
-        .portal-hero-inner {
-            padding: 2rem 1.5rem;
-        }
-
-        .portal-hero-title {
-            font-size: 2.05rem;
-        }
-
-        .portal-hero-main-card {
-            padding: 1.5rem 1.6rem;
-        }
-
-        .ann-card {
-            padding: 1rem 1rem;
-        }
+        .portal-hero-inner { padding: 2rem 1.5rem; }
+        .portal-hero-title { font-size: 2.05rem; }
+        .portal-hero-main-card { padding: 1.5rem 1.6rem; }
+        .ann-card { padding: 1rem 1rem; }
     }
 </style>
 
 <div class="container-fluid px-0">
-    <!-- HERO (same width / look as portal home) -->
     <section class="mb-4">
         <div class="portal-hero">
             <div class="portal-hero-bg-carousel">
-                <!-- single hero image for announcements -->
                 <img src="~/images/announcement-hero.jpg"
                      alt="BADEA announcements hero"
                      class="active" />
@@ -368,13 +318,13 @@
                         <div class="portal-pill-badge mb-2">
                             <span>BADEA · Internal announcements</span>
                         </div>
-                        <h1 class="portal-hero-title mb-2">
-                            Announcements feed.
-                        </h1>
+
+                        <h1 class="portal-hero-title mb-2">Announcements feed.</h1>
+
                         <p class="portal-hero-sub mb-3">
-                            A simple stream of internal BADEA announcements. Content is static for now – later this page
-                            can connect directly to your backend.
+                            A simple stream of internal BADEA announcements.
                         </p>
+
                         <div class="portal-hero-actions d-flex flex-wrap gap-2 mt-2">
                             <a href="#announcements-feed" class="btn btn-primary btn-sm px-4">
                                 Browse announcements
@@ -383,6 +333,9 @@
                                class="btn btn-outline-light btn-sm px-4">
                                 Back to overview
                             </a>
+                            <a asp-action="Create" class="btn btn-outline-light btn-sm px-4">
+                                New announcement
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -390,87 +343,78 @@
         </div>
     </section>
 
-    <!-- ANNOUNCEMENTS FEED -->
     <section id="announcements-feed" class="mb-4">
         <div class="ann-shell">
-            <div class="ann-meta-pill mb-2">
-                BADEA · Announcements feed
+            <div class="ann-header">
+                <div>
+                    <div class="ann-meta-pill">BADEA · Announcements feed</div>
+                </div>
+                <a asp-action="Create" class="btn btn-primary btn-sm px-4">New announcement</a>
             </div>
-<a asp-action="Create" class="btn btn-outline-light btn-sm px-4">New announcement</a>
 
-<div class="ann-list">
-    @if (Model.Items.Count == 0)
-    {
-        <div class="alert alert-info">No announcements yet.</div>
-    }
-    else
-    {
-        @foreach (var a in Model.Items)
-        {
-            <a asp-action="Details" asp-route-id="@a.Id" style="text-decoration:none;">
-                <article class="ann-card">
-                    <div class="ann-avatar">
-                        @(string.IsNullOrWhiteSpace(a.CreatedByName) ? "BA" : a.CreatedByName.Trim().Take(2))
-                    </div>
-
-                    <div class="ann-main">
-                        <div class="ann-main-header">
-                            <div>
-                                <div class="ann-author-line">
-                                    @a.CreatedByName · @a.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy HH:mm")
-                                </div>
-                                <div class="ann-title">@a.Title</div>
-                            </div>
-
-                            @if (a.IsMemo)
-                            {
-                                <span class="ann-tag-pill">Memo</span>
-                            }
-                            else
-                            {
-                                <span class="ann-tag-pill">General</span>
-                            }
-                        </div>
-
-                        <p class="ann-body">@a.Excerpt</p>
-                    </div>
-                </article>
-            </a>
-        }
-    }
-</div>
-
-@if (Model.TotalPages > 1)
-{
-    <div class="ann-load-more">
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
-                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)">Previous</a>
-                </li>
-
-                @for (var p = 1; p <= Model.TotalPages; p++)
+            <div class="ann-list">
+                @if (Model.Items.Count == 0)
                 {
-                    <li class="page-item @(p == Model.Page ? "active" : "")">
-                        <a class="page-link" asp-action="Index" asp-route-page="@p">@p</a>
-                    </li>
+                    <div class="alert alert-info">No announcements yet.</div>
                 }
+                else
+                {
+                    @foreach (var a in Model.Items)
+                    {
+                        var initials = "BA";
+                        if (!string.IsNullOrWhiteSpace(a.CreatedByName))
+                        {
+                            var name = a.CreatedByName.Trim();
+                            initials = name.Length >= 2 ? name.Substring(0, 2).ToUpperInvariant() : name.ToUpperInvariant();
+                        }
 
-                <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")">
-                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-}
+                        <a asp-action="Details" asp-route-id="@a.Id" style="text-decoration:none;">
+                            <article class="ann-card">
+                                <div class="ann-avatar">@initials</div>
 
+                                <div class="ann-main">
+                                    <div class="ann-main-header">
+                                        <div>
+                                            <div class="ann-author-line">
+                                                @a.CreatedByName · @a.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy HH:mm")
+                                            </div>
+                                            <div class="ann-title">@a.Title</div>
+                                        </div>
 
-            <!-- Load more (static for now) -->
-            <div class="ann-load-more">
-                <button type="button" class="btn btn-outline-secondary btn-sm">
-                    Load more announcements
-                </button>
+                                        <span class="ann-tag-pill">@(a.IsMemo ? "Memo" : "General")</span>
+                                    </div>
+
+                                    <p class="ann-body">@a.Excerpt</p>
+                                </div>
+                            </article>
+                        </a>
+                    }
+                }
             </div>
+
+            @if (Model.TotalPages > 1)
+            {
+                <div class="ann-load-more">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
+                                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)">Previous</a>
+                            </li>
+
+                            @for (var p = 1; p <= Model.TotalPages; p++)
+                            {
+                                <li class="page-item @(p == Model.Page ? "active" : "")">
+                                    <a class="page-link" asp-action="Index" asp-route-page="@p">@p</a>
+                                </li>
+                            }
+
+                            <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")">
+                                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            }
         </div>
     </section>
 </div>
