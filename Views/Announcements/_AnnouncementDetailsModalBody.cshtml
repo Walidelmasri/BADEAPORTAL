@@ -8,10 +8,10 @@
 
     .ann-modal-header {
         padding: 1.25rem 1.5rem 0.75rem 1.5rem;
-        border-bottom: 1px solid rgba(0,0,0,.06);
+        border-bottom: 1px solid rgba(0, 0, 0, .06);
         background:
-            radial-gradient(circle at top left, rgba(10,156,80,.10), transparent 55%),
-            linear-gradient(180deg, rgba(255,255,255,1), rgba(249,250,251,1));
+            radial-gradient(circle at top left, rgba(10, 156, 80, .10), transparent 55%),
+            linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(249, 250, 251, 1));
         border-top-left-radius: 1.25rem;
         border-top-right-radius: 1.25rem;
     }
@@ -38,21 +38,21 @@
         font-weight: 700;
         letter-spacing: .06em;
         text-transform: uppercase;
-        border: 1px solid rgba(0,0,0,.08);
-        background: rgba(255,255,255,.7);
+        border: 1px solid rgba(0, 0, 0, .08);
+        background: rgba(255, 255, 255, .7);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
     }
 
     .ann-chip-memo {
-        border-color: rgba(10,156,80,.25);
-        background: rgba(10,156,80,.10);
+        border-color: rgba(10, 156, 80, .25);
+        background: rgba(10, 156, 80, .10);
         color: #0a9c50;
     }
 
     .ann-chip-general {
-        border-color: rgba(59,130,246,.22);
-        background: rgba(59,130,246,.10);
+        border-color: rgba(59, 130, 246, .22);
+        background: rgba(59, 130, 246, .10);
         color: #1d4ed8;
     }
 
@@ -63,9 +63,9 @@
 
     .ann-memo-card {
         border-radius: 1rem;
-        border: 1px solid rgba(0,0,0,.08);
+        border: 1px solid rgba(0, 0, 0, .08);
         background: linear-gradient(180deg, #ffffff, #f9fafb);
-        box-shadow: 0 12px 30px rgba(15,29,45,.06);
+        box-shadow: 0 12px 30px rgba(15, 29, 45, .06);
         padding: 1rem 1.1rem;
     }
 
@@ -80,10 +80,10 @@
 
     .ann-content {
         border-radius: 1rem;
-        border: 1px solid rgba(0,0,0,.06);
+        border: 1px solid rgba(0, 0, 0, .06);
         background: #ffffff;
         padding: 1rem 1.1rem;
-        box-shadow: 0 10px 26px rgba(15,29,45,.05);
+        box-shadow: 0 10px 26px rgba(15, 29, 45, .05);
     }
 
     .ann-content :is(p, li) {
@@ -92,15 +92,15 @@
         font-size: .98rem;
     }
 
-    .ann-content :is(h1,h2,h3,h4,h5,h6) {
+    .ann-content :is(h1, h2, h3, h4, h5, h6) {
         font-weight: 800;
         letter-spacing: .2px;
     }
 
     .ann-modal-footer {
         padding: 0.9rem 1.5rem 1.25rem 1.5rem;
-        border-top: 1px solid rgba(0,0,0,.06);
-        background: linear-gradient(180deg, rgba(249,250,251,1), rgba(255,255,255,1));
+        border-top: 1px solid rgba(0, 0, 0, .06);
+        background: linear-gradient(180deg, rgba(249, 250, 251, 1), rgba(255, 255, 255, 1));
         border-bottom-left-radius: 1.25rem;
         border-bottom-right-radius: 1.25rem;
     }
@@ -128,12 +128,24 @@
         border-radius: 999px;
         padding: .42rem 1rem;
         font-weight: 700;
-        background: rgba(0,0,0,.04);
-        border: 1px solid rgba(0,0,0,.08);
+        background: rgba(0, 0, 0, .04);
+        border: 1px solid rgba(0, 0, 0, .08);
     }
 
     .ann-btn-ghost:hover {
-        background: rgba(0,0,0,.06);
+        background: rgba(0, 0, 0, .06);
+    }
+
+    .ann-btn-ghost.btn-dark {
+        background: #1f2937;
+        /* slate-800 */
+        border-color: #1f2937;
+    }
+
+    .ann-btn-ghost.btn-dark:hover {
+        background: #111827;
+        /* slate-900 */
+        border-color: #111827;
     }
 </style>
 
@@ -162,10 +174,7 @@
             </div>
 
             <!-- Close (X) -->
-            <button type="button"
-                    class="btn-close mt-1"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+            <button type="button" class="btn-close mt-1" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
     </div>
 
@@ -208,18 +217,14 @@
             <div>
                 @if (Model.IsMemo)
                 {
-                    <a asp-controller="Announcements"
-                       asp-action="DownloadMemo"
-                       asp-route-id="@Model.Id"
-                       class="btn btn-outline-success btn-sm ann-btn-soft">
+                    <a asp-controller="Announcements" asp-action="DownloadMemo" asp-route-id="@Model.Id"
+                        class="btn btn-outline-success btn-sm ann-btn-soft">
                         Download PDF
                     </a>
                 }
             </div>
 
-            <button type="button"
-                    class="btn btn-secondary btn-sm ann-btn-ghost"
-                    data-bs-dismiss="modal">
+            <button type="button" class="btn btn-dark btn-sm ann-btn-ghost" data-bs-dismiss="modal">
                 Close
             </button>
         </div>
