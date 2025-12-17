@@ -1,81 +1,262 @@
 @model BADEAPORTAL.Models.Announcements.AnnouncementCreateVm
 
 @{
-    ViewData["Title"] = "Create Announcement";
+    ViewData["Title"] = "New announcement";
 }
 
-<h1 class="mb-3">@ViewData["Title"]</h1>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
 
+<style>
+/* ================= PORTAL / APPLE LOOK (UNCHANGED) ================= */
+
+:root { --portal-hero-glass-bg: rgba(0,0,0,.55); }
+
+body, button, a, p, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Tajawal', sans-serif !important;
+}
+
+.create-shell { max-width:1040px; margin:1.75rem auto 0 auto; }
+
+.portal-hero {
+    border-radius:2rem;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 26px 80px rgba(0,0,0,.25);
+    background:#000;
+    min-height:320px;
+}
+
+.portal-hero-bg-carousel img {
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover;
+}
+
+.portal-hero-overlay {
+    position:absolute; inset:0;
+    background:
+        linear-gradient(90deg,
+            rgba(0,0,0,.86) 0%,
+            rgba(0,0,0,.62) 35%,
+            rgba(0,0,0,.18) 70%,
+            rgba(0,0,0,.05) 100%),
+        radial-gradient(circle at top left, rgba(255,255,255,.18), transparent 60%);
+}
+
+.portal-hero-inner {
+    position:relative; z-index:1;
+    padding:2.4rem 3.2rem;
+    color:#fff;
+    display:flex;
+    justify-content:space-between;
+    gap:1.5rem;
+    flex-wrap:wrap;
+}
+
+.portal-pill-badge {
+    display:inline-flex;
+    padding:.2rem .8rem;
+    border-radius:999px;
+    font-size:.7rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    background:rgba(0,0,0,.6);
+    color:#c0f3d2;
+    border:1px solid rgba(192,243,210,.45);
+}
+
+.hero-title {
+    font-size:2.1rem;
+    font-weight:850;
+    text-shadow:0 8px 26px rgba(0,0,0,.85);
+}
+
+.hero-sub { font-size:.95rem; opacity:.92; }
+
+.apple-card {
+    border-radius:1.8rem;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    box-shadow:0 18px 60px rgba(15,29,45,.12);
+    overflow:hidden;
+}
+
+.apple-card-header {
+    padding:1.15rem 1.4rem;
+    background:linear-gradient(180deg,#fbfdff,#fff);
+    border-bottom:1px solid #eef2f7;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.toggle-pill {
+    display:inline-flex;
+    gap:.55rem;
+    padding:.35rem .85rem;
+    border-radius:999px;
+    border:1px solid #e5e7eb;
+    background:#fff;
+    box-shadow:0 10px 26px rgba(15,29,45,.07);
+}
+
+.apple-card-body { padding:1.35rem 1.4rem; }
+
+.field-label {
+    font-size:.78rem;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:#6b7280;
+    margin-bottom:.35rem;
+}
+
+.premium-input {
+    border-radius:1.05rem !important;
+    border:1px solid #e5e7eb !important;
+    box-shadow:0 12px 28px rgba(15,29,45,.06);
+}
+
+/* ================= QUILL (MATCH MEMO GENERATOR) ================= */
+
+.premium-editor-shell {
+    border-radius:1.4rem;
+    border:1px solid #e5e7eb;
+    background:#fff;
+    box-shadow:0 18px 60px rgba(15,29,45,.12);
+    overflow:hidden;
+}
+
+.premium-editor-toolbar {
+    border-bottom:1px solid #eef2f7;
+    background:linear-gradient(180deg,#fbfdff,#fff);
+    padding:.35rem .5rem;
+}
+
+.premium-editor { min-height:320px; padding:1rem; }
+
+.ql-editor table { width:100%; border-collapse:collapse; }
+.ql-editor td, .ql-editor th {
+    border:1px solid #e5e7eb;
+    padding:6px;
+}
+
+/* ================= MEMO PANEL ================= */
+
+.memo-panel {
+    border-radius:1.4rem;
+    border:1px solid #eef2f7;
+    background:linear-gradient(180deg,#fbfdff,#fff);
+    padding:1.1rem;
+    margin-top:1rem;
+    display:none;
+}
+
+.memo-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+}
+</style>
+
+<div class="container-fluid px-0">
+<section class="mb-4">
+    <div class="portal-hero">
+        <div class="portal-hero-bg-carousel">
+            <img src="~/images/announcement-hero.jpg" />
+        </div>
+        <div class="portal-hero-overlay"></div>
+
+        <div class="portal-hero-inner">
+            <div>
+                <div class="portal-pill-badge">BADEA · Create</div>
+                <div class="hero-title">New announcement.</div>
+                <div class="hero-sub">Optional memo header · Rich content · RTL support</div>
+            </div>
+            <a asp-action="Index" class="btn btn-outline-light">Back</a>
+        </div>
+    </div>
+</section>
+
+<div class="create-shell">
 <form asp-action="Create" method="post">
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-    <div class="mb-3">
-        <label asp-for="Title" class="form-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+<div class="apple-card">
+<div class="apple-card-header">
+    <div class="field-label">Announcement content</div>
+    <div class="toggle-pill">
+        <input asp-for="IsMemo" id="isMemoToggle" class="form-check-input m-0" />
+        <label for="isMemoToggle">This is a memo</label>
     </div>
+</div>
 
-    <div class="mb-3 form-check">
-        <input asp-for="IsMemo" class="form-check-input" id="isMemoToggle" />
-        <label asp-for="IsMemo" class="form-check-label">This announcement is a memo</label>
+<div class="apple-card-body">
+
+<div class="mb-3">
+    <div class="field-label">Title</div>
+    <input asp-for="Title" class="form-control premium-input" />
+</div>
+
+<div id="memoFields" class="memo-panel">
+<div class="memo-grid">
+    <input asp-for="MemoTo" class="form-control premium-input" placeholder="To" />
+    <input asp-for="MemoFrom" class="form-control premium-input" placeholder="From" />
+    <input asp-for="MemoThrough" class="form-control premium-input" placeholder="Through" />
+    <input asp-for="MemoSubject" class="form-control premium-input" placeholder="Subject" />
+    <input asp-for="MemoClassification" class="form-control premium-input" placeholder="Classification" />
+</div>
+</div>
+
+<div class="mt-4">
+<div class="field-label">Body</div>
+
+<input asp-for="BodyHtml" type="hidden" id="BodyHtml" />
+
+<div class="premium-editor-shell">
+    <div id="q-toolbar" class="premium-editor-toolbar">
+        <button class="ql-bold"></button>
+        <button class="ql-italic"></button>
+        <button class="ql-underline"></button>
+        <select class="ql-align"></select>
+        <button class="ql-list" value="bullet"></button>
+        <button class="ql-list" value="ordered"></button>
+        <button class="ql-direction" value="rtl"></button>
+        <button id="tbl-insert" type="button">▦</button>
     </div>
+    <div id="q-editor" class="premium-editor"></div>
+</div>
+</div>
 
-    <div id="memoFields" style="display:none;">
-        <div class="mb-3">
-            <label asp-for="MemoTo" class="form-label"></label>
-            <input asp-for="MemoTo" class="form-control" />
-        </div>
+<div class="mt-4 d-flex gap-2">
+    <button class="btn btn-success">Publish</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</div>
 
-        <div class="mb-3">
-            <label asp-for="MemoThrough" class="form-label"></label>
-            <input asp-for="MemoThrough" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="MemoFrom" class="form-label"></label>
-            <input asp-for="MemoFrom" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="MemoSubject" class="form-label"></label>
-            <input asp-for="MemoSubject" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="MemoClassification" class="form-label"></label>
-            <input asp-for="MemoClassification" class="form-control" />
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="BodyHtml" class="form-label">Body</label>
-        <textarea asp-for="BodyHtml" class="form-control" rows="10"></textarea>
-        <span asp-validation-for="BodyHtml" class="text-danger"></span>
-        <div class="form-text">
-            For now this is raw HTML/text. If you want Quill/RTL/tables next, we’ll wire the editor in here.
-        </div>
-    </div>
-
-    <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary">Publish</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-    </div>
+</div>
+</div>
 </form>
+</div>
+</div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
-    <script>
-        (function () {
-            const toggle = document.getElementById('isMemoToggle');
-            const memoFields = document.getElementById('memoFields');
+<script>
+const quill = new Quill('#q-editor',{
+    theme:'snow',
+    modules:{ toolbar:'#q-toolbar', table:true }
+});
 
-            function sync() {
-                memoFields.style.display = toggle.checked ? '' : 'none';
-            }
+const body = document.getElementById('BodyHtml');
+if(body.value) quill.clipboard.dangerouslyPasteHTML(body.value);
 
-            toggle.addEventListener('change', sync);
-            sync();
-        })();
-    </script>
+document.querySelector('form').addEventListener('submit',()=>{
+    body.value = quill.root.innerHTML;
+});
+
+const toggle=document.getElementById('isMemoToggle');
+const panel=document.getElementById('memoFields');
+const sync=()=>panel.style.display=toggle.checked?'block':'none';
+toggle.addEventListener('change',sync); sync();
+</script>
 }

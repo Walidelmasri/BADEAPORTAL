@@ -4,42 +4,331 @@
     ViewData["Title"] = "Announcement";
 }
 
-<h1 class="mb-2">@Model.Title</h1>
+<style>
+    :root {
+        --portal-hero-glass-bg: rgba(0, 0, 0, 0.55);
+    }
 
-<div class="text-muted mb-3">
-    <span>Created by <strong>@Model.CreatedByName</strong></span>
-    <span class="mx-2">•</span>
-    <span>@Model.CreatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</span>
-</div>
+    body, button, a, p, h1, h2, h3, h4, h5, h6 {
+        font-family: 'Tajawal', sans-serif !important;
+    }
 
-@if (Model.IsMemo)
-{
-    <div class="card mb-3">
-        <div class="card-body">
-            <div><strong>To:</strong> @Model.MemoTo</div>
-            @if (!string.IsNullOrWhiteSpace(Model.MemoThrough))
-            {
-                <div><strong>Through:</strong> @Model.MemoThrough</div>
-            }
-            <div><strong>From:</strong> @Model.MemoFrom</div>
-            <div><strong>Subject:</strong> @Model.MemoSubject</div>
-            <div><strong>Classification:</strong> @Model.MemoClassification</div>
+    .detail-shell {
+        max-width: 1040px;
+        margin: 1.75rem auto 0 auto;
+    }
 
-            <div class="mt-3">
-                <a asp-action="DownloadMemo" asp-route-id="@Model.Id" class="btn btn-outline-primary">
-                    Download Memo PDF
-                </a>
+    .portal-hero {
+        border-radius: 2rem;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 26px 80px rgba(0, 0, 0, 0.25);
+        background-color: #000;
+        min-height: 320px;
+    }
+
+    .portal-hero-bg-carousel { position: absolute; inset: 0; overflow: hidden; }
+
+    .portal-hero-bg-carousel img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 1;
+    }
+
+    .portal-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(90deg,
+                rgba(0, 0, 0, 0.86) 0%,
+                rgba(0, 0, 0, 0.62) 35%,
+                rgba(0, 0, 0, 0.18) 70%,
+                rgba(0, 0, 0, 0.05) 100%),
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 60%);
+    }
+
+    .portal-hero-inner {
+        position: relative;
+        z-index: 1;
+        padding: 2.4rem 3.2rem;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .portal-pill-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.2rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: rgba(0, 0, 0, 0.6);
+        color: #c0f3d2;
+        border: 1px solid rgba(192, 243, 210, 0.45);
+        margin-bottom: .6rem;
+    }
+
+    .hero-title {
+        font-size: 2.1rem;
+        font-weight: 850;
+        line-height: 1.15;
+        margin-bottom: .35rem;
+        text-shadow: 0 8px 26px rgba(0,0,0,.85);
+    }
+
+    .hero-meta {
+        font-size: .92rem;
+        opacity: .92;
+    }
+
+    .hero-actions .btn {
+        font-weight: 650;
+        letter-spacing: .2px;
+        padding: .5rem 1.25rem;
+        border-radius: 999px;
+        display: inline-flex;
+        gap: .45rem;
+        align-items: center;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .hero-actions .btn-primary {
+        background: #0a9c50;
+        border-color: #0a9c50;
+        box-shadow: 0 10px 26px rgba(0,0,0,.25);
+    }
+
+    .hero-actions .btn-primary:hover {
+        background: #07b55d;
+        border-color: #07b55d;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(0,0,0,.30);
+    }
+
+    .hero-actions .btn-outline-light {
+        color: #fff !important;
+        border-color: rgba(255,255,255,.55);
+        background: rgba(255,255,255,.12);
+        box-shadow: 0 8px 22px rgba(0,0,0,.22);
+    }
+
+    .hero-actions .btn-outline-light:hover {
+        background: #fff;
+        color: #000 !important;
+        border-color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(0,0,0,.30);
+    }
+
+    .glass-card {
+        border-radius: 1.6rem;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 18px 55px rgba(15, 29, 45, 0.10);
+        overflow: hidden;
+    }
+
+    .glass-card-header {
+        padding: 1.1rem 1.4rem;
+        background: linear-gradient(180deg, #fbfdff, #ffffff);
+        border-bottom: 1px solid #eef2f7;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .tag-pill {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: .12em;
+        padding: 0.18rem 0.75rem;
+        border-radius: 999px;
+        background: #ecfdf3;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+    }
+
+    .meta-line {
+        font-size: .85rem;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+    }
+
+    .glass-card-body {
+        padding: 1.35rem 1.4rem;
+    }
+
+    .memo-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .9rem 1.2rem;
+    }
+
+    .memo-item {
+        border-radius: 1.1rem;
+        border: 1px solid #eef2f7;
+        background: #fbfdff;
+        padding: .85rem 1rem;
+    }
+
+    .memo-label {
+        font-size: .7rem;
+        text-transform: uppercase;
+        letter-spacing: .12em;
+        color: #9ca3af;
+        margin-bottom: .25rem;
+    }
+
+    .memo-value {
+        font-size: .95rem;
+        font-weight: 700;
+        color: #111827;
+        word-break: break-word;
+    }
+
+    .content-body {
+        border-radius: 1.6rem;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 18px 55px rgba(15, 29, 45, 0.10);
+        padding: 1.35rem 1.4rem;
+    }
+
+    .content-body :is(p, li) {
+        font-size: .98rem;
+        line-height: 1.75;
+        color: #1f2937;
+    }
+
+    .content-body table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid #e5e7eb;
+        border-radius: 1.2rem;
+        overflow: hidden;
+        margin: 1rem 0;
+    }
+
+    .content-body th, .content-body td {
+        padding: .75rem .85rem;
+        border-bottom: 1px solid #eef2f7;
+        vertical-align: top;
+    }
+
+    .content-body tr:last-child td { border-bottom: 0; }
+
+    @@media (max-width: 767.98px) {
+        .portal-hero-inner { padding: 2rem 1.4rem; }
+        .hero-title { font-size: 1.7rem; }
+        .memo-grid { grid-template-columns: 1fr; }
+        .glass-card-body, .content-body { padding: 1.1rem 1.1rem; }
+    }
+</style>
+
+<div class="container-fluid px-0">
+    <section class="mb-4">
+        <div class="portal-hero">
+            <div class="portal-hero-bg-carousel">
+                <img src="~/images/announcement-hero.jpg" alt="BADEA announcements hero" />
+            </div>
+            <div class="portal-hero-overlay"></div>
+
+            <div class="portal-hero-inner">
+                <div style="max-width: 760px;">
+                    <div class="portal-pill-badge">
+                        <span>BADEA · @(Model.IsMemo ? "Memo" : "Announcement")</span>
+                    </div>
+                    <div class="hero-title">@Model.Title</div>
+                    <div class="hero-meta">
+                        Created by <strong>@Model.CreatedByName</strong> ·
+                        @Model.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy HH:mm")
+                    </div>
+                </div>
+
+                <div class="hero-actions d-flex gap-2">
+                    <a asp-action="Index" class="btn btn-outline-light">Back</a>
+
+                    @if (Model.IsMemo)
+                    {
+                        <a asp-action="DownloadMemo" asp-route-id="@Model.Id" class="btn btn-primary">
+                            Download memo PDF
+                        </a>
+                    }
+                </div>
             </div>
         </div>
-    </div>
-}
+    </section>
 
-<div class="card">
-    <div class="card-body">
-        @Html.Raw(Model.BodyHtml)
-    </div>
-</div>
+    <div class="detail-shell">
+        @if (Model.IsMemo)
+        {
+            <div class="glass-card mb-3">
+                <div class="glass-card-header">
+                    <div class="meta-line">Memo header</div>
+                    <span class="tag-pill">Memo</span>
+                </div>
 
-<div class="mt-3">
-    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                <div class="glass-card-body">
+                    <div class="memo-grid">
+                        <div class="memo-item">
+                            <div class="memo-label">To</div>
+                            <div class="memo-value">@Model.MemoTo</div>
+                        </div>
+
+                        <div class="memo-item">
+                            <div class="memo-label">From</div>
+                            <div class="memo-value">@Model.MemoFrom</div>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.MemoThrough))
+                        {
+                            <div class="memo-item">
+                                <div class="memo-label">Through</div>
+                                <div class="memo-value">@Model.MemoThrough</div>
+                            </div>
+                        }
+
+                        <div class="memo-item">
+                            <div class="memo-label">Subject</div>
+                            <div class="memo-value">@Model.MemoSubject</div>
+                        </div>
+
+                        <div class="memo-item">
+                            <div class="memo-label">Classification</div>
+                            <div class="memo-value">@Model.MemoClassification</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="content-body">
+            @Html.Raw(Model.BodyHtml)
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <a asp-action="Index" class="btn btn-outline-secondary btn-sm px-4" style="border-radius:999px;">Back to feed</a>
+            @if (Model.IsMemo)
+            {
+                <a asp-action="DownloadMemo" asp-route-id="@Model.Id" class="btn btn-success btn-sm px-4" style="border-radius:999px;">
+                    Download PDF
+                </a>
+            }
+        </div>
+    </div>
 </div>
