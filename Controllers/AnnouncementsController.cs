@@ -177,7 +177,7 @@ public async Task<IActionResult> Modal(int id)
         CreatedByName = entity.CreatedByName
     };
 
-    return PartialView("_AnnouncementDetailsModal", vm);
+    return PartialView("_AnnouncementDetailsModalBody", vm);
 }
 
 
