@@ -1,75 +1,228 @@
 @model BADEAPORTAL.Models.Announcements.AnnouncementDetailsVm
 
-<div class="announcement-modal-body">
-
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-start mb-3">
-        <div>
-            <h5 class="mb-1">@Model.Title</h5>
-            <div class="text-muted small rtl-auto">
-                @Model.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy") · @Model.CreatedByName
-            </div>
-        </div>
-
-        <!-- Close (X) -->
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"></button>
-    </div>
-
-    <!-- Memo Header Block -->
-    @if (Model.IsMemo)
-    {
-        <div class="border rounded p-3 mb-3 bg-light">
-            <dl class="row mb-0 small rtl-auto">
-                <dt class="col-3">To</dt>
-                <dd class="col-9">@Model.MemoTo</dd>
-
-                @if (!string.IsNullOrWhiteSpace(Model.MemoThrough))
-                {
-                    <dt class="col-3">Through</dt>
-                    <dd class="col-9">@Model.MemoThrough</dd>
-                }
-
-                <dt class="col-3">From</dt>
-                <dd class="col-9">@Model.MemoFrom</dd>
-
-                <dt class="col-3">Subject</dt>
-                <dd class="col-9">@Model.MemoSubject</dd>
-
-                <dt class="col-3">Classification</dt>
-                <dd class="col-9">@Model.MemoClassification</dd>
-            </dl>
-        </div>
+<style>
+    /* Modal premium skin (scoped) */
+    .ann-modal {
+        border-radius: 1.25rem;
     }
 
-    <!-- Body -->
-    <div class="announcement-body-content rtl-auto">
-        @Html.Raw(Model.BodyHtml)
+    .ann-modal-header {
+        padding: 1.25rem 1.5rem 0.75rem 1.5rem;
+        border-bottom: 1px solid rgba(0,0,0,.06);
+        background:
+            radial-gradient(circle at top left, rgba(10,156,80,.10), transparent 55%),
+            linear-gradient(180deg, rgba(255,255,255,1), rgba(249,250,251,1));
+        border-top-left-radius: 1.25rem;
+        border-top-right-radius: 1.25rem;
+    }
+
+    .ann-modal-title {
+        font-weight: 800;
+        letter-spacing: .2px;
+        line-height: 1.15;
+        margin: 0;
+    }
+
+    .ann-modal-meta {
+        font-size: .82rem;
+        color: #6b7280;
+    }
+
+    .ann-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        padding: .25rem .7rem;
+        border-radius: 999px;
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        border: 1px solid rgba(0,0,0,.08);
+        background: rgba(255,255,255,.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .ann-chip-memo {
+        border-color: rgba(10,156,80,.25);
+        background: rgba(10,156,80,.10);
+        color: #0a9c50;
+    }
+
+    .ann-chip-general {
+        border-color: rgba(59,130,246,.22);
+        background: rgba(59,130,246,.10);
+        color: #1d4ed8;
+    }
+
+    .ann-modal-body {
+        padding: 1.25rem 1.5rem;
+        background: #fff;
+    }
+
+    .ann-memo-card {
+        border-radius: 1rem;
+        border: 1px solid rgba(0,0,0,.08);
+        background: linear-gradient(180deg, #ffffff, #f9fafb);
+        box-shadow: 0 12px 30px rgba(15,29,45,.06);
+        padding: 1rem 1.1rem;
+    }
+
+    .ann-memo-card dt {
+        font-weight: 700;
+        color: #374151;
+    }
+
+    .ann-memo-card dd {
+        color: #111827;
+    }
+
+    .ann-content {
+        border-radius: 1rem;
+        border: 1px solid rgba(0,0,0,.06);
+        background: #ffffff;
+        padding: 1rem 1.1rem;
+        box-shadow: 0 10px 26px rgba(15,29,45,.05);
+    }
+
+    .ann-content :is(p, li) {
+        color: #111827;
+        line-height: 1.7;
+        font-size: .98rem;
+    }
+
+    .ann-content :is(h1,h2,h3,h4,h5,h6) {
+        font-weight: 800;
+        letter-spacing: .2px;
+    }
+
+    .ann-modal-footer {
+        padding: 0.9rem 1.5rem 1.25rem 1.5rem;
+        border-top: 1px solid rgba(0,0,0,.06);
+        background: linear-gradient(180deg, rgba(249,250,251,1), rgba(255,255,255,1));
+        border-bottom-left-radius: 1.25rem;
+        border-bottom-right-radius: 1.25rem;
+    }
+
+    .ann-btn-primary {
+        background: #0a9c50;
+        border-color: #0a9c50;
+        font-weight: 700;
+        border-radius: 999px;
+        padding: .42rem 1rem;
+    }
+
+    .ann-btn-primary:hover {
+        background: #07b55d;
+        border-color: #07b55d;
+    }
+
+    .ann-btn-soft {
+        border-radius: 999px;
+        padding: .42rem 1rem;
+        font-weight: 700;
+    }
+
+    .ann-btn-ghost {
+        border-radius: 999px;
+        padding: .42rem 1rem;
+        font-weight: 700;
+        background: rgba(0,0,0,.04);
+        border: 1px solid rgba(0,0,0,.08);
+    }
+
+    .ann-btn-ghost:hover {
+        background: rgba(0,0,0,.06);
+    }
+</style>
+
+<div class="announcement-modal-body ann-modal">
+
+    <!-- Header -->
+    <div class="ann-modal-header">
+        <div class="d-flex justify-content-between align-items-start gap-3">
+            <div class="min-w-0">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                    @if (Model.IsMemo)
+                    {
+                        <span class="ann-chip ann-chip-memo">📎 Memo</span>
+                    }
+                    else
+                    {
+                        <span class="ann-chip ann-chip-general">📢 Announcement</span>
+                    }
+                </div>
+
+                <h4 class="ann-modal-title rtl-auto">@Model.Title</h4>
+
+                <div class="ann-modal-meta rtl-auto mt-2">
+                    @Model.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy") · @Model.CreatedByName
+                </div>
+            </div>
+
+            <!-- Close (X) -->
+            <button type="button"
+                    class="btn-close mt-1"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+
+    <div class="ann-modal-body">
+        <!-- Memo Header Block -->
+        @if (Model.IsMemo)
+        {
+            <div class="ann-memo-card mb-3">
+                <dl class="row mb-0 small rtl-auto">
+                    <dt class="col-3">To</dt>
+                    <dd class="col-9">@Model.MemoTo</dd>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.MemoThrough))
+                    {
+                        <dt class="col-3">Through</dt>
+                        <dd class="col-9">@Model.MemoThrough</dd>
+                    }
+
+                    <dt class="col-3">From</dt>
+                    <dd class="col-9">@Model.MemoFrom</dd>
+
+                    <dt class="col-3">Subject</dt>
+                    <dd class="col-9">@Model.MemoSubject</dd>
+
+                    <dt class="col-3">Classification</dt>
+                    <dd class="col-9">@Model.MemoClassification</dd>
+                </dl>
+            </div>
+        }
+
+        <!-- Body -->
+        <div class="ann-content rtl-auto">
+            @Html.Raw(Model.BodyHtml)
+        </div>
     </div>
 
     <!-- Footer -->
-    <div class="d-flex justify-content-between align-items-center mt-4">
-        @if (Model.IsMemo)
-        {
-            <a asp-controller="Announcements"
-               asp-action="DownloadMemo"
-               asp-route-id="@Model.Id"
-               class="btn btn-outline-primary btn-sm">
-                Download PDF
-            </a>
-        }
-        else
-        {
-            <span></span>
-        }
+    <div class="ann-modal-footer">
+        <div class="d-flex justify-content-between align-items-center gap-2">
+            <div>
+                @if (Model.IsMemo)
+                {
+                    <a asp-controller="Announcements"
+                       asp-action="DownloadMemo"
+                       asp-route-id="@Model.Id"
+                       class="btn btn-outline-success btn-sm ann-btn-soft">
+                        Download PDF
+                    </a>
+                }
+            </div>
 
-        <button type="button"
-                class="btn btn-secondary btn-sm"
-                data-bs-dismiss="modal">
-            Close
-        </button>
+            <button type="button"
+                    class="btn btn-secondary btn-sm ann-btn-ghost"
+                    data-bs-dismiss="modal">
+                Close
+            </button>
+        </div>
     </div>
 
 </div>
