@@ -1,4 +1,6 @@
-﻿@{
+﻿@model BADEAPORTAL.Models.Home.HomeIndexVm
+
+@{
     ViewData["Title"] = "BADEA Portal";
 }
 
@@ -75,7 +77,8 @@
         position: relative;
         box-shadow: 0 26px 80px rgba(0, 0, 0, 0.25);
         background-color: #000;
-        min-height: 400px; /* or 380 / 400 – tweak until it matches what you like */
+        min-height: 400px;
+        /* or 380 / 400 – tweak until it matches what you like */
     }
 
     /* stack of images under the text */
@@ -244,28 +247,28 @@
 
     /* ---------- CARDS / BLOG ---------- */
 
-.portal-section-title {
-    margin-top: 2.2rem;
-    font-size: 0.9 rem;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-weight: 600;
-    color: #9ca3af;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-rendering: optimizeLegibility;
-}
+    .portal-section-title {
+        margin-top: 2.2rem;
+        font-size: 0.9 rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-weight: 600;
+        color: #9ca3af;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-rendering: optimizeLegibility;
+    }
 
-/* subtle leading line, very “settings section” / Apple vibes */
-.portal-section-title::before {
-    content: "";
-    display: inline-block;
-    width: 28px;
-    height: 1px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.28));
-}
+    /* subtle leading line, very “settings section” / Apple vibes */
+    .portal-section-title::before {
+        content: "";
+        display: inline-block;
+        width: 28px;
+        height: 1px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.28));
+    }
 
 
     .portal-tool-card {
@@ -292,25 +295,27 @@
         background: linear-gradient(145deg, #ffffff, #f3f8ff);
         transform: translateY(-4px);
     }
+
     /* ---------- CARD HEIGHT NORMALIZATION ---------- */
 
     /* Make each column act as a flex container so the card can stretch full height */
-#updates-section .row.g-3 > [class*="col-"] {
-    display: flex;
-}
+    #updates-section .row.g-3>[class*="col-"] {
+        display: flex;
+    }
 
-#updates-section .portal-blog-card {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
+    #updates-section .portal-blog-card {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-#updates-section .portal-blog-card p.small {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;      /* number of lines before truncating */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
+    #updates-section .portal-blog-card p.small {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        /* number of lines before truncating */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 
     /* Clamp the description text to 3 lines with ellipsis */
     .portal-tool-body p.small.text-muted {
@@ -440,6 +445,100 @@
             height: 80px;
         }
     }
+
+    /* ---------- ANNOUNCEMENTS PREMIUM EXTRAS (SAFE ADDITIONS) ---------- */
+
+    /* fade-in animation */
+    @@keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .ann-fade {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeUp .55s ease forwards;
+    }
+
+    .ann-fade[data-delay="1"] {
+        animation-delay: .06s;
+    }
+
+    .ann-fade[data-delay="2"] {
+        animation-delay: .12s;
+    }
+
+    .ann-fade[data-delay="3"] {
+        animation-delay: .18s;
+    }
+
+    /* badge row */
+    .ann-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .45rem;
+        margin-top: .55rem;
+        align-items: center;
+    }
+
+    /* NEW badge */
+    .ann-badge-new {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        padding: .18rem .65rem;
+        border-radius: 999px;
+        font-size: .7rem;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        background: rgba(10, 156, 80, .12);
+        color: #0a9c50;
+        border: 1px solid rgba(10, 156, 80, .25);
+    }
+
+    /* icon pill */
+    .ann-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        padding: .25rem .7rem;
+        border-radius: 999px;
+        font-size: .7rem;
+        background: #f1faf5;
+        color: #137c3e;
+        border: 1px solid #cfead7;
+    }
+
+    .ann-pill .ann-ico {
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, .06);
+        font-size: .75rem;
+    }
+
+    /* RTL auto-detection: if it contains Arabic, switch direction */
+    .rtl-auto {
+        unicode-bidi: plaintext;
+        /* best automatic behavior */
+    }
+
+    /* Force title/excerpt to behave nicely in mixed content */
+    .ann-title,
+    .ann-excerpt {
+        unicode-bidi: plaintext;
+    }
 </style>
 
 
@@ -496,41 +595,68 @@
     <section id="updates-section" class="mt-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
-                <div class="portal-section-title">BADEA updates</div>
-                @* <div class="text-muted small">Lightweight internal news stream (static for now).</div> *@
+                <div class="portal-section-title">Latest announcements</div>
             </div>
+
+            <a asp-controller="Announcements" asp-action="Index" class="btn btn-outline-secondary btn-sm">
+                Load more
+            </a>
         </div>
 
         <div class="row g-3">
-            <div class="col-lg-4 col-md-6">
-                <article class="portal-blog-card">
-                    <div class="small text-muted mb-1">March 2025</div>
-                    <h6 class="mb-1">Portal design draft ready</h6>
-                    <p class="small mb-0 text-muted">
-                        First version of the BADEA internal portal layout – we’ll plug it into existing tools next.
-                    </p>
-                </article>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <article class="portal-blog-card">
-                    <div class="small text-muted mb-1">Coming soon</div>
-                    <h6 class="mb-1">Single entry for KPIs &amp; actions</h6>
-                    <p class="small mb-0 text-muted">
-                        The portal will become the front entry for dashboards, RedBoard, and action plans.
-                    </p>
-                </article>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <article class="portal-blog-card">
-                    <div class="small text-muted mb-1">Coming soon</div>
-                    <h6 class="mb-1">BADEA guidelines &amp; resources</h6>
-                    <p class="small mb-0 text-muted">
-                        A space for templates, policies, and reference documents – one place instead of many links.
-                    </p>
-                </article>
-            </div>
+            @if (Model.LatestAnnouncements == null || Model.LatestAnnouncements.Count == 0)
+            {
+                <div class="col-12">
+                    <div class="alert alert-info mb-0">No announcements yet.</div>
+                </div>
+            }
+            else
+            {
+                var i = 0;
+
+                foreach (var a in Model.LatestAnnouncements)
+                {
+                    i++;
+
+                    var isNew = (DateTime.UtcNow - a.CreatedAtUtc).TotalHours <= 48;
+                    var delay = i > 3 ? 3 : i; // 1..3
+                    var kindLabel = a.IsMemo ? "Memo" : "General";
+                    var icon = a.IsMemo ? "📎" : "📢";
+
+                    <div class="col-lg-4 col-md-6">
+                        <a asp-controller="Announcements" asp-action="Details" asp-route-id="@a.Id"
+                            class="text-decoration-none text-dark d-block">
+                            <article class="portal-blog-card ann-fade" data-delay="@delay">
+                                <div class="small text-muted mb-1 rtl-auto">
+                                    @a.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy") · @a.CreatedByName
+                                </div>
+
+                                <h6 class="mb-1 ann-title rtl-auto">@a.Title</h6>
+
+                                <p class="small mb-0 text-muted ann-excerpt rtl-auto">
+                                    @a.Excerpt
+                                </p>
+
+                                <div class="ann-badges">
+                                    @if (isNew)
+                                    {
+                                        <span class="ann-badge-new">NEW</span>
+                                    }
+
+                                    <span class="ann-pill">
+                                        <span class="ann-ico">@icon</span>
+                                        @kindLabel
+                                    </span>
+                                </div>
+                            </article>
+                        </a>
+                    </div>
+                }
+            }
+
         </div>
     </section>
+
     <!-- TOOLS & WORKSPACES -->
     <section id="tools-section" class="mb-4">
         <div class="d-flex justify-content-between align-items-end mb-2">
@@ -727,8 +853,7 @@
                             <span class="portal-chip">Analytics</span>
                         </div>
                         <div class="portal-tool-visual">
-                            <img src="~/images/icons/ecm.png" alt="KPI Monitor icon"
-                                class="portal-tool-logo-img" />
+                            <img src="~/images/icons/ecm.png" alt="KPI Monitor icon" class="portal-tool-logo-img" />
                         </div>
                     </div>
                 </a>
