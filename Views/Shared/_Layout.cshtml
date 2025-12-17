@@ -15,6 +15,18 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BADEAPORTAL.styles.css" asp-append-version="true" />
+    <script>
+        (function () {
+            try {
+                const v = localStorage.getItem('badea.portal.sidebar'); // 'hidden' | null
+                if (v === 'hidden') {
+                    document.body.classList.add('portal-sidebar-hidden'); // desktop collapsed
+                    // don't auto-open mobile overlay on load
+                    document.body.classList.remove('portal-sidebar-open');
+                }
+            } catch { /* ignore */ }
+        })();
+    </script>
 
     <style>
         :root {
@@ -36,8 +48,10 @@
         /* ----------------- SIDEBAR ----------------- */
         .portal-sidebar {
             width: 240px;
-            flex: 0 0 240px;              /* fixed width in the flex layout */
-            height: auto;                /* always full viewport height */
+            flex: 0 0 240px;
+            /* fixed width in the flex layout */
+            height: auto;
+            /* always full viewport height */
             background: radial-gradient(circle at top left, #018f38 0, #006b2a 35%, #004118 100%);
             color: #fff;
             box-shadow: 4px 0 22px rgba(0, 0, 0, 0.25);
@@ -170,7 +184,8 @@
             }
 
             body.portal-sidebar-hidden .portal-sidebar {
-                position: absolute;     /* pull it out of the flex layout */
+                position: absolute;
+                /* pull it out of the flex layout */
                 left: 0;
                 top: 0;
                 bottom: 0;
@@ -234,20 +249,20 @@
                 <ul class="nav nav-pills flex-column gap-1">
                     <li class="nav-item">
                         <a class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")"
-                           asp-area="" asp-controller="Home" asp-action="Index">
+                            asp-area="" asp-controller="Home" asp-action="Index">
                             Overview
                         </a>
                     </li>
                     <li class="nav-item">
                         <!-- you said not to touch this one; leaving it exactly as you had it -->
                         <a class="nav-link @(currentController == "Portal" && currentAction == "Index" ? "" : "")"
-                           href="#tools-section">
+                            href="#tools-section">
                             Phone Directory
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @(currentController == "Announcements" && currentAction == "Index" ? "active" : "")"
-                           asp-area="" asp-controller="Announcements" asp-action="Index">
+                            asp-area="" asp-controller="Announcements" asp-action="Index">
                             Announcements
                         </a>
                     </li>
@@ -259,10 +274,10 @@
                 <span class="badge bg-success border border-light">Online</span>
             </div>
         </aside>
-@{
-    var userProfile = UserProfileService.GetCurrentUser();
-    var greetingName = userProfile.FullName ?? userProfile.DisplayName ?? "BADEA";
-}
+        @{
+            var userProfile = UserProfileService.GetCurrentUser();
+            var greetingName = userProfile.FullName ?? userProfile.DisplayName ?? "BADEA";
+        }
 
         <!-- MAIN -->
         <div class="portal-main flex-grow-1 d-flex flex-column">
@@ -271,7 +286,7 @@
                     <div class="d-flex align-items-center gap-2">
                         <!-- toggle button (now works on desktop + mobile) -->
                         <button type="button" class="btn btn-sm btn-outline-success" id="portalToggleBtn"
-                                aria-label="Toggle navigation">
+                            aria-label="Toggle navigation">
                             ☰
                         </button>
                         <div class="fw-semibold text-secondary">
@@ -307,9 +322,19 @@
 
             btn.addEventListener('click', function (e) {
                 e.stopPropagation();
-                document.body.classList.toggle('portal-sidebar-open');   // mobile slide-in
-                document.body.classList.toggle('portal-sidebar-hidden'); // desktop hide/show
+
+                const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
+                if (isDesktop) {
+                    document.body.classList.toggle('portal-sidebar-hidden'); // desktop hide/show
+                    const hidden = document.body.classList.contains('portal-sidebar-hidden');
+                    try { localStorage.setItem('badea.portal.sidebar', hidden ? 'hidden' : 'shown'); } catch { }
+                } else {
+                    document.body.classList.toggle('portal-sidebar-open');   // mobile slide-in
+                    // don't persist mobile overlay state
+                }
             });
+
 
             // close sidebar when backdrop is clicked (mobile only)
             document.addEventListener('click', function (e) {
@@ -319,6 +344,13 @@
                 }
             });
         })();
+        window.addEventListener('resize', function () {
+            const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+            if (isDesktop) {
+                document.body.classList.remove('portal-sidebar-open'); // kill mobile overlay when entering desktop
+            }
+        });
+
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
