@@ -539,6 +539,65 @@
     .ann-excerpt {
         unicode-bidi: plaintext;
     }
+    /* === Make Latest Announcements cards equal height === */
+#updates-section .row.g-3 > [class*="col-"]{
+    display: flex;
+}
+
+#updates-section .portal-blog-card{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+/* =========================
+   HOME - ANNOUNCEMENTS FIXES
+   (override-only, safe)
+   ========================= */
+
+/* 1) Make each announcement column stretch */
+#updates-section .row.g-3 > [class*="col-"]{
+    display: flex;
+}
+
+/* 2) Make the <a> fill the column height */
+#updates-section .row.g-3 > [class*="col-"] > a{
+    display: flex !important;
+    width: 100%;
+    height: 100%;
+}
+
+/* 3) Make the card stretch and behave as a vertical layout */
+#updates-section .row.g-3 > [class*="col-"] > a > .portal-blog-card{
+    width: 100%;
+    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 4) Clamp title + excerpt so devices don’t change card height */
+#updates-section .portal-blog-card .ann-title,
+#updates-section .portal-blog-card h6{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#updates-section .portal-blog-card .ann-excerpt,
+#updates-section .portal-blog-card p.small{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 5) Push badges to the bottom for perfect consistency */
+#updates-section .portal-blog-card .ann-badges{
+    margin-top: auto;
+}
+
 </style>
 
 
