@@ -52,10 +52,10 @@
                     const modalBody = document.getElementById('announcementModalBody');
 
                     modalBody.innerHTML = `
-                    <div class="text-center py-5 text-muted">
-                        Loading…
-                    </div>
-                `;
+                        <div class="text-center py-5 text-muted">
+                            Loading…
+                        </div>
+                    `;
 
                     const modal = new bootstrap.Modal(
                         document.getElementById('announcementModal')
@@ -63,16 +63,16 @@
                     modal.show();
 
                     try {
-                        const res = await fetch('@Url.Action("Modal", "Announcements")/' + id);
+                        const res = await fetch('@Url.Action("Modal", "Announcements")' + '?id=' + encodeURIComponent(id));
                         if (!res.ok) throw new Error('Failed to load');
 
                         modalBody.innerHTML = await res.text();
                     } catch {
                         modalBody.innerHTML = `
-                        <div class="alert alert-danger mb-0">
-                            Failed to load announcement.
-                        </div>
-                    `;
+                            <div class="alert alert-danger mb-0">
+                                Failed to load announcement.
+                            </div>
+                        `;
                     }
                 });
             });
