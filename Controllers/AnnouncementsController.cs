@@ -160,10 +160,7 @@ namespace BADEAPORTAL.Controllers
 public async Task<IActionResult> Modal(int id)
 {
     var entity = await _announcements.GetByIdAsync(id);
-    if (entity == null)
-    {
-        return NotFound();
-    }
+    if (entity == null) return NotFound();
 
     var vm = new AnnouncementDetailsVm
     {
@@ -180,8 +177,9 @@ public async Task<IActionResult> Modal(int id)
         CreatedByName = entity.CreatedByName
     };
 
-    return PartialView("_AnnouncementDetailsModalBody", vm);
+    return PartialView("_AnnouncementDetailsModal", vm);
 }
+
 
     }
 }

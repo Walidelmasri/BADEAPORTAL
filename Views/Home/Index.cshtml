@@ -42,42 +42,42 @@
                 }, 2500);
             }
         });
-document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
 
-    document.querySelectorAll('.js-ann-open').forEach(link => {
-        link.addEventListener('click', async (e) => {
-            e.preventDefault();
+            document.querySelectorAll('.js-ann-open').forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    e.preventDefault();
 
-            const id = link.getAttribute('data-ann-id');
-            const modalBody = document.getElementById('announcementModalBody');
+                    const id = link.getAttribute('data-ann-id');
+                    const modalBody = document.getElementById('announcementModalBody');
 
-            modalBody.innerHTML = `
-                <div class="text-center py-5 text-muted">
-                    Loading…
-                </div>
-            `;
-
-            const modal = new bootstrap.Modal(
-                document.getElementById('announcementModal')
-            );
-            modal.show();
-
-            try {
-                const res = await fetch(`/Announcements/Modal/${id}`);
-                if (!res.ok) throw new Error('Failed to load');
-
-                modalBody.innerHTML = await res.text();
-            } catch {
-                modalBody.innerHTML = `
-                    <div class="alert alert-danger mb-0">
-                        Failed to load announcement.
+                    modalBody.innerHTML = `
+                    <div class="text-center py-5 text-muted">
+                        Loading…
                     </div>
                 `;
-            }
-        });
-    });
 
-});
+                    const modal = new bootstrap.Modal(
+                        document.getElementById('announcementModal')
+                    );
+                    modal.show();
+
+                    try {
+                        const res = await fetch('@Url.Action("Modal", "Announcements")/' + id);
+                        if (!res.ok) throw new Error('Failed to load');
+
+                        modalBody.innerHTML = await res.text();
+                    } catch {
+                        modalBody.innerHTML = `
+                        <div class="alert alert-danger mb-0">
+                            Failed to load announcement.
+                        </div>
+                    `;
+                    }
+                });
+            });
+
+        });
 
     </script>
 }
