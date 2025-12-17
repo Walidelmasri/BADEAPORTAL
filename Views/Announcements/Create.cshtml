@@ -258,5 +258,28 @@ const toggle=document.getElementById('isMemoToggle');
 const panel=document.getElementById('memoFields');
 const sync=()=>panel.style.display=toggle.checked?'block':'none';
 toggle.addEventListener('change',sync); sync();
+
+document.querySelector('form').addEventListener('submit', e => {
+    const body = quill.getText().trim();
+    if (!body.length) {
+        e.preventDefault();
+        alert('Body cannot be empty');
+        return;
+    }
+
+    if (toggle.checked) {
+        const required = ['MemoTo','MemoFrom','MemoSubject','MemoClassification'];
+        for (const name of required) {
+            const el = document.querySelector(`[name="${name}"]`);
+            if (!el.value.trim()) {
+                e.preventDefault();
+                el.focus();
+                alert('Please complete memo header fields');
+                return;
+            }
+        }
+    }
+});
+
 </script>
 }

@@ -16,6 +16,7 @@ builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 // Announcements + PDF
 builder.Services.AddScoped<IAnnouncementsService, AnnouncementsService>();
 builder.Services.AddScoped<IMemoPdfService, QuestPdfMemoService>();
+builder.Services.AddScoped<IHtmlContentNormalizer, QuillHtmlNormalizer>();
 
 // Oracle EF Core
 builder.Services.AddDbContext<PortalDbContext>(options =>

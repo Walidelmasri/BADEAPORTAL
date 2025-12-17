@@ -13,10 +13,16 @@ namespace BADEAPORTAL.Services
         private readonly PortalDbContext _db;
         private readonly IUserProfileService _userProfile;
 
-        public AnnouncementsService(PortalDbContext db, IUserProfileService userProfile)
+        private readonly IHtmlContentNormalizer _htmlNormalizer;
+
+        public AnnouncementsService(
+            PortalDbContext db,
+            IUserProfileService userProfile,
+            IHtmlContentNormalizer htmlNormalizer)
         {
             _db = db;
             _userProfile = userProfile;
+            _htmlNormalizer = htmlNormalizer;
         }
 
         public async Task<(IReadOnlyList<Announcement> Items, int TotalCount)> GetPagedAsync(int page, int pageSize)
@@ -46,18 +52,10 @@ namespace BADEAPORTAL.Services
         {
             var user = _userProfile.GetCurrentUser();
 
-            var createdByName =
-                user.FullName ??
-                user.DisplayName ??
-                user.EmailOrUpn ??
-                "Unknown";
-
-            var createdByUpn = user.EmailOrUpn ?? "unknown@local";
-
             var entity = new Announcement
             {
                 Title = dto.Title,
-                BodyHtml = dto.BodyHtml,
+                BodyHtml = _htmlNormalizer.Normalize(dto.BodyHtml), // ✅ FIX
                 IsMemo = dto.IsMemo,
 
                 MemoTo = dto.MemoTo,
@@ -67,8 +65,8 @@ namespace BADEAPORTAL.Services
                 MemoClassification = dto.MemoClassification,
 
                 CreatedAtUtc = DateTime.UtcNow,
-                CreatedByName = createdByName,
-                CreatedByUpn = createdByUpn
+                CreatedByName = user.FullName ?? user.DisplayName ?? user.EmailOrUpn ?? "Unknown",
+                CreatedByUpn = user.EmailOrUpn ?? "unknown@local"
             };
 
             _db.Announcements.Add(entity);
@@ -76,5 +74,6 @@ namespace BADEAPORTAL.Services
 
             return entity.Id;
         }
+
     }
 }
