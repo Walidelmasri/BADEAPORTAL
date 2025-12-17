@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BADEAPORTAL.Models;
-using BADEAPORTAL.Models.Announcements;
-
 using BADEAPORTAL.Services;
+using BADEAPORTAL.Models.Announcements;
 
 namespace BADEAPORTAL.Controllers
 {
@@ -156,5 +155,33 @@ namespace BADEAPORTAL.Controllers
 
             return text.Substring(0, maxLength) + "…";
         }
+// GET: /Announcements/Modal/5
+[HttpGet]
+public async Task<IActionResult> Modal(int id)
+{
+    var entity = await _announcements.GetByIdAsync(id);
+    if (entity == null)
+    {
+        return NotFound();
+    }
+
+    var vm = new AnnouncementDetailsVm
+    {
+        Id = entity.Id,
+        Title = entity.Title,
+        BodyHtml = entity.BodyHtml,
+        IsMemo = entity.IsMemo,
+        MemoTo = entity.MemoTo,
+        MemoThrough = entity.MemoThrough,
+        MemoFrom = entity.MemoFrom,
+        MemoSubject = entity.MemoSubject,
+        MemoClassification = entity.MemoClassification,
+        CreatedAtUtc = entity.CreatedAtUtc,
+        CreatedByName = entity.CreatedByName
+    };
+
+    return PartialView("_AnnouncementDetailsModalBody", vm);
+}
+
     }
 }

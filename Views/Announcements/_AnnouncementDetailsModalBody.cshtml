@@ -1,0 +1,75 @@
+@model BADEAPORTAL.Models.Announcements.AnnouncementDetailsVm
+
+<div class="announcement-modal-body">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+            <h5 class="mb-1">@Model.Title</h5>
+            <div class="text-muted small rtl-auto">
+                @Model.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy") · @Model.CreatedByName
+            </div>
+        </div>
+
+        <!-- Close (X) -->
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+    </div>
+
+    <!-- Memo Header Block -->
+    @if (Model.IsMemo)
+    {
+        <div class="border rounded p-3 mb-3 bg-light">
+            <dl class="row mb-0 small rtl-auto">
+                <dt class="col-3">To</dt>
+                <dd class="col-9">@Model.MemoTo</dd>
+
+                @if (!string.IsNullOrWhiteSpace(Model.MemoThrough))
+                {
+                    <dt class="col-3">Through</dt>
+                    <dd class="col-9">@Model.MemoThrough</dd>
+                }
+
+                <dt class="col-3">From</dt>
+                <dd class="col-9">@Model.MemoFrom</dd>
+
+                <dt class="col-3">Subject</dt>
+                <dd class="col-9">@Model.MemoSubject</dd>
+
+                <dt class="col-3">Classification</dt>
+                <dd class="col-9">@Model.MemoClassification</dd>
+            </dl>
+        </div>
+    }
+
+    <!-- Body -->
+    <div class="announcement-body-content rtl-auto">
+        @Html.Raw(Model.BodyHtml)
+    </div>
+
+    <!-- Footer -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        @if (Model.IsMemo)
+        {
+            <a asp-controller="Announcements"
+               asp-action="DownloadMemo"
+               asp-route-id="@Model.Id"
+               class="btn btn-outline-primary btn-sm">
+                Download PDF
+            </a>
+        }
+        else
+        {
+            <span></span>
+        }
+
+        <button type="button"
+                class="btn btn-secondary btn-sm"
+                data-bs-dismiss="modal">
+            Close
+        </button>
+    </div>
+
+</div>
