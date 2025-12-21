@@ -1290,7 +1290,7 @@
           "lib/net8.0/Oracle.ManagedDataAccess.dll": {}
         }
       },
-      "QuestPDF/2025.7.1": {
+      "QuestPDF/2025.12.0": {
         "type": "package",
         "compile": {
           "lib/net8.0/QuestPDF.dll": {
@@ -4166,10 +4166,10 @@
         "oracle.png"
       ]
     },
-    "QuestPDF/2025.7.1": {
-      "sha512": "WSSStmqSEidOqQqAmS7GmItgDe87IVzmmQEZZ2qH03PWyKJt9l1f6M65VQwIh6CZvNt7lc14ryVv7YOM2DCVqg==",
+    "QuestPDF/2025.12.0": {
+      "sha512": "INaUIKE3z9+X8alPcriqjkctT+S/xVWfkUW8Xrmu4k38t9yijGjWGWxrJkopO0YiXjVxSJ+HDAZ6P/Nyd2tB5Q==",
       "type": "package",
-      "path": "questpdf/2025.7.1",
+      "path": "questpdf/2025.12.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4189,6 +4189,7 @@
         "ExternalDependencyLicenses/skia.txt",
         "ExternalDependencyLicenses/wuffs.txt",
         "ExternalDependencyLicenses/zlib.txt",
+        "LatinWords.txt",
         "LatoFont/Lato-Black.ttf",
         "LatoFont/Lato-BlackItalic.ttf",
         "LatoFont/Lato-Bold.ttf",
@@ -4209,6 +4210,7 @@
         "LatoFont/Lato-ThinItalic.ttf",
         "LatoFont/OFL.txt",
         "Logo.png",
+        "MimeTypes.csv",
         "PackageLicense.md",
         "README.md",
         "ReleaseNotes.txt",
@@ -4216,13 +4218,15 @@
         "build/net4/QuestPDF.targets",
         "buildTransitive/QuestPDF.targets",
         "buildTransitive/net4/QuestPDF.targets",
+        "lib/net10.0/QuestPDF.dll",
+        "lib/net10.0/QuestPDF.xml",
         "lib/net6.0/QuestPDF.dll",
         "lib/net6.0/QuestPDF.xml",
         "lib/net8.0/QuestPDF.dll",
         "lib/net8.0/QuestPDF.xml",
         "lib/netstandard2.0/QuestPDF.dll",
         "lib/netstandard2.0/QuestPDF.xml",
-        "questpdf.2025.7.1.nupkg.sha512",
+        "questpdf.2025.12.0.nupkg.sha512",
         "questpdf.nuspec",
         "runtimes/linux-arm64/native/libQuestPdfSkia.so",
         "runtimes/linux-arm64/native/libqpdf.so",
@@ -5179,7 +5183,7 @@
       "Microsoft.Identity.Web.UI >= 4.1.1",
       "Oracle.EntityFrameworkCore >= 9.23.90",
       "Oracle.ManagedDataAccess.Core >= 23.9.1",
-      "QuestPDF >= 2025.7.1"
+      "QuestPDF >= 2025.12.0"
     ]
   },
   "packageFolders": {
@@ -5253,7 +5257,7 @@
           },
           "QuestPDF": {
             "target": "Package",
-            "version": "[2025.7.1, )"
+            "version": "[2025.12.0, )"
           }
         },
         "imports": [

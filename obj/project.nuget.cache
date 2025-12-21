@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZAQMIFbD0Q8=",
+  "dgSpecHash": "lyyfLzm6KWA=",
   "success": true,
   "projectFilePath": "/Users/walidsalem/BADEA/BADEAPortal/BADEAPORTAL/BADEAPORTAL.csproj",
   "expectedPackageFiles": [
@@ -65,7 +65,7 @@
     "/Users/walidsalem/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/Users/walidsalem/.nuget/packages/oracle.entityframeworkcore/9.23.90/oracle.entityframeworkcore.9.23.90.nupkg.sha512",
     "/Users/walidsalem/.nuget/packages/oracle.manageddataaccess.core/23.9.1/oracle.manageddataaccess.core.23.9.1.nupkg.sha512",
-    "/Users/walidsalem/.nuget/packages/questpdf/2025.7.1/questpdf.2025.7.1.nupkg.sha512",
+    "/Users/walidsalem/.nuget/packages/questpdf/2025.12.0/questpdf.2025.12.0.nupkg.sha512",
     "/Users/walidsalem/.nuget/packages/system.clientmodel/1.0.0/system.clientmodel.1.0.0.nupkg.sha512",
     "/Users/walidsalem/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/Users/walidsalem/.nuget/packages/system.collections.immutable/7.0.0/system.collections.immutable.7.0.0.nupkg.sha512",
