@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using BADEAPORTAL.Models;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Hosting;
@@ -22,207 +24,619 @@ namespace BADEAPORTAL.Services
         public QuestPdfMemoService(IWebHostEnvironment env)
         {
             _env = env;
-
             EnsureFontsRegistered(_env);
         }
 
+        // ========== PUBLIC API (matches your portal code) ==========
         public byte[] GenerateMemoPdf(MemoPdfRequest request)
         {
-            // Build the same "document input" shape as the memo generator
-            var memo = new MemoDocument
+            // IMPORTANT: keep this, avoids runtime exceptions on some deployments
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            // Map your portal request -> generator-style memo model
+            var m = new PortalMemoInput
             {
-                MemoNumber = $"Memo-{DateTime.UtcNow:yyyyMMddHHmmss}", // or entity.Id if you prefer
+                MemoNumber = $"M-{DateTime.UtcNow:yyyyMMdd-HHmmss}",
                 To = request.To,
                 Through = request.Through ?? string.Empty,
                 From = request.From,
                 Subject = request.Subject,
                 Classification = request.Classification,
-                Date = request.CreatedAtUtc,
+                Body = request.BodyHtml, // generator expects HTML in Body; it renders it
                 PreparedBy = request.CreatedByName,
-                BodyHtml = request.BodyHtml,
-                BannerImageBytes = ReadWwwrootBytes("images/memo-banner.png"),
-                FooterImageBytes = ReadWwwrootBytes("images/memo-footer.png")
+                PageMarginPt = 36f,
+                UnderlineColorHex = "#212322",
+                FontFamilyArabic = "Tajawal",
+                FontFamilyLatin = "Tajawal",
+                DateText = null, // will auto-generate like generator
+                BannerImage = ReadWwwrootBytes("images/memo-banner.png"),
+                FooterImage = ReadWwwrootBytes("images/memo-footer.png")
             };
 
-            var pdf = BuildPdf(memo);
-            return pdf;
+            // Generate (same layout rules as MemoGenerator)
+            return GenerateExactLikeMemoGenerator(m).GetAwaiter().GetResult();
         }
 
-        private byte[] BuildPdf(MemoDocument doc)
+        // ========== INTERNAL "MemoGenerator clone" ==========
+        private static async Task<byte[]> GenerateExactLikeMemoGenerator(PortalMemoInput m)
         {
-            // Important: match generator-like styling defaults
-            var baseText = TextStyle.Default
-                .FontFamily("Tajawal")
-                .FontSize(11);
-
-            var document = Document.Create(container =>
+            static bool ContainsArabic(string? s)
             {
-                container.Page(page =>
+                if (string.IsNullOrEmpty(s)) return false;
+                foreach (var ch in s)
                 {
-                    page.Size(PageSizes.A4);
-                    page.Margin(36);
-                    page.DefaultTextStyle(baseText);
+                    int code = ch;
+                    if ((code >= 0x0600 && code <= 0x06FF) ||
+                        (code >= 0x0750 && code <= 0x077F) ||
+                        (code >= 0x08A0 && code <= 0x08FF))
+                        return true;
+                }
+                return false;
+            }
 
-                    page.Content().Column(col =>
+            static bool IsRtlNode(HtmlNode node)
+            {
+                var dir = node.GetAttributeValue("dir", "").Trim().ToLowerInvariant();
+                if (dir == "rtl") return true;
+
+                var style = node.GetAttributeValue("style", "");
+                if (!string.IsNullOrEmpty(style) &&
+                    style.IndexOf("direction:rtl", StringComparison.OrdinalIgnoreCase) >= 0)
+                    return true;
+
+                return ContainsArabic(node.InnerText);
+            }
+
+            static string? ReadTextAlign(HtmlNode node)
+            {
+                var style = node.GetAttributeValue("style", "");
+                if (!string.IsNullOrEmpty(style))
+                {
+                    var parts = style.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                    foreach (var p in parts)
                     {
-                        col.Spacing(10);
+                        var kv = p.Split(':', 2, StringSplitOptions.TrimEntries);
+                        if (kv.Length == 2 && kv[0].Equals("text-align", StringComparison.OrdinalIgnoreCase))
+                            return kv[1].ToLowerInvariant();
+                    }
+                }
 
-                        // TOP BANNER IMAGE
-                        if (doc.BannerImageBytes is { Length: > 0 })
+                var alignAttr = node.GetAttributeValue("align", null);
+                return alignAttr?.ToLowerInvariant();
+            }
+
+            static bool IsBlankBlock(HtmlNode block)
+            {
+                if (!(block.Name.Equals("p", StringComparison.OrdinalIgnoreCase) ||
+                      block.Name.Equals("div", StringComparison.OrdinalIgnoreCase)))
+                    return false;
+
+                var text = HtmlEntity.DeEntitize(block.InnerText)
+                                     .Replace("\u200B", "")
+                                     .Replace("\u00A0", " ")
+                                     .Trim();
+
+                if (text.Length > 0)
+                    return false;
+
+                var html = block.InnerHtml.Trim().ToLowerInvariant();
+                return html == "" || html == "<br>" || html == "<br/>" || html == "<br />";
+            }
+
+            // ===== Inline renderer (exact) =====
+            static void RenderInline(HtmlNode node, TextDescriptor t, TextStyle latinStyle, TextStyle arabicStyle)
+            {
+                if (node.NodeType == HtmlNodeType.Text)
+                {
+                    var text = HtmlEntity.DeEntitize(node.InnerText);
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                        var style = ContainsArabic(text) ? arabicStyle : latinStyle;
+                        t.Span(text).Style(style);
+                    }
+                    return;
+                }
+
+                var tag = node.Name.ToLowerInvariant();
+
+                var effLatin = latinStyle;
+                var effArabic = arabicStyle;
+                var underline = false;
+
+                if (tag is "strong" or "b")
+                {
+                    effLatin = effLatin.SemiBold();
+                    effArabic = effArabic.SemiBold();
+                }
+
+                if (tag is "em" or "i")
+                {
+                    effLatin = effLatin.Italic();
+                    effArabic = effArabic.Italic();
+                }
+
+                if (tag == "u")
+                    underline = true;
+
+                foreach (var child in node.ChildNodes)
+                {
+                    if (child.NodeType == HtmlNodeType.Element &&
+                        child.Name.Equals("br", StringComparison.OrdinalIgnoreCase))
+                    {
+                        t.EmptyLine();
+                        continue;
+                    }
+
+                    if (child.NodeType == HtmlNodeType.Text)
+                    {
+                        var txt = HtmlEntity.DeEntitize(child.InnerText);
+                        if (!string.IsNullOrWhiteSpace(txt))
                         {
-                            col.Item()
-                                .Image(doc.BannerImageBytes)
-                                .FitWidth();
+                            var s = ContainsArabic(txt) ? effArabic : effLatin;
+                            var span = t.Span(txt).Style(s);
+                            if (underline) span.Underline();
+                        }
+                    }
+                    else
+                    {
+                        RenderInline(child, t, effLatin, effArabic);
+                    }
+                }
+            }
+
+            static void RenderTable(IContainer parent, HtmlNode tableNode, float widthPt, TextStyle baseStyle, TextStyle arabicStyle)
+            {
+                var allRows = tableNode.SelectNodes("./thead/tr|./tbody/tr|./tr")?.ToList()
+                             ?? new List<HtmlNode>();
+                if (allRows.Count == 0) return;
+
+                int colCount = allRows.Max(r => r.SelectNodes("./th|./td")?.Count ?? 0);
+                if (colCount <= 0) return;
+
+                var headerRows = allRows
+                    .Where(r => r.ParentNode?.Name.Equals("thead", StringComparison.OrdinalIgnoreCase) == true
+                             || r.SelectSingleNode("./th") != null)
+                    .ToList();
+
+                var bodyRows = allRows.Except(headerRows).ToList();
+
+                var borderCol = "#e5e7eb";
+                const float pad = 6f;
+
+                IContainer CellBox(IContainer c) => c.Border(0.8f).BorderColor(borderCol).Padding(pad);
+
+                parent
+                    .AlignCenter()
+                    .Width(widthPt)
+                    .Table(table =>
+                    {
+                        table.ColumnsDefinition(cols =>
+                        {
+                            for (int i = 0; i < colCount; i++)
+                                cols.RelativeColumn();
+                        });
+
+                        if (headerRows.Count > 0)
+                        {
+                            table.Header(h =>
+                            {
+                                foreach (var tr in headerRows)
+                                {
+                                    var cells = tr.SelectNodes("./th|./td")?.ToList() ?? new List<HtmlNode>();
+                                    foreach (var cell in cells)
+                                    {
+                                        h.Cell().Element(CellBox).Text(t =>
+                                        {
+                                            t.AlignCenter();
+                                            var bold = baseStyle.SemiBold();
+                                            var boldAr = arabicStyle.SemiBold();
+                                            foreach (var child in cell.ChildNodes)
+                                                RenderInline(child, t, bold, boldAr);
+                                        });
+                                    }
+                                    for (int k = cells.Count; k < colCount; k++)
+                                    {
+                                        h.Cell().Element(CellBox).Text(t =>
+                                        {
+                                            t.AlignCenter();
+                                            t.Span("");
+                                        });
+                                    }
+                                }
+                            });
                         }
 
-                        // TITLE
-                        col.Item().PaddingTop(6).AlignCenter().Text(text =>
+                        foreach (var tr in bodyRows)
                         {
-                            text.DefaultTextStyle(baseText.FontSize(16).SemiBold());
-                            text.Span("MEMO");
-                        });
-
-                        col.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
-
-                        // HEADER BLOCK (premium card)
-                        col.Item().Element(e =>
-                        {
-                            e.Background(Colors.Grey.Lighten5)
-                             .Border(1)
-                             .BorderColor(Colors.Grey.Lighten2)
-                             .Padding(12)
-                             .CornerRadius(8)
-                             .Column(h =>
-                             {
-                                 h.Spacing(6);
-
-                                 HeaderRow(h, "To:", doc.To);
-                                 if (!string.IsNullOrWhiteSpace(doc.Through))
-                                     HeaderRow(h, "Through:", doc.Through);
-
-                                 HeaderRow(h, "From:", doc.From);
-                                 HeaderRow(h, "Subject:", doc.Subject);
-                                 HeaderRow(h, "Classification:", doc.Classification);
-                                 HeaderRow(h, "Date:", doc.Date.ToLocalTime().ToString("dd MMM yyyy"));
-                                 HeaderRow(h, "Prepared by:", doc.PreparedBy);
-                             });
-                        });
-
-                        // BODY
-                        col.Item().PaddingTop(6).Element(e =>
-                        {
-                            e.Border(1)
-                             .BorderColor(Colors.Grey.Lighten3)
-                             .Padding(14)
-                             .CornerRadius(10)
-                             .Background(Colors.White)
-                             .Column(body =>
-                             {
-                                 body.Spacing(6);
-
-                                 var blocks = HtmlToTextBlocks(doc.BodyHtml);
-
-                                 foreach (var b in blocks)
-                                 {
-                                     if (b.IsHeading)
-                                     {
-                                         body.Item().Text(t =>
-                                         {
-                                             t.DefaultTextStyle(baseText.FontSize(13).SemiBold());
-                                             t.Span(b.Text);
-                                         });
-                                     }
-                                     else
-                                     {
-                                         body.Item().Text(t =>
-                                         {
-                                             t.DefaultTextStyle(baseText.FontSize(11));
-                                             t.Span(b.Text);
-                                         });
-                                     }
-                                 }
-                             });
-                        });
-
-                        // FOOTER IMAGE
-                        if (doc.FooterImageBytes is { Length: > 0 })
-                        {
-                            col.Item()
-                                .PaddingTop(10)
-                                .Image(doc.FooterImageBytes)
-                                .FitWidth();
+                            var cells = tr.SelectNodes("./td|./th")?.ToList() ?? new List<HtmlNode>();
+                            foreach (var cell in cells)
+                            {
+                                table.Cell().Element(CellBox).Text(t =>
+                                {
+                                    t.AlignCenter();
+                                    foreach (var child in cell.ChildNodes)
+                                        RenderInline(child, t, baseStyle, arabicStyle);
+                                });
+                            }
+                            for (int k = cells.Count; k < colCount; k++)
+                            {
+                                table.Cell().Element(CellBox).Text(t =>
+                                {
+                                    t.AlignCenter();
+                                    t.Span("");
+                                });
+                            }
                         }
                     });
-                });
-            });
+            }
 
-            return document.GeneratePdf();
-        }
-
-        private static void HeaderRow(ColumnDescriptor col, string label, string value)
-        {
-            col.Item().Row(r =>
+            static void RenderParagraph(IContainer parent, HtmlNode block, float widthPt, TextStyle baseStyle, TextStyle arabicStyle)
             {
-                r.ConstantItem(110).Text(t =>
+                if (IsBlankBlock(block))
                 {
-                    t.DefaultTextStyle(TextStyle.Default.FontFamily("Tajawal").FontSize(10).SemiBold().FontColor(Colors.Grey.Darken2));
-                    t.Span(label);
-                });
+                    parent.Height(12);
+                    return;
+                }
 
-                r.RelativeItem().Text(t =>
+                var align = ReadTextAlign(block);
+                var rtl = IsRtlNode(block);
+                var alignToUse = string.IsNullOrWhiteSpace(align) ? (rtl ? "right" : "left") : align;
+
+                var container = parent.AlignCenter().Width(widthPt);
+                if (rtl) container = container.ContentFromRightToLeft();
+
+                container.Text(t =>
                 {
-                    t.DefaultTextStyle(TextStyle.Default.FontFamily("Tajawal").FontSize(10));
-                    t.Span(value ?? string.Empty);
+                    t.DefaultTextStyle(ds => ds.LineHeight(1.35f));
+
+                    switch (alignToUse)
+                    {
+                        case "justify": t.Justify(); break;
+                        case "center": t.AlignCenter(); break;
+                        case "right": t.AlignRight(); break;
+                        default: t.AlignLeft(); break;
+                    }
+
+                    foreach (var child in block.ChildNodes)
+                        RenderInline(child, t, baseStyle, arabicStyle);
                 });
-            });
-        }
-
-        private sealed record TextBlock(string Text, bool IsHeading);
-
-        // Minimal HTML parsing (generator-style: turn html into readable blocks)
-        private static TextBlock[] HtmlToTextBlocks(string html)
-        {
-            if (string.IsNullOrWhiteSpace(html))
-                return Array.Empty<TextBlock>();
-
-            var doc = new HtmlDocument();
-            doc.LoadHtml(html);
-
-            // Remove images completely (matches your earlier strip)
-            var imgs = doc.DocumentNode.SelectNodes("//img");
-            if (imgs != null)
-            {
-                foreach (var img in imgs)
-                    img.Remove();
             }
 
-            // Treat headings as "premium" emphasis
-            var nodes = doc.DocumentNode
-                .Descendants()
-                .Where(n => n.Name is "h1" or "h2" or "h3" or "p" or "li" or "br")
-                .ToList();
-
-            var blocks = new System.Collections.Generic.List<TextBlock>();
-
-            foreach (var n in nodes)
+            static void RenderList(IContainer parent, HtmlNode list, bool ordered, float widthPt, TextStyle baseStyle, TextStyle arabicStyle)
             {
-                var text = HtmlEntity.DeEntitize(n.InnerText ?? string.Empty).Trim();
-                if (string.IsNullOrWhiteSpace(text))
-                    continue;
+                var items = list.SelectNodes("./li");
+                if (items == null || items.Count == 0)
+                    return;
 
-                var isHeading = n.Name is "h1" or "h2" or "h3";
-                blocks.Add(new TextBlock(text, isHeading));
+                int index = 1;
+
+                parent.Column(col =>
+                {
+                    foreach (var li in items)
+                    {
+                        var liText = HtmlEntity.DeEntitize(li.InnerText ?? string.Empty)
+                                        .Replace("\u200B", "")
+                                        .Replace("\u00A0", " ")
+                                        .Trim();
+                        bool hasNonTextContent = li.SelectSingleNode(".//img|.//table|.//ul|.//ol") != null;
+                        if (liText.Length == 0 && !hasNonTextContent)
+                            continue;
+
+                        var bullet = ordered ? $"{index}. " : "• ";
+                        var rtl = IsRtlNode(li);
+                        var align = ReadTextAlign(li) ?? (rtl ? "right" : "left");
+
+                        col.Item().Element(itemContainer =>
+                        {
+                            var rowContainer = itemContainer.AlignCenter().Width(widthPt);
+                            if (rtl)
+                                rowContainer = rowContainer.ContentFromRightToLeft();
+
+                            rowContainer.Row(row =>
+                            {
+                                row.ConstantItem(18).Text(b =>
+                                {
+                                    switch (align)
+                                    {
+                                        case "center": b.AlignCenter(); break;
+                                        case "right": b.AlignRight(); break;
+                                        default: b.AlignLeft(); break;
+                                    }
+                                    b.Span(bullet);
+                                });
+
+                                row.RelativeItem().Text(t =>
+                                {
+                                    t.DefaultTextStyle(ds => ds.LineHeight(1.35f));
+                                    switch (align)
+                                    {
+                                        case "justify": t.Justify(); break;
+                                        case "center": t.AlignCenter(); break;
+                                        case "right": t.AlignRight(); break;
+                                        default: t.AlignLeft(); break;
+                                    }
+
+                                    foreach (var child in li.ChildNodes)
+                                        RenderInline(child, t, baseStyle, arabicStyle);
+                                });
+                            });
+                        });
+
+                        index++;
+                    }
+                });
             }
 
-            // fallback if html has no p/h nodes
-            if (blocks.Count == 0)
+            static void RenderRichBody(IContainer container, string html, float widthPt, TextStyle baseStyle, TextStyle arabicStyle)
             {
-                var plain = HtmlEntity.DeEntitize(doc.DocumentNode.InnerText ?? string.Empty).Trim();
-                if (!string.IsNullOrWhiteSpace(plain))
-                    blocks.Add(new TextBlock(plain, false));
+                if (string.IsNullOrWhiteSpace(html) || html.IndexOf('<') < 0)
+                {
+                    var text = (html ?? "").Replace("\r\n", "\n");
+                    container.Text(t =>
+                    {
+                        t.DefaultTextStyle(ds => ds.LineHeight(1.35f));
+                        foreach (var line in text.Split('\n'))
+                        {
+                            if (string.IsNullOrWhiteSpace(line)) { t.EmptyLine(); continue; }
+
+                            var rtl = ContainsArabic(line);
+                            if (rtl) { t.AlignRight(); t.Span(line).Style(arabicStyle); }
+                            else { t.AlignLeft(); t.Span(line).Style(baseStyle); }
+                        }
+                    });
+                    return;
+                }
+
+                var doc = new HtmlDocument();
+                doc.LoadHtml(html);
+
+                var body = doc.DocumentNode.SelectSingleNode("//body") ?? doc.DocumentNode;
+                var blocks = body.ChildNodes;
+
+                container.Column(col =>
+                {
+                    foreach (var node in blocks)
+                    {
+                        if (node.NodeType == HtmlNodeType.Text && string.IsNullOrWhiteSpace(node.InnerText))
+                            continue;
+                        if (node.NodeType != HtmlNodeType.Element)
+                            continue;
+
+                        switch (node.Name.ToLowerInvariant())
+                        {
+                            case "p":
+                            case "div":
+                                RenderParagraph(col.Item(), node, widthPt, baseStyle, arabicStyle);
+                                break;
+
+                            case "br":
+                                col.Item().Height(12);
+                                break;
+
+                            case "ul":
+                                RenderList(col.Item(), node, ordered: false, widthPt, baseStyle, arabicStyle);
+                                break;
+
+                            case "ol":
+                                RenderList(col.Item(), node, ordered: true, widthPt, baseStyle, arabicStyle);
+                                break;
+
+                            case "table":
+                                RenderTable(col.Item(), node, widthPt, baseStyle, arabicStyle);
+                                break;
+
+                            default:
+                                RenderParagraph(col.Item(), node, widthPt, baseStyle, arabicStyle);
+                                break;
+                        }
+                    }
+                });
             }
 
-            return blocks.ToArray();
+            static string ToArabicIndicDigits(string s)
+            {
+                ReadOnlySpan<char> map = "٠١٢٣٤٥٦٧٨٩";
+                var chars = s.ToCharArray();
+                for (int i = 0; i < chars.Length; i++)
+                {
+                    char ch = chars[i];
+                    if (ch >= '0' && ch <= '9')
+                        chars[i] = map[ch - '0'];
+                }
+                return new string(chars);
+            }
+
+            static string OrdinalDateEn(DateTime dt)
+            {
+                int d = dt.Day;
+                string suffix = (d % 10 == 1 && d != 11) ? "st"
+                              : (d % 10 == 2 && d != 12) ? "nd"
+                              : (d % 10 == 3 && d != 13) ? "rd" : "th";
+                return $"{dt:MMMM} {d}{suffix} {dt:yyyy}";
+            }
+
+            static string ArabicGregorianDate(DateTime dt)
+            {
+                var ci = new CultureInfo("ar-EG");
+                var s = dt.ToString("d MMMM yyyy", ci);
+                s = ToArabicIndicDigits(s);
+                return "\u202B" + s + "\u202C";
+            }
+
+            static string HexOr(string? hex, string fallback)
+                => string.IsNullOrWhiteSpace(hex) ? fallback : hex!.Trim();
+
+            var labelHexEn = "#78D64B";
+            var labelHexAr = "#3A913F";
+            var underlineHex = HexOr(m.UnderlineColorHex, "#212322");
+            var bodyHex = "#000000";
+
+            const float FieldWidthPt = 420f;
+            const float ThroughWidthPt = FieldWidthPt - 40f;
+            const float MemoWidthPt = 220f;
+            const float DateWidthPt = 260f;
+            const float LineThickness = 0.8f;
+            const float FooterReservePt = 84f;
+
+            const float TopClusterSpacing = 2f;
+            const float LabelBlockSpacing = 0f;
+            const float FieldLineHeight = 1.15f;
+            const float GapAfterSubjectPt = 20f;
+
+            var baseText = TextStyle.Default.FontSize(12).FontFamily("Tajawal").FontColor(bodyHex);
+            if (!string.IsNullOrWhiteSpace(m.FontFamilyLatin))
+                baseText = baseText.FontFamily(m.FontFamilyLatin);
+
+            var arabicText = TextStyle.Default.FontSize(12).FontFamily("Tajawal").FontColor(bodyHex);
+            if (!string.IsNullOrWhiteSpace(m.FontFamilyArabic))
+                arabicText = arabicText.FontFamily(m.FontFamilyArabic);
+
+            byte[]? bannerBytes = (m.BannerImage is { Length: > 0 }) ? m.BannerImage : null;
+            byte[]? footerBytes = (m.FooterImage is { Length: > 0 }) ? m.FooterImage : null;
+
+            string memoNumber = string.IsNullOrWhiteSpace(m.MemoNumber)
+                ? $"M-{DateTime.UtcNow:yyyyMMdd-HHmmss}"
+                : m.MemoNumber!.Trim();
+
+            string autoDate = ContainsArabic(m.Body ?? "") ? ArabicGregorianDate(DateTime.UtcNow)
+                                                           : OrdinalDateEn(DateTime.UtcNow);
+            string dateText = string.IsNullOrWhiteSpace(m.DateText) ? autoDate : m.DateText!.Trim();
+
+            var pdf = Document.Create(doc =>
+            {
+                doc.Page(page =>
+                {
+                    page.Size(PageSizes.A4);
+                    page.Margin(m.PageMarginPt);
+                    page.DefaultTextStyle(baseText);
+
+                    // Background footer image pinned to bottom
+                    page.Background().Element(bg =>
+                    {
+                        if (footerBytes != null)
+                            bg.AlignBottom().Image(footerBytes).FitWidth();
+                    });
+
+                    // Banner only once
+                    page.Header().ShowOnce().PaddingTop(3).Element(h =>
+                    {
+                        if (bannerBytes != null)
+                            h.Image(bannerBytes).FitWidth();
+                    });
+
+                    page.Content()
+                        .PaddingBottom(FooterReservePt)
+                        .Column(col =>
+                        {
+                            col.Spacing(TopClusterSpacing);
+
+                            // Memo No.
+                            col.Item().AlignLeft().Width(MemoWidthPt).Column(c =>
+                            {
+                                c.Spacing(LabelBlockSpacing);
+                                c.Item().Text(t => t.Span("Memo No.").SemiBold().FontColor(labelHexEn).FontSize(10));
+                                c.Item().Text(t => { t.AlignLeft(); t.Span(memoNumber).FontSize(10); });
+                            });
+
+                            // Date
+                            col.Item().AlignCenter().Width(DateWidthPt).Column(c =>
+                            {
+                                c.Spacing(LabelBlockSpacing);
+                                c.Item().Row(rr =>
+                                {
+                                    rr.RelativeItem().Text(t => t.Span("Date").SemiBold().FontColor(labelHexEn));
+                                    rr.RelativeItem().AlignRight().Text(t => t.Span("التاريخ").Style(arabicText).SemiBold().FontColor(labelHexAr));
+                                });
+                                c.Item()
+                                 .BorderBottom(LineThickness).BorderColor(underlineHex)
+                                 .Text(t =>
+                                 {
+                                     t.AlignCenter();
+                                     var style = ContainsArabic(dateText) ? arabicText : baseText;
+                                     t.Span(dateText).Style(style);
+                                 });
+                            });
+
+                            void FieldBlock(string en, string ar, string? value)
+                            {
+                                col.Item().AlignCenter().Width(FieldWidthPt).Column(b =>
+                                {
+                                    b.Spacing(LabelBlockSpacing);
+
+                                    b.Item().Row(r =>
+                                    {
+                                        r.RelativeItem().Text(t => t.Span(en).SemiBold().FontColor(labelHexEn).FontSize(14));
+                                        r.RelativeItem().AlignRight().Text(t => t.Span(ar).Style(arabicText).SemiBold().FontColor(labelHexAr).FontSize(14));
+                                    });
+
+                                    b.Item()
+                                     .BorderBottom(LineThickness).BorderColor(underlineHex)
+                                     .Text(t =>
+                                     {
+                                         t.DefaultTextStyle(ds => ds.LineHeight(FieldLineHeight));
+                                         t.AlignCenter();
+                                         var s = ContainsArabic(value ?? "") ? arabicText : baseText;
+                                         t.Span(value ?? "").Style(s).FontSize(14);
+                                     });
+                                });
+                            }
+
+                            void ThroughBlock(string en, string ar, string? value)
+                            {
+                                col.Item().AlignCenter().Width(ThroughWidthPt).Column(b =>
+                                {
+                                    b.Spacing(LabelBlockSpacing);
+
+                                    b.Item().Row(r =>
+                                    {
+                                        r.RelativeItem().Text(t => t.Span(en).SemiBold().FontColor(labelHexEn).FontSize(14));
+                                        r.RelativeItem().AlignRight().Text(t => t.Span(ar).Style(arabicText).SemiBold().FontColor(labelHexAr).FontSize(14));
+                                    });
+
+                                    b.Item().Text(t =>
+                                    {
+                                        t.DefaultTextStyle(ds => ds.LineHeight(FieldLineHeight));
+                                        t.AlignCenter();
+                                        var s = ContainsArabic(value ?? "") ? arabicText : baseText;
+                                        t.Span(value ?? "").Style(s).FontSize(14);
+                                    });
+                                });
+                            }
+
+                            FieldBlock("To", "إلى", m.To);
+                            ThroughBlock("Through", "بواسطة", m.Through);
+                            FieldBlock("From", "من", m.From);
+                            FieldBlock("Subject", "الموضوع", m.Subject);
+
+                            col.Item().Height(GapAfterSubjectPt);
+
+                            col.Item()
+                               .AlignCenter()
+                               .Width(FieldWidthPt)
+                               .Element(body =>
+                               {
+                                   RenderRichBody(body, m.Body ?? "", FieldWidthPt, baseText, arabicText);
+                               });
+                        });
+
+                    // Footer classification (as real footer, not floating)
+                    page.Footer()
+                        .PaddingTop(2)
+                        .Column(f =>
+                        {
+                            var classText = string.IsNullOrWhiteSpace(m.Classification) ? "—" : m.Classification!.Trim();
+                            f.Item().Text(t =>
+                            {
+                                t.AlignCenter();
+                                t.Span("Classification").SemiBold().FontColor(labelHexEn);
+                                t.Span(": ");
+                                t.Span(classText);
+                            });
+                        });
+                });
+            }).GeneratePdf();
+
+            return await Task.FromResult(pdf);
         }
 
         private byte[]? ReadWwwrootBytes(string relativePath)
@@ -239,18 +653,34 @@ namespace BADEAPORTAL.Services
 
                 var fontsDir = Path.Combine(env.WebRootPath, "fonts");
 
-                // Register ALL Tajawal fonts you have (Regular/Bold/etc)
-                // QuestPDF will use them when you call .FontFamily("Tajawal")
                 if (Directory.Exists(fontsDir))
                 {
                     foreach (var f in Directory.GetFiles(fontsDir, "Tajawal-*.ttf"))
-                    {
                         FontManager.RegisterFont(File.OpenRead(f));
-                    }
                 }
 
                 _fontsRegistered = true;
             }
+        }
+
+        // Internal input model so we don't force you to add new folders/models
+        private sealed class PortalMemoInput
+        {
+            public string? MemoNumber { get; set; }
+            public string? To { get; set; }
+            public string? Through { get; set; }
+            public string? From { get; set; }
+            public string? Subject { get; set; }
+            public string? Classification { get; set; }
+            public string? Body { get; set; }                 // HTML
+            public string? PreparedBy { get; set; }           // not used in generator template
+            public float PageMarginPt { get; set; } = 36f;
+            public string? UnderlineColorHex { get; set; }
+            public string? FontFamilyLatin { get; set; }
+            public string? FontFamilyArabic { get; set; }
+            public string? DateText { get; set; }
+            public byte[]? BannerImage { get; set; }
+            public byte[]? FooterImage { get; set; }
         }
     }
 }
