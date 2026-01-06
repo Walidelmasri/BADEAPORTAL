@@ -89,6 +89,8 @@ namespace BADEAPORTAL.Services
 
             static string? ReadTextAlign(HtmlNode node)
             {
+                string? align = null;
+
                 var style = node.GetAttributeValue("style", "");
                 if (!string.IsNullOrEmpty(style))
                 {
@@ -96,14 +98,22 @@ namespace BADEAPORTAL.Services
                     foreach (var p in parts)
                     {
                         var kv = p.Split(':', 2, StringSplitOptions.TrimEntries);
-                        if (kv.Length == 2 && kv[0].Equals("text-align", StringComparison.OrdinalIgnoreCase))
-                            return kv[1].ToLowerInvariant();
+                        if (kv.Length == 2 &&
+                            kv[0].Equals("text-align", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // keep overwriting so LAST text-align wins (browser behavior)
+                            align = kv[1].ToLowerInvariant();
+                        }
                     }
                 }
+
+                if (!string.IsNullOrWhiteSpace(align))
+                    return align;
 
                 var alignAttr = node.GetAttributeValue("align", null);
                 return alignAttr?.ToLowerInvariant();
             }
+
 
             static bool IsBlankBlock(HtmlNode block)
             {
