@@ -12,5 +12,11 @@ namespace BADEAPORTAL.Models
         public string? MemoFrom { get; set; }
         public string? MemoSubject { get; set; }
         public string? MemoClassification { get; set; }
+        public string FromKind { get; set; } = "USER";
+        public string? FromDeptCode { get; set; }
+
+        public bool NotifyInApp { get; set; } = true;
+        public bool NotifyEmail { get; set; } = true;
+
     }
 }

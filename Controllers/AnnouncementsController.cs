@@ -54,9 +54,16 @@ namespace BADEAPORTAL.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var vm = new AnnouncementCreateVm();
+            var vm = new AnnouncementCreateVm
+            {
+                IsMemo = true,          // default memo
+                NotifyInApp = true,
+                NotifyEmail = true,
+                FromKind = "USER"
+            };
             return View(vm);
         }
+
 
         // POST: /Announcements/Create
         [HttpPost]
@@ -77,7 +84,11 @@ namespace BADEAPORTAL.Controllers
                 MemoThrough = vm.MemoThrough,
                 MemoFrom = vm.MemoFrom,
                 MemoSubject = vm.MemoSubject,
-                MemoClassification = vm.MemoClassification
+                MemoClassification = vm.MemoClassification,
+                FromKind = vm.FromKind,
+                FromDeptCode = vm.FromDeptCode,
+                NotifyInApp = vm.NotifyInApp,
+                NotifyEmail = vm.NotifyEmail
             };
 
             var id = await _announcements.CreateAsync(dto);
@@ -155,30 +166,30 @@ namespace BADEAPORTAL.Controllers
 
             return text.Substring(0, maxLength) + "…";
         }
-// GET: /Announcements/Modal/5
-[HttpGet]
-public async Task<IActionResult> Modal(int id)
-{
-    var entity = await _announcements.GetByIdAsync(id);
-    if (entity == null) return NotFound();
+        // GET: /Announcements/Modal/5
+        [HttpGet]
+        public async Task<IActionResult> Modal(int id)
+        {
+            var entity = await _announcements.GetByIdAsync(id);
+            if (entity == null) return NotFound();
 
-    var vm = new AnnouncementDetailsVm
-    {
-        Id = entity.Id,
-        Title = entity.Title,
-        BodyHtml = entity.BodyHtml,
-        IsMemo = entity.IsMemo,
-        MemoTo = entity.MemoTo,
-        MemoThrough = entity.MemoThrough,
-        MemoFrom = entity.MemoFrom,
-        MemoSubject = entity.MemoSubject,
-        MemoClassification = entity.MemoClassification,
-        CreatedAtUtc = entity.CreatedAtUtc,
-        CreatedByName = entity.CreatedByName
-    };
+            var vm = new AnnouncementDetailsVm
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                BodyHtml = entity.BodyHtml,
+                IsMemo = entity.IsMemo,
+                MemoTo = entity.MemoTo,
+                MemoThrough = entity.MemoThrough,
+                MemoFrom = entity.MemoFrom,
+                MemoSubject = entity.MemoSubject,
+                MemoClassification = entity.MemoClassification,
+                CreatedAtUtc = entity.CreatedAtUtc,
+                CreatedByName = entity.CreatedByName
+            };
 
-    return PartialView("_AnnouncementDetailsModalBody", vm);
-}
+            return PartialView("_AnnouncementDetailsModalBody", vm);
+        }
 
 
     }

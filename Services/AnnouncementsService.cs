@@ -66,7 +66,12 @@ namespace BADEAPORTAL.Services
 
                 CreatedAtUtc = DateTime.UtcNow,
                 CreatedByName = user.FullName ?? user.DisplayName ?? user.EmailOrUpn ?? "Unknown",
-                CreatedByUpn = user.EmailOrUpn ?? "unknown@local"
+                CreatedByUpn = user.EmailOrUpn ?? "unknown@local",
+                FromKind = dto.FromKind ?? "USER",
+                FromDeptCode = dto.FromDeptCode,
+
+                NotifyInApp = dto.NotifyInApp,
+                NotifyEmail = dto.NotifyEmail
             };
 
             _db.Announcements.Add(entity);

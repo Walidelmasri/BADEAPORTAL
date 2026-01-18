@@ -17,6 +17,12 @@ namespace BADEAPORTAL.Models.Announcements
         public string? MemoFrom { get; set; }
         public string? MemoSubject { get; set; }
         public string? MemoClassification { get; set; }
+        public string FromKind { get; set; } = "USER";   // USER or DEPT
+        public string? FromDeptCode { get; set; }
+
+        public bool NotifyInApp { get; set; } = true;
+        public bool NotifyEmail { get; set; } = true;
+
 
         public IEnumerable<ValidationResult> Validate(ValidationContext context)
         {

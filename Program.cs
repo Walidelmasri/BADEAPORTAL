@@ -22,6 +22,7 @@ builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped<IAnnouncementsService, AnnouncementsService>();
 builder.Services.AddScoped<IMemoPdfService, QuestPdfMemoService>();
 builder.Services.AddScoped<IHtmlContentNormalizer, QuillHtmlNormalizer>();
+builder.Services.AddScoped<IPickerDirectory, OraclePickerDirectory>();
 
 // Oracle EF Core
 builder.Services.AddDbContext<PortalDbContext>(options =>
