@@ -33,7 +33,6 @@ FROM (
       AND (
             UPPER(NAME_ENG) LIKE :p_like
          OR UPPER(EMP_ID)   LIKE :p_like
-         OR UPPER(USERID)   LIKE :p_like
       )
     ORDER BY NAME_ENG
 )
