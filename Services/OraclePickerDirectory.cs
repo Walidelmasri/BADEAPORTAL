@@ -24,7 +24,7 @@ namespace BADEAPORTAL.Services
             var limit = take <= 0 ? 50 : Math.Min(take, 200);
 
             await using var cmd = conn.CreateCommand();
-cmd.CommandText = @"
+            cmd.CommandText = @"
 SELECT EMP_ID, NAME_ENG, USERID
 FROM (
     SELECT EMP_ID, NAME_ENG, USERID
@@ -36,8 +36,8 @@ FROM (
          OR UPPER(USERID)   LIKE :p_like
       )
     ORDER BY NAME_ENG
-) x
-WHERE x.ROWNUM <= :p_take";
+)
+WHERE ROWNUM <= :p_take";
 
 
             var pLike = cmd.CreateParameter();
