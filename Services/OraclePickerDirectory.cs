@@ -18,21 +18,25 @@ namespace BADEAPORTAL.Services
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
-            await using var cmd = conn.CreateCommand();
+            // Limit defensively (and avoid binding FETCH)
+            var limit = take <= 0 ? 20 : Math.Min(take, 50);
 
-            // Quick search: match on name OR emp_id OR userid
+            await using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
-SELECT EMP_ID, NAME_ENG, USERID, EMAIL
-FROM   BADEA_ADDONS.EMPLOYEES
-WHERE  EMP_ID IS NOT NULL
-AND   (
-        :p_q IS NULL
-     OR UPPER(NAME_ENG) LIKE :p_like
-     OR UPPER(EMP_ID)   LIKE :p_like
-     OR UPPER(USERID)   LIKE :p_like
+SELECT *
+FROM (
+    SELECT EMP_ID, NAME_ENG, USERID, EMAIL
+    FROM   BADEA_ADDONS.EMPLOYEES
+    WHERE  EMP_ID IS NOT NULL
+    AND   (
+            :p_q IS NULL
+         OR UPPER(NAME_ENG) LIKE :p_like
+         OR UPPER(EMP_ID)   LIKE :p_like
+         OR UPPER(USERID)   LIKE :p_like
+    )
+    ORDER BY NAME_ENG
 )
-ORDER BY NAME_ENG
-FETCH FIRST :p_take ROWS ONLY";
+WHERE ROWNUM <= :p_take";
 
             var pQ = cmd.CreateParameter();
             pQ.ParameterName = "p_q";
@@ -41,14 +45,12 @@ FETCH FIRST :p_take ROWS ONLY";
 
             var pLike = cmd.CreateParameter();
             pLike.ParameterName = "p_like";
-            pLike.Value = string.IsNullOrWhiteSpace(q)
-                ? DBNull.Value
-                : $"%{q.Trim().ToUpperInvariant()}%";
+            pLike.Value = string.IsNullOrWhiteSpace(q) ? DBNull.Value : $"%{q.Trim().ToUpperInvariant()}%";
             cmd.Parameters.Add(pLike);
 
             var pTake = cmd.CreateParameter();
             pTake.ParameterName = "p_take";
-            pTake.Value = take <= 0 ? 20 : Math.Min(take, 50);
+            pTake.Value = limit;
             cmd.Parameters.Add(pTake);
 
             await using var rdr = await cmd.ExecuteReaderAsync(ct);
@@ -71,6 +73,7 @@ FETCH FIRST :p_take ROWS ONLY";
             return list;
         }
 
+
         public async Task<IReadOnlyList<DepartmentPickDto>> SearchDepartmentsAsync(string? q, int take = 20, CancellationToken ct = default)
         {
             var list = new List<DepartmentPickDto>();
@@ -79,15 +82,20 @@ FETCH FIRST :p_take ROWS ONLY";
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
+            var limit = take <= 0 ? 20 : Math.Min(take, 50);
+
             await using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
-SELECT DEPT_CODE, DEPT_NAME, HEAD_EMP_ID
-FROM   BADEA_ADDONS.DEPARTMENTS
-WHERE  :p_q IS NULL
-   OR  UPPER(DEPT_NAME) LIKE :p_like
-   OR  UPPER(DEPT_CODE) LIKE :p_like
-ORDER BY DEPT_NAME
-FETCH FIRST :p_take ROWS ONLY";
+SELECT *
+FROM (
+    SELECT DEPT_CODE, DEPT_NAME, HEAD_EMP_ID
+    FROM   BADEA_ADDONS.DEPARTMENTS
+    WHERE  :p_q IS NULL
+       OR  UPPER(DEPT_NAME) LIKE :p_like
+       OR  UPPER(DEPT_CODE) LIKE :p_like
+    ORDER BY DEPT_NAME
+)
+WHERE ROWNUM <= :p_take";
 
             var pQ = cmd.CreateParameter();
             pQ.ParameterName = "p_q";
@@ -96,14 +104,12 @@ FETCH FIRST :p_take ROWS ONLY";
 
             var pLike = cmd.CreateParameter();
             pLike.ParameterName = "p_like";
-            pLike.Value = string.IsNullOrWhiteSpace(q)
-                ? DBNull.Value
-                : $"%{q.Trim().ToUpperInvariant()}%";
+            pLike.Value = string.IsNullOrWhiteSpace(q) ? DBNull.Value : $"%{q.Trim().ToUpperInvariant()}%";
             cmd.Parameters.Add(pLike);
 
             var pTake = cmd.CreateParameter();
             pTake.ParameterName = "p_take";
-            pTake.Value = take <= 0 ? 20 : Math.Min(take, 50);
+            pTake.Value = limit;
             cmd.Parameters.Add(pTake);
 
             await using var rdr = await cmd.ExecuteReaderAsync(ct);
@@ -124,6 +130,7 @@ FETCH FIRST :p_take ROWS ONLY";
 
             return list;
         }
+
 
         public async Task<(string EmpId, string NameEng)?> TryGetEmployeeByUserIdAsync(string userId, CancellationToken ct = default)
         {
