@@ -18,31 +18,32 @@ namespace BADEAPORTAL.Services
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
+            // you said: no "fetch all" here
             if (string.IsNullOrWhiteSpace(q))
-                return Array.Empty<EmployeePickDto>(); // IMPORTANT: no “fetch all” here
+                return Array.Empty<EmployeePickDto>();
 
             var limit = take <= 0 ? 50 : Math.Min(take, 200);
 
             await using var cmd = conn.CreateCommand();
+
+            // NORMAL ORACLE SQL (no weird aliasing, no EMP_ID search, no USERID search)
             cmd.CommandText = @"
 SELECT EMP_ID, NAME_ENG, USERID
 FROM (
     SELECT EMP_ID, NAME_ENG, USERID
     FROM   BADEA_ADDONS.EMPLOYEES
     WHERE  EMP_ID IS NOT NULL
-      AND (
-            UPPER(NAME_ENG) LIKE :p_like
-         OR UPPER(EMP_ID)   LIKE :p_like
-      )
+      AND  UPPER(NAME_ENG) LIKE :p_name
     ORDER BY NAME_ENG
 )
 WHERE ROWNUM <= :p_take";
 
+            cmd.Parameters.Clear();
 
-            var pLike = cmd.CreateParameter();
-            pLike.ParameterName = "p_like";
-            pLike.Value = $"%{q.Trim().ToUpperInvariant()}%";
-            cmd.Parameters.Add(pLike);
+            var pName = cmd.CreateParameter();
+            pName.ParameterName = "p_name";
+            pName.Value = q.Trim().ToUpperInvariant() + "%"; // STARTS WITH (normal)
+            cmd.Parameters.Add(pName);
 
             var pTake = cmd.CreateParameter();
             pTake.ParameterName = "p_take";
@@ -52,7 +53,8 @@ WHERE ROWNUM <= :p_take";
             await using var rdr = await cmd.ExecuteReaderAsync(ct);
             while (await rdr.ReadAsync(ct))
             {
-                var empId = rdr.GetString(0);
+                // keep EXACTLY your existing mapping behavior
+                var empId = rdr.GetString(0);                 // if this ever throws, EMP_ID is NUMBER and you must ToString it
                 var name = rdr.IsDBNull(1) ? "-" : rdr.GetString(1);
                 var userId = rdr.IsDBNull(2) ? null : rdr.GetString(2);
 
@@ -66,8 +68,6 @@ WHERE ROWNUM <= :p_take";
 
             return list;
         }
-
-
 
         public async Task<IReadOnlyList<EmployeePickDto>> ListEmployeesAsync(int take = 200, CancellationToken ct = default)
         {
