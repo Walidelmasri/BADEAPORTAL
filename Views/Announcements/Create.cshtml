@@ -255,6 +255,9 @@
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
     <script>
+        // =========================
+        // Quill
+        // =========================
         const quill = new Quill('#q-editor', {
             theme: 'snow',
             modules: { toolbar: '#q-toolbar', table: true }
@@ -266,6 +269,9 @@
         const form = document.querySelector('form');
         form.addEventListener('submit', () => { body.value = quill.root.innerHTML; });
 
+        // =========================
+        // Memo toggle (default memo)
+        // =========================
         const isMemoHidden = document.getElementById('isMemoHidden');
         const isAnnouncementToggle = document.getElementById('isAnnouncementToggle');
         const panel = document.getElementById('memoFields');
@@ -280,6 +286,9 @@
         syncMemoToggle();
         isAnnouncementToggle.addEventListener('change', syncMemoToggle);
 
+        // =========================
+        // Validation
+        // =========================
         form.addEventListener('submit', e => {
             const txt = quill.getText().trim();
             if (!txt.length) { e.preventDefault(); alert('Body cannot be empty'); return; }
@@ -299,6 +308,18 @@
             }
         });
 
+        // =========================
+        // Helpers
+        // =========================
+        function stripEmpId(label) {
+            if (!label) return '';
+            // removes trailing " (anything)" at the end
+            return label.replace(/\s*\([^)]*\)\s*$/, '').trim();
+        }
+
+        // =========================
+        // Lookup base (respects /portalbadea)
+        // =========================
         const lookupBase = '@Url.Content("~/api/lookup")';
 
         async function searchEmployees(q) {
@@ -317,11 +338,24 @@
             return await res.json();
         }
 
+        // =========================
+        // Typeahead helper (stays open on scroll)
+        // =========================
         function attachTypeahead(inputEl, fetchFn, onPick, buttonEl) {
             let box;
             let t;
 
-            function closeBox() { if (box) { box.remove(); box = null; } }
+            function closeBox() {
+                if (box) { box.remove(); box = null; }
+            }
+
+            function positionBox() {
+                if (!box) return;
+                const rect = inputEl.getBoundingClientRect();
+                box.style.left = `${rect.left + window.scrollX}px`;
+                box.style.top = `${rect.bottom + window.scrollY + 6}px`;
+                box.style.width = `${rect.width}px`;
+            }
 
             function render(items) {
                 closeBox();
@@ -338,11 +372,6 @@
                 box.style.maxHeight = '280px';
                 box.style.overflowY = 'auto';
 
-                const rect = inputEl.getBoundingClientRect();
-                box.style.left = `${rect.left + window.scrollX}px`;
-                box.style.top = `${rect.bottom + window.scrollY + 6}px`;
-                box.style.width = `${rect.width}px`;
-
                 items.forEach(item => {
                     const row = document.createElement('div');
                     row.textContent = item.label || item.Label || '';
@@ -357,6 +386,7 @@
                 });
 
                 document.body.appendChild(box);
+                positionBox();
             }
 
             async function openList(q) {
@@ -375,8 +405,8 @@
                 if (e.target !== inputEl && e.target !== buttonEl) closeBox();
             };
 
-            const onResize = () => closeBox();
-            const onScroll = () => closeBox();
+            const onResize = () => { positionBox(); };
+            const onScroll = () => { positionBox(); };
 
             inputEl.addEventListener('input', onInput);
             document.addEventListener('click', onDocClick);
@@ -385,7 +415,8 @@
 
             if (buttonEl) {
                 buttonEl.addEventListener('click', async () => {
-                    await openList(inputEl.value.trim()); // if empty -> shows first page if API supports it
+                    // open even if empty => API decides what it returns
+                    await openList(inputEl.value.trim());
                 });
             }
 
@@ -399,14 +430,24 @@
             };
         }
 
+        // =========================
         // THROUGH (dept only)
+        // =========================
         const memoThroughInput = document.getElementById('memoThroughInput');
         const memoThroughBtn = document.getElementById('memoThroughBtn');
-        let disposeThrough = attachTypeahead(memoThroughInput, searchDepartments, (item) => {
-            memoThroughInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
-        }, memoThroughBtn);
 
+        let disposeThrough = attachTypeahead(
+            memoThroughInput,
+            searchDepartments,
+            (item) => {
+                memoThroughInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
+            },
+            memoThroughBtn
+        );
+
+        // =========================
         // TO (user or dept)
+        // =========================
         const memoToInput = document.getElementById('memoToInput');
         const memoToBtn = document.getElementById('memoToBtn');
         const toKindSelect = document.getElementById('toKindSelect');
@@ -416,27 +457,41 @@
 
         function wireToPicker() {
             if (disposeTo) { disposeTo(); disposeTo = null; }
+
             toDeptCodeHidden.value = "";
             memoToInput.value = "";
 
             if (toKindSelect && toKindSelect.value === "DEPT") {
                 memoToInput.placeholder = "Search department...";
-                disposeTo = attachTypeahead(memoToInput, searchDepartments, (item) => {
-                    memoToInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
-                    toDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
-                }, memoToBtn);
+                disposeTo = attachTypeahead(
+                    memoToInput,
+                    searchDepartments,
+                    (item) => {
+                        memoToInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
+                        toDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
+                    },
+                    memoToBtn
+                );
             } else {
                 memoToInput.placeholder = "Search employee...";
-                disposeTo = attachTypeahead(memoToInput, searchEmployees, (item) => {
-                    memoToInput.value = item.label || item.Label || '';
-                }, memoToBtn);
+                disposeTo = attachTypeahead(
+                    memoToInput,
+                    searchEmployees,
+                    (item) => {
+                        const lbl = item.label || item.Label || '';
+                        memoToInput.value = stripEmpId(lbl); // ✅ strips "(EMP_ID)"
+                    },
+                    memoToBtn
+                );
             }
         }
 
         toKindSelect.addEventListener('change', wireToPicker);
         wireToPicker();
 
+        // =========================
         // FROM (user or dept)
+        // =========================
         const fromKindSelect = document.getElementById('fromKindSelect');
         const memoFromInput = document.getElementById('memoFromInput');
         const memoFromBtn = document.getElementById('memoFromBtn');
@@ -446,20 +501,32 @@
 
         function wireFromPicker() {
             if (disposeFrom) { disposeFrom(); disposeFrom = null; }
+
             fromDeptCodeHidden.value = "";
             memoFromInput.value = "";
 
             if (fromKindSelect && fromKindSelect.value === "DEPT") {
                 memoFromInput.placeholder = "Search department...";
-                disposeFrom = attachTypeahead(memoFromInput, searchDepartments, (item) => {
-                    memoFromInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
-                    fromDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
-                }, memoFromBtn);
+                disposeFrom = attachTypeahead(
+                    memoFromInput,
+                    searchDepartments,
+                    (item) => {
+                        memoFromInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
+                        fromDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
+                    },
+                    memoFromBtn
+                );
             } else {
                 memoFromInput.placeholder = "Search employee...";
-                disposeFrom = attachTypeahead(memoFromInput, searchEmployees, (item) => {
-                    memoFromInput.value = item.label || item.Label || '';
-                }, memoFromBtn);
+                disposeFrom = attachTypeahead(
+                    memoFromInput,
+                    searchEmployees,
+                    (item) => {
+                        const lbl = item.label || item.Label || '';
+                        memoFromInput.value = stripEmpId(lbl); // ✅ strips "(EMP_ID)"
+                    },
+                    memoFromBtn
+                );
             }
         }
 
@@ -467,3 +534,4 @@
         wireFromPicker();
     </script>
 }
+
