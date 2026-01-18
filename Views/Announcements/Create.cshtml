@@ -237,12 +237,23 @@
                     <div id="memoFields" class="memo-panel">
                         <div class="memo-grid">
 
-                            <!-- TO (employees quick search) -->
+                            <!-- TO -->
                             <div>
                                 <div class="field-label">To</div>
                                 <input asp-for="MemoTo" id="memoToInput" class="form-control premium-input"
-                                       placeholder="Search employee..." autocomplete="off" />
+                                    placeholder="Search..." autocomplete="off" />
+                                <input type="hidden" id="toDeptCodeHidden" name="ToDeptCode" />
                             </div>
+
+                            <!-- TO KIND -->
+                            <div>
+                                <div class="field-label">To type</div>
+                                <select id="toKindSelect" class="form-select premium-input" name="ToKind">
+                                    <option value="USER">User</option>
+                                    <option value="DEPT">Department</option>
+                                </select>
+                            </div>
+
 
                             <!-- FROM KIND -->
                             <div>
@@ -257,7 +268,7 @@
                             <div>
                                 <div class="field-label">From</div>
                                 <input asp-for="MemoFrom" id="memoFromInput" class="form-control premium-input"
-                                       placeholder="Search..." autocomplete="off" />
+                                    placeholder="Search..." autocomplete="off" />
                                 <input asp-for="FromDeptCode" type="hidden" id="fromDeptCodeHidden" />
                             </div>
 
@@ -265,7 +276,7 @@
                             <div>
                                 <div class="field-label">Through (Department)</div>
                                 <input asp-for="MemoThrough" id="memoThroughInput" class="form-control premium-input"
-                                       placeholder="Search department..." autocomplete="off" />
+                                    placeholder="Search department..." autocomplete="off" />
                             </div>
 
                             <div>
@@ -276,7 +287,7 @@
                             <div>
                                 <div class="field-label">Classification</div>
                                 <input asp-for="MemoClassification" class="form-control premium-input"
-                                       placeholder="Classification" />
+                                    placeholder="Classification" />
                             </div>
 
                             <!-- notifications -->
@@ -334,6 +345,9 @@
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
     <script>
+        // =========================
+        // Quill
+        // =========================
         const quill = new Quill('#q-editor', {
             theme: 'snow',
             modules: { toolbar: '#q-toolbar', table: true }
@@ -342,10 +356,14 @@
         const body = document.getElementById('BodyHtml');
         if (body.value) quill.clipboard.dangerouslyPasteHTML(body.value);
 
-        document.querySelector('form').addEventListener('submit', () => {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', () => {
             body.value = quill.root.innerHTML;
         });
 
+        // =========================
+        // Memo toggle (default memo)
+        // =========================
         const isMemoHidden = document.getElementById('isMemoHidden');
         const isAnnouncementToggle = document.getElementById('isAnnouncementToggle');
         const panel = document.getElementById('memoFields');
@@ -356,14 +374,16 @@
             panel.style.display = (!isAnnouncement) ? 'block' : 'none';
         }
 
-        // default memo
-        isAnnouncementToggle.checked = false;
+        isAnnouncementToggle.checked = false; // default memo
         syncMemoToggle();
         isAnnouncementToggle.addEventListener('change', syncMemoToggle);
 
-        document.querySelector('form').addEventListener('submit', e => {
-            const body = quill.getText().trim();
-            if (!body.length) {
+        // =========================
+        // Validation
+        // =========================
+        form.addEventListener('submit', e => {
+            const txt = quill.getText().trim();
+            if (!txt.length) {
                 e.preventDefault();
                 alert('Body cannot be empty');
                 return;
@@ -374,9 +394,9 @@
                 const required = ['MemoTo', 'MemoFrom', 'MemoSubject', 'MemoClassification'];
                 for (const name of required) {
                     const el = document.querySelector(`[name="${name}"]`);
-                    if (!el.value.trim()) {
+                    if (!el || !el.value.trim()) {
                         e.preventDefault();
-                        el.focus();
+                        if (el) el.focus();
                         alert('Please complete memo header fields');
                         return;
                     }
@@ -384,18 +404,30 @@
             }
         });
 
+        // =========================
+        // Lookup base (respects /portalbadea path base)
+        // =========================
+        const lookupBase = '@Url.Content("~/api/lookup")';
+
         async function searchEmployees(q) {
-            const res = await fetch(`/api/lookup/employees?q=${encodeURIComponent(q)}&take=10`);
+            const res = await fetch(`${lookupBase}/employees?q=${encodeURIComponent(q)}&take=10`, {
+                headers: { 'Accept': 'application/json' }
+            });
             if (!res.ok) return [];
             return await res.json();
         }
 
         async function searchDepartments(q) {
-            const res = await fetch(`/api/lookup/departments?q=${encodeURIComponent(q)}&take=10`);
+            const res = await fetch(`${lookupBase}/departments?q=${encodeURIComponent(q)}&take=10`, {
+                headers: { 'Accept': 'application/json' }
+            });
             if (!res.ok) return [];
             return await res.json();
         }
 
+        // =========================
+        // Typeahead helper (returns disposer)
+        // =========================
         function attachTypeahead(inputEl, fetchFn, onPick) {
             let box;
             let t;
@@ -406,7 +438,7 @@
 
             function render(items) {
                 closeBox();
-                if (!items.length) return;
+                if (!items || !items.length) return;
 
                 box = document.createElement('div');
                 box.style.position = 'absolute';
@@ -473,17 +505,51 @@
             };
         }
 
-        // Wire fields
-        const memoToInput = document.getElementById('memoToInput');
-        attachTypeahead(memoToInput, searchEmployees, (item) => {
-            memoToInput.value = item.label || item.Label || '';
-        });
-
+        // =========================
+        // Wire THROUGH (departments only)
+        // =========================
         const memoThroughInput = document.getElementById('memoThroughInput');
         attachTypeahead(memoThroughInput, searchDepartments, (item) => {
-            memoThroughInput.value = item.label || item.Label || '';
+            memoThroughInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
         });
 
+        // =========================
+        // Wire TO (user or dept)
+        // =========================
+        const memoToInput = document.getElementById('memoToInput');
+        const toKindSelect = document.getElementById('toKindSelect');
+        const toDeptCodeHidden = document.getElementById('toDeptCodeHidden');
+
+        let disposeToPicker = null;
+
+        function wireToPicker() {
+            if (disposeToPicker) { disposeToPicker(); disposeToPicker = null; }
+
+            toDeptCodeHidden.value = "";
+            memoToInput.value = "";
+
+            if (toKindSelect && toKindSelect.value === "DEPT") {
+                memoToInput.placeholder = "Search department...";
+                disposeToPicker = attachTypeahead(memoToInput, searchDepartments, (item) => {
+                    memoToInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
+                    toDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
+                });
+            } else {
+                memoToInput.placeholder = "Search employee...";
+                disposeToPicker = attachTypeahead(memoToInput, searchEmployees, (item) => {
+                    memoToInput.value = item.label || item.Label || '';
+                });
+            }
+        }
+
+        if (toKindSelect) {
+            toKindSelect.addEventListener('change', wireToPicker);
+        }
+        wireToPicker();
+
+        // =========================
+        // Wire FROM (user or dept)
+        // =========================
         const fromKindSelect = document.getElementById('fromKindSelect');
         const memoFromInput = document.getElementById('memoFromInput');
         const fromDeptCodeHidden = document.getElementById('fromDeptCodeHidden');
@@ -491,15 +557,12 @@
         let disposeFromPicker = null;
 
         function wireFromPicker() {
-            if (disposeFromPicker) {
-                disposeFromPicker();
-                disposeFromPicker = null;
-            }
+            if (disposeFromPicker) { disposeFromPicker(); disposeFromPicker = null; }
 
             fromDeptCodeHidden.value = "";
             memoFromInput.value = "";
 
-            if (fromKindSelect.value === "DEPT") {
+            if (fromKindSelect && fromKindSelect.value === "DEPT") {
                 memoFromInput.placeholder = "Search department...";
                 disposeFromPicker = attachTypeahead(memoFromInput, searchDepartments, (item) => {
                     memoFromInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
@@ -513,7 +576,10 @@
             }
         }
 
-        fromKindSelect.addEventListener('change', wireFromPicker);
+        if (fromKindSelect) {
+            fromKindSelect.addEventListener('change', wireFromPicker);
+        }
         wireFromPicker();
     </script>
+
 }
