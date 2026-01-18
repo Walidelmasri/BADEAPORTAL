@@ -18,40 +18,20 @@ namespace BADEAPORTAL.Services
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
-            // Limit defensively (and avoid binding FETCH)
             var limit = take <= 0 ? 20 : Math.Min(take, 50);
 
+            // Pull a small ordered window (KPI Monitor style) then filter in C#
+            // (avoids Oracle weirdness + avoids EMAIL column existence issues)
             await using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
 SELECT *
 FROM (
-    SELECT EMP_ID, NAME_ENG, USERID, EMAIL
+    SELECT EMP_ID, NAME_ENG, USERID
     FROM   BADEA_ADDONS.EMPLOYEES
     WHERE  EMP_ID IS NOT NULL
-    AND   (
-            :p_q IS NULL
-         OR UPPER(NAME_ENG) LIKE :p_like
-         OR UPPER(EMP_ID)   LIKE :p_like
-         OR UPPER(USERID)   LIKE :p_like
-    )
-    ORDER BY NAME_ENG
+    ORDER  BY NAME_ENG
 )
-WHERE ROWNUM <= :p_take";
-
-            var pQ = cmd.CreateParameter();
-            pQ.ParameterName = "p_q";
-            pQ.Value = string.IsNullOrWhiteSpace(q) ? DBNull.Value : q.Trim();
-            cmd.Parameters.Add(pQ);
-
-            var pLike = cmd.CreateParameter();
-            pLike.ParameterName = "p_like";
-            pLike.Value = string.IsNullOrWhiteSpace(q) ? DBNull.Value : $"%{q.Trim().ToUpperInvariant()}%";
-            cmd.Parameters.Add(pLike);
-
-            var pTake = cmd.CreateParameter();
-            pTake.ParameterName = "p_take";
-            pTake.Value = limit;
-            cmd.Parameters.Add(pTake);
+WHERE ROWNUM <= 300";
 
             await using var rdr = await cmd.ExecuteReaderAsync(ct);
             while (await rdr.ReadAsync(ct))
@@ -59,19 +39,37 @@ WHERE ROWNUM <= :p_take";
                 var empId = rdr.GetString(0);
                 var name = rdr.IsDBNull(1) ? "-" : rdr.GetString(1);
                 var userId = rdr.IsDBNull(2) ? null : rdr.GetString(2);
-                var email = rdr.IsDBNull(3) ? null : rdr.GetString(3);
 
                 list.Add(new EmployeePickDto
                 {
                     EmpId = empId,
                     Label = $"{name} ({empId})",
                     UserId = userId,
-                    Email = email
+                    Email = null
                 });
+            }
+
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                var qq = q.Trim();
+
+                list = list
+                    .Where(x =>
+                        (x.EmpId?.Contains(qq, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                        (x.Label?.Contains(qq, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                        (x.UserId?.Contains(qq, StringComparison.OrdinalIgnoreCase) ?? false)
+                    )
+                    .Take(limit)
+                    .ToList();
+            }
+            else
+            {
+                list = list.Take(limit).ToList();
             }
 
             return list;
         }
+
 
 
         public async Task<IReadOnlyList<DepartmentPickDto>> SearchDepartmentsAsync(string? q, int take = 20, CancellationToken ct = default)
