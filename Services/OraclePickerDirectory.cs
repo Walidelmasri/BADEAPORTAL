@@ -10,7 +10,8 @@ namespace BADEAPORTAL.Services
         private readonly PortalDbContext _db;
         public OraclePickerDirectory(PortalDbContext db) => _db = db;
 
-        public async Task<IReadOnlyList<EmployeePickDto>> SearchEmployeesAsync(string? q, int take = 20, CancellationToken ct = default)
+        public async Task<IReadOnlyList<EmployeePickDto>> SearchEmployeesAsync(
+            string? q, int take = 20, CancellationToken ct = default)
         {
             var list = new List<EmployeePickDto>();
             var conn = _db.Database.GetDbConnection();
@@ -18,25 +19,34 @@ namespace BADEAPORTAL.Services
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
+            var limit = take <= 0 ? 20 : Math.Min(take, 5000);
             var hasQuery = !string.IsNullOrWhiteSpace(q);
-            var limit = take <= 0 ? 20 : Math.Min(take, 5000); // allow "all" if they ask for it
 
             await using var cmd = conn.CreateCommand();
 
             if (!hasQuery)
             {
-                // ✅ return ALL employees (no cap)
+                // KPI-style "list" query, but limited for dropdown (ROWNUM)
                 cmd.CommandText = @"
 SELECT EMP_ID, NAME_ENG, USERID
-FROM   BADEA_ADDONS.EMPLOYEES
-WHERE  EMP_ID IS NOT NULL
-ORDER  BY NAME_ENG";
+FROM (
+    SELECT EMP_ID, NAME_ENG, USERID
+    FROM   BADEA_ADDONS.EMPLOYEES
+    WHERE  EMP_ID IS NOT NULL
+    ORDER  BY NAME_ENG
+)
+WHERE ROWNUM <= :p_take";
+
+                var pTake = cmd.CreateParameter();
+                pTake.ParameterName = "p_take";
+                pTake.Value = limit;
+                cmd.Parameters.Add(pTake);
             }
             else
             {
-                // ✅ search mode (cap by take)
+                // KPI-style search query (ROWNUM + LIKE)
                 cmd.CommandText = @"
-SELECT *
+SELECT EMP_ID, NAME_ENG, USERID
 FROM (
     SELECT EMP_ID, NAME_ENG, USERID
     FROM   BADEA_ADDONS.EMPLOYEES
@@ -79,6 +89,7 @@ WHERE ROWNUM <= :p_take";
 
             return list;
         }
+
 
 
 
