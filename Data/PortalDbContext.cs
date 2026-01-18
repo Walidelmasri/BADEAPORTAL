@@ -126,7 +126,7 @@ namespace BADEAPORTAL.Data
             // =========================
             modelBuilder.Entity<Department>(d =>
             {
-                d.ToTable("DEPARTMENTS", "BADEA_ADDONS");
+                d.ToTable("DEPARTMENTS");
                 d.HasKey(x => x.DeptCode);
             });
         }
