@@ -25,7 +25,7 @@ namespace BADEAPORTAL.Data
             // =========================
             modelBuilder.Entity<Announcement>(a =>
             {
-                a.ToTable("ANNOUNCEMENTS", "BADEA_ADDONS");
+                a.ToTable("ANNOUNCEMENTS");
 
                 a.HasKey(x => x.Id);
 
