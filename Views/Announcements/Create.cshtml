@@ -7,120 +7,65 @@
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
 
 <style>
-    :root {
-        --portal-hero-glass-bg: rgba(0, 0, 0, .55);
-    }
+    :root { --portal-hero-glass-bg: rgba(0, 0, 0, .55); }
 
-    body,
-    button,
-    a,
-    p,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-family: 'Tajawal', sans-serif !important;
-    }
+    body, button, a, p, h1, h2, h3, h4, h5, h6 { font-family: 'Tajawal', sans-serif !important; }
 
-    .create-shell {
-        max-width: 1040px;
-        margin: 1.75rem auto 0 auto;
-    }
+    .create-shell { max-width: 1040px; margin: 1.75rem auto 0 auto; }
 
     .portal-hero {
-        border-radius: 2rem;
-        overflow: hidden;
-        position: relative;
+        border-radius: 2rem; overflow: hidden; position: relative;
         box-shadow: 0 26px 80px rgba(0, 0, 0, .25);
-        background: #000;
-        min-height: 320px;
+        background: #000; min-height: 320px;
     }
 
-    .portal-hero-bg-carousel img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+    .portal-hero-bg-carousel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
     .portal-hero-overlay {
-        position: absolute;
-        inset: 0;
+        position: absolute; inset: 0;
         background:
             linear-gradient(90deg, rgba(0, 0, 0, .86) 0%, rgba(0, 0, 0, .62) 35%, rgba(0, 0, 0, .18) 70%, rgba(0, 0, 0, .05) 100%),
             radial-gradient(circle at top left, rgba(255, 255, 255, .18), transparent 60%);
     }
 
     .portal-hero-inner {
-        position: relative;
-        z-index: 1;
-        padding: 2.4rem 3.2rem;
-        color: #fff;
-        display: flex;
-        justify-content: space-between;
-        gap: 1.5rem;
-        flex-wrap: wrap;
+        position: relative; z-index: 1;
+        padding: 2.4rem 3.2rem; color: #fff;
+        display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
     }
 
     .portal-pill-badge {
-        display: inline-flex;
-        padding: .2rem .8rem;
-        border-radius: 999px;
-        font-size: .7rem;
-        text-transform: uppercase;
-        letter-spacing: .08em;
-        background: rgba(0, 0, 0, .6);
-        color: #c0f3d2;
+        display: inline-flex; padding: .2rem .8rem; border-radius: 999px;
+        font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+        background: rgba(0, 0, 0, .6); color: #c0f3d2;
         border: 1px solid rgba(192, 243, 210, .45);
     }
 
-    .hero-title {
-        font-size: 2.1rem;
-        font-weight: 850;
-        text-shadow: 0 8px 26px rgba(0, 0, 0, .85);
-    }
+    .hero-title { font-size: 2.1rem; font-weight: 850; text-shadow: 0 8px 26px rgba(0, 0, 0, .85); }
 
     .apple-card {
-        border-radius: 1.8rem;
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        box-shadow: 0 18px 60px rgba(15, 29, 45, .12);
-        overflow: hidden;
+        border-radius: 1.8rem; background: #fff; border: 1px solid #e5e7eb;
+        box-shadow: 0 18px 60px rgba(15, 29, 45, .12); overflow: hidden;
     }
 
     .apple-card-header {
         padding: 1.15rem 1.4rem;
         background: linear-gradient(180deg, #fbfdff, #fff);
         border-bottom: 1px solid #eef2f7;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display: flex; justify-content: space-between; align-items: center;
     }
 
     .toggle-pill {
-        display: inline-flex;
-        gap: .55rem;
-        padding: .35rem .85rem;
-        border-radius: 999px;
-        border: 1px solid #e5e7eb;
-        background: #fff;
+        display: inline-flex; gap: .55rem; padding: .35rem .85rem;
+        border-radius: 999px; border: 1px solid #e5e7eb; background: #fff;
         box-shadow: 0 10px 26px rgba(15, 29, 45, .07);
     }
 
-    .apple-card-body {
-        padding: 1.35rem 1.4rem;
-    }
+    .apple-card-body { padding: 1.35rem 1.4rem; }
 
     .field-label {
-        font-size: .78rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: .1em;
-        color: #6b7280;
-        margin-bottom: .35rem;
+        font-size: .78rem; font-weight: 800; text-transform: uppercase;
+        letter-spacing: .1em; color: #6b7280; margin-bottom: .35rem;
     }
 
     .premium-input {
@@ -130,11 +75,8 @@
     }
 
     .premium-editor-shell {
-        border-radius: 1.4rem;
-        border: 1px solid #e5e7eb;
-        background: #fff;
-        box-shadow: 0 18px 60px rgba(15, 29, 45, .12);
-        overflow: hidden;
+        border-radius: 1.4rem; border: 1px solid #e5e7eb; background: #fff;
+        box-shadow: 0 18px 60px rgba(15, 29, 45, .12); overflow: hidden;
     }
 
     .premium-editor-toolbar {
@@ -143,43 +85,35 @@
         padding: .35rem .5rem;
     }
 
-    .premium-editor {
-        min-height: 320px;
-        padding: 1rem;
-    }
+    .premium-editor { min-height: 320px; padding: 1rem; }
 
-    .ql-editor table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .ql-editor td,
-    .ql-editor th {
-        border: 1px solid #e5e7eb;
-        padding: 6px;
-    }
+    .ql-editor table { width: 100%; border-collapse: collapse; }
+    .ql-editor td, .ql-editor th { border: 1px solid #e5e7eb; padding: 6px; }
 
     .memo-panel {
-        border-radius: 1.4rem;
-        border: 1px solid #eef2f7;
+        border-radius: 1.4rem; border: 1px solid #eef2f7;
         background: linear-gradient(180deg, #fbfdff, #fff);
-        padding: 1.1rem;
-        margin-top: 1rem;
-        display: none;
+        padding: 1.1rem; margin-top: 1rem; display: none;
     }
 
-    .memo-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+    .memo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .pick-btn { width: 44px; display:flex; align-items:center; justify-content:center; }
+
+    .typeahead-box {
+        position: absolute;
+        z-index: 9999;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        box-shadow: 0 18px 60px rgba(15,29,45,.12);
+        overflow: hidden;
+        max-height: 280px;
+        overflow-y: auto;
     }
 
-    .pick-btn {
-        width: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+    .typeahead-row { padding: 10px 12px; cursor: pointer; }
+    .typeahead-row:hover { background: #f3f4f6; }
 </style>
 
 <div class="container-fluid px-0">
@@ -229,9 +163,8 @@
                                 <div class="field-label">To</div>
                                 <div class="input-group">
                                     <input asp-for="MemoTo" id="memoToInput" class="form-control premium-input"
-                                        placeholder="Search..." autocomplete="off" />
-                                    <button type="button" id="memoToBtn"
-                                        class="btn btn-outline-secondary premium-input pick-btn">▾</button>
+                                           placeholder="Search..." autocomplete="off" />
+                                    <button type="button" id="memoToBtn" class="btn btn-outline-secondary premium-input pick-btn">▾</button>
                                 </div>
                                 <input type="hidden" id="toDeptCodeHidden" name="ToDeptCode" />
                             </div>
@@ -259,9 +192,8 @@
                                 <div class="field-label">From</div>
                                 <div class="input-group">
                                     <input asp-for="MemoFrom" id="memoFromInput" class="form-control premium-input"
-                                        placeholder="Search..." autocomplete="off" />
-                                    <button type="button" id="memoFromBtn"
-                                        class="btn btn-outline-secondary premium-input pick-btn">▾</button>
+                                           placeholder="Search..." autocomplete="off" />
+                                    <button type="button" id="memoFromBtn" class="btn btn-outline-secondary premium-input pick-btn">▾</button>
                                 </div>
                                 <input asp-for="FromDeptCode" type="hidden" id="fromDeptCodeHidden" />
                             </div>
@@ -270,11 +202,9 @@
                             <div>
                                 <div class="field-label">Through (Department)</div>
                                 <div class="input-group">
-                                    <input asp-for="MemoThrough" id="memoThroughInput"
-                                        class="form-control premium-input" placeholder="Search department..."
-                                        autocomplete="off" />
-                                    <button type="button" id="memoThroughBtn"
-                                        class="btn btn-outline-secondary premium-input pick-btn">▾</button>
+                                    <input asp-for="MemoThrough" id="memoThroughInput" class="form-control premium-input"
+                                           placeholder="Search department..." autocomplete="off" />
+                                    <button type="button" id="memoThroughBtn" class="btn btn-outline-secondary premium-input pick-btn">▾</button>
                                 </div>
                             </div>
 
@@ -285,8 +215,7 @@
 
                             <div>
                                 <div class="field-label">Classification</div>
-                                <input asp-for="MemoClassification" class="form-control premium-input"
-                                    placeholder="Classification" />
+                                <input asp-for="MemoClassification" class="form-control premium-input" placeholder="Classification" />
                             </div>
 
                             <div style="grid-column: 1 / -1;">
@@ -338,287 +267,300 @@
 </div>
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
-    <script>
-        // =========================
-        // Quill
-        // =========================
-        const quill = new Quill('#q-editor', {
-            theme: 'snow',
-            modules: { toolbar: '#q-toolbar', table: true }
-        });
+<script>
+(() => {
+    // -------------------------
+    // Quill
+    // -------------------------
+    const quill = new Quill('#q-editor', { theme: 'snow', modules: { toolbar: '#q-toolbar', table: true } });
 
-        const body = document.getElementById('BodyHtml');
-        if (body.value) quill.clipboard.dangerouslyPasteHTML(body.value);
+    const body = document.getElementById('BodyHtml');
+    if (body && body.value) quill.clipboard.dangerouslyPasteHTML(body.value);
 
-        const form = document.querySelector('form');
-        form.addEventListener('submit', () => { body.value = quill.root.innerHTML; });
+    const form = document.querySelector('form');
+    form.addEventListener('submit', () => { body.value = quill.root.innerHTML; });
 
-        // =========================
-        // Memo toggle (default memo)
-        // =========================
-        const isMemoHidden = document.getElementById('isMemoHidden');
-        const isAnnouncementToggle = document.getElementById('isAnnouncementToggle');
-        const panel = document.getElementById('memoFields');
+    // -------------------------
+    // Memo toggle (default memo)
+    // -------------------------
+    const isMemoHidden = document.getElementById('isMemoHidden');
+    const isAnnouncementToggle = document.getElementById('isAnnouncementToggle');
+    const panel = document.getElementById('memoFields');
 
-        function syncMemoToggle() {
-            const isAnnouncement = isAnnouncementToggle.checked;
-            isMemoHidden.value = (!isAnnouncement).toString();
-            panel.style.display = (!isAnnouncement) ? 'block' : 'none';
-        }
+    function syncMemoToggle() {
+        const isAnnouncement = isAnnouncementToggle.checked;
+        isMemoHidden.value = (!isAnnouncement).toString();
+        panel.style.display = (!isAnnouncement) ? 'block' : 'none';
+    }
 
-        isAnnouncementToggle.checked = false;
-        syncMemoToggle();
-        isAnnouncementToggle.addEventListener('change', syncMemoToggle);
+    isAnnouncementToggle.checked = false;
+    syncMemoToggle();
+    isAnnouncementToggle.addEventListener('change', syncMemoToggle);
 
-        // =========================
-        // Validation
-        // =========================
-        form.addEventListener('submit', e => {
-            const txt = quill.getText().trim();
-            if (!txt.length) { e.preventDefault(); alert('Body cannot be empty'); return; }
+    // -------------------------
+    // Validation
+    // -------------------------
+    form.addEventListener('submit', e => {
+        const txt = quill.getText().trim();
+        if (!txt.length) { e.preventDefault(); alert('Body cannot be empty'); return; }
 
-            const isMemo = (isMemoHidden.value === 'true');
-            if (isMemo) {
-                const required = ['MemoTo', 'MemoFrom', 'MemoSubject', 'MemoClassification'];
-                for (const name of required) {
-                    const el = document.querySelector(`[name="${name}"]`);
-                    if (!el || !el.value.trim()) {
-                        e.preventDefault();
-                        if (el) el.focus();
-                        alert('Please complete memo header fields');
-                        return;
-                    }
+        const isMemo = (isMemoHidden.value === 'true');
+        if (isMemo) {
+            const required = ['MemoTo', 'MemoFrom', 'MemoSubject', 'MemoClassification'];
+            for (const name of required) {
+                const el = document.querySelector(`[name="${name}"]`);
+                if (!el || !el.value.trim()) {
+                    e.preventDefault();
+                    if (el) el.focus();
+                    alert('Please complete memo header fields');
+                    return;
                 }
             }
-        });
+        }
+    });
 
-        // =========================
-        // Helpers
-        // =========================
-        function stripEmpId(label) {
-            if (!label) return '';
-            // removes trailing " (anything)" at the end
-            return label.replace(/\s*\([^)]*\)\s*$/, '').trim();
+    // -------------------------
+    // Helpers
+    // -------------------------
+    function getLabel(item) {
+        return (item && (item.label ?? item.Label ?? "")) + "";
+    }
+
+    function stripEmpId(label) {
+        if (!label) return '';
+        return label.replace(/\s*\([^)]*\)\s*$/, '').trim(); // "Name (123)" => "Name"
+    }
+
+    // -------------------------
+    // Lookup base (respects /portalbadea)
+    // -------------------------
+    const lookupBase = '@Url.Content("~/api/lookup")';
+
+    async function fetchJson(url) {
+        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
+    }
+
+    async function searchEmployees(q, take) {
+        const url = `${lookupBase}/employees?q=${encodeURIComponent(q || "")}&take=${take}`;
+        return await fetchJson(url);
+    }
+
+    async function searchDepartments(q, take) {
+        const url = `${lookupBase}/departments?q=${encodeURIComponent(q || "")}&take=${take}`;
+        return await fetchJson(url);
+    }
+
+    // -------------------------
+    // Typeahead (robust)
+    // - search triggers from 1 char
+    // - button opens list even if empty
+    // - DOES NOT close on scroll, only repositions
+    // - clicking inside dropdown doesn't close it
+    // -------------------------
+    function attachTypeahead({ inputEl, buttonEl, fetcher, onPick, minChars = 1 }) {
+        let box = null;
+        let t = null;
+        let lastReq = 0;
+
+        function close() {
+            if (box) { box.remove(); box = null; }
         }
 
-        // =========================
-        // Lookup base (respects /portalbadea)
-        // =========================
-        const lookupBase = '@Url.Content("~/api/lookup")';
-
-        async function searchEmployees(q) {
-            const take = (q && q.trim().length) ? 10 : 5000; // empty = all
-            const res = await fetch(`${lookupBase}/employees?q=${encodeURIComponent(q || "")}&take=${take}`, {
-                headers: { 'Accept': 'application/json' }
-            });
-            if (!res.ok) return [];
-            return await res.json();
+        function position() {
+            if (!box) return;
+            const rect = inputEl.getBoundingClientRect();
+            box.style.left = `${rect.left + window.scrollX}px`;
+            box.style.top = `${rect.bottom + window.scrollY + 6}px`;
+            box.style.width = `${rect.width}px`;
         }
 
+        function render(items) {
+            close();
+            if (!items || !items.length) return;
 
-        async function searchDepartments(q) {
-            const res = await fetch(`${lookupBase}/departments?q=${encodeURIComponent(q || "")}&take=10`, {
-                headers: { 'Accept': 'application/json' }
-            });
-            if (!res.ok) return [];
-            return await res.json();
-        }
+            box = document.createElement('div');
+            box.className = 'typeahead-box';
 
-        // =========================
-        // Typeahead helper (stays open on scroll)
-        // =========================
-        function attachTypeahead(inputEl, fetchFn, onPick, buttonEl) {
-            let box;
-            let t;
-
-            function closeBox() {
-                if (box) { box.remove(); box = null; }
-            }
-
-            function positionBox() {
-                if (!box) return;
-                const rect = inputEl.getBoundingClientRect();
-                box.style.left = `${rect.left + window.scrollX}px`;
-                box.style.top = `${rect.bottom + window.scrollY + 6}px`;
-                box.style.width = `${rect.width}px`;
-            }
-
-            function render(items) {
-                closeBox();
-                if (!items || !items.length) return;
-
-                box = document.createElement('div');
-                box.style.position = 'absolute';
-                box.style.zIndex = '9999';
-                box.style.background = '#fff';
-                box.style.border = '1px solid #e5e7eb';
-                box.style.borderRadius = '12px';
-                box.style.boxShadow = '0 18px 60px rgba(15,29,45,.12)';
-                box.style.overflow = 'hidden';
-                box.style.maxHeight = '280px';
-                box.style.overflowY = 'auto';
-
-                items.forEach(item => {
-                    const row = document.createElement('div');
-                    row.textContent = item.label || item.Label || '';
-                    row.style.padding = '10px 12px';
-                    row.style.cursor = 'pointer';
-                    row.addEventListener('mousedown', (e) => {
-                        e.preventDefault();
-                        onPick(item);
-                        closeBox();
-                    });
-                    box.appendChild(row);
+            for (const item of items) {
+                const row = document.createElement('div');
+                row.className = 'typeahead-row';
+                row.textContent = getLabel(item);
+                row.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    onPick(item);
+                    close();
                 });
-
-                document.body.appendChild(box);
-                positionBox();
+                box.appendChild(row);
             }
 
-            async function openList(q) {
-                const items = await fetchFn(q);
+            document.body.appendChild(box);
+            position();
+        }
+
+        async function openList(q, take) {
+            const reqId = ++lastReq;
+            try {
+                const items = await fetcher(q, take);
+                if (reqId !== lastReq) return; // ignore stale responses
                 render(items);
-            }
-
-            const onInput = () => {
-                const q = inputEl.value.trim();
-                clearTimeout(t);
-                if (q.length < 2) { closeBox(); return; }
-                t = setTimeout(() => openList(q), 180);
-            };
-
-            const onDocClick = (e) => {
-                if (e.target !== inputEl && e.target !== buttonEl) closeBox();
-            };
-
-            const onResize = () => { positionBox(); };
-            const onScroll = () => { positionBox(); };
-
-            inputEl.addEventListener('input', onInput);
-            document.addEventListener('click', onDocClick);
-            window.addEventListener('resize', onResize);
-            window.addEventListener('scroll', onScroll, true);
-
-            if (buttonEl) {
-                buttonEl.addEventListener('click', async () => {
-                    // open even if empty => API decides what it returns
-                    await openList(inputEl.value.trim());
-                });
-            }
-
-            return () => {
-                clearTimeout(t);
-                inputEl.removeEventListener('input', onInput);
-                document.removeEventListener('click', onDocClick);
-                window.removeEventListener('resize', onResize);
-                window.removeEventListener('scroll', onScroll, true);
-                closeBox();
-            };
-        }
-
-        // =========================
-        // THROUGH (dept only)
-        // =========================
-        const memoThroughInput = document.getElementById('memoThroughInput');
-        const memoThroughBtn = document.getElementById('memoThroughBtn');
-
-        let disposeThrough = attachTypeahead(
-            memoThroughInput,
-            searchDepartments,
-            (item) => {
-                memoThroughInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
-            },
-            memoThroughBtn
-        );
-
-        // =========================
-        // TO (user or dept)
-        // =========================
-        const memoToInput = document.getElementById('memoToInput');
-        const memoToBtn = document.getElementById('memoToBtn');
-        const toKindSelect = document.getElementById('toKindSelect');
-        const toDeptCodeHidden = document.getElementById('toDeptCodeHidden');
-
-        let disposeTo = null;
-
-        function wireToPicker() {
-            if (disposeTo) { disposeTo(); disposeTo = null; }
-
-            toDeptCodeHidden.value = "";
-            memoToInput.value = "";
-
-            if (toKindSelect && toKindSelect.value === "DEPT") {
-                memoToInput.placeholder = "Search department...";
-                disposeTo = attachTypeahead(
-                    memoToInput,
-                    searchDepartments,
-                    (item) => {
-                        memoToInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
-                        toDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
-                    },
-                    memoToBtn
-                );
-            } else {
-                memoToInput.placeholder = "Search employee...";
-                disposeTo = attachTypeahead(
-                    memoToInput,
-                    searchEmployees,
-                    (item) => {
-                        const lbl = item.label || item.Label || '';
-                        memoToInput.value = stripEmpId(lbl); // ✅ strips "(EMP_ID)"
-                    },
-                    memoToBtn
-                );
+            } catch (err) {
+                // fail silently; you can console.log if you want
+                close();
             }
         }
 
-        toKindSelect.addEventListener('change', wireToPicker);
-        wireToPicker();
+        function onInput() {
+            const q = (inputEl.value || '').trim();
+            clearTimeout(t);
 
-        // =========================
-        // FROM (user or dept)
-        // =========================
-        const fromKindSelect = document.getElementById('fromKindSelect');
-        const memoFromInput = document.getElementById('memoFromInput');
-        const memoFromBtn = document.getElementById('memoFromBtn');
-        const fromDeptCodeHidden = document.getElementById('fromDeptCodeHidden');
+            if (q.length < minChars) { close(); return; }
 
-        let disposeFrom = null;
-
-        function wireFromPicker() {
-            if (disposeFrom) { disposeFrom(); disposeFrom = null; }
-
-            fromDeptCodeHidden.value = "";
-            memoFromInput.value = "";
-
-            if (fromKindSelect && fromKindSelect.value === "DEPT") {
-                memoFromInput.placeholder = "Search department...";
-                disposeFrom = attachTypeahead(
-                    memoFromInput,
-                    searchDepartments,
-                    (item) => {
-                        memoFromInput.value = item.deptName || item.DeptName || (item.label || item.Label || '');
-                        fromDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
-                    },
-                    memoFromBtn
-                );
-            } else {
-                memoFromInput.placeholder = "Search employee...";
-                disposeFrom = attachTypeahead(
-                    memoFromInput,
-                    searchEmployees,
-                    (item) => {
-                        const lbl = item.label || item.Label || '';
-                        memoFromInput.value = stripEmpId(lbl); // ✅ strips "(EMP_ID)"
-                    },
-                    memoFromBtn
-                );
-            }
+            t = setTimeout(() => openList(q, 50), 180); // search: 50 results
         }
 
-        fromKindSelect.addEventListener('change', wireFromPicker);
-        wireFromPicker();
-    </script>
+        function onButtonClick() {
+            const q = (inputEl.value || '').trim();
+            // button: empty => show first 200; typed => show 200 matching
+            openList(q, 200);
+        }
+
+        function onDocClick(e) {
+            if (e.target === inputEl || e.target === buttonEl) return;
+            if (box && box.contains(e.target)) return;
+            close();
+        }
+
+        function onResize() { position(); }
+        function onScroll() { position(); }
+
+        inputEl.addEventListener('input', onInput);
+        document.addEventListener('click', onDocClick);
+        window.addEventListener('resize', onResize);
+        window.addEventListener('scroll', onScroll, true);
+
+        if (buttonEl) buttonEl.addEventListener('click', onButtonClick);
+
+        return () => {
+            clearTimeout(t);
+            inputEl.removeEventListener('input', onInput);
+            document.removeEventListener('click', onDocClick);
+            window.removeEventListener('resize', onResize);
+            window.removeEventListener('scroll', onScroll, true);
+            if (buttonEl) buttonEl.removeEventListener('click', onButtonClick);
+            close();
+        };
+    }
+
+    // -------------------------
+    // THROUGH (dept only)
+    // -------------------------
+    const memoThroughInput = document.getElementById('memoThroughInput');
+    const memoThroughBtn = document.getElementById('memoThroughBtn');
+
+    attachTypeahead({
+        inputEl: memoThroughInput,
+        buttonEl: memoThroughBtn,
+        fetcher: (q, take) => searchDepartments(q, take),
+        onPick: (item) => {
+            memoThroughInput.value = item.deptName || item.DeptName || stripEmpId(getLabel(item));
+        },
+        minChars: 1
+    });
+
+    // -------------------------
+    // TO (user or dept)
+    // -------------------------
+    const memoToInput = document.getElementById('memoToInput');
+    const memoToBtn = document.getElementById('memoToBtn');
+    const toKindSelect = document.getElementById('toKindSelect');
+    const toDeptCodeHidden = document.getElementById('toDeptCodeHidden');
+
+    let disposeTo = null;
+
+    function wireToPicker() {
+        if (disposeTo) disposeTo();
+
+        toDeptCodeHidden.value = "";
+        memoToInput.value = "";
+
+        if (toKindSelect.value === "DEPT") {
+            memoToInput.placeholder = "Search department...";
+            disposeTo = attachTypeahead({
+                inputEl: memoToInput,
+                buttonEl: memoToBtn,
+                fetcher: (q, take) => searchDepartments(q, take),
+                onPick: (item) => {
+                    memoToInput.value = item.deptName || item.DeptName || stripEmpId(getLabel(item));
+                    toDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
+                },
+                minChars: 1
+            });
+        } else {
+            memoToInput.placeholder = "Search employee...";
+            disposeTo = attachTypeahead({
+                inputEl: memoToInput,
+                buttonEl: memoToBtn,
+                fetcher: (q, take) => searchEmployees(q, take),
+                onPick: (item) => {
+                    memoToInput.value = stripEmpId(getLabel(item));
+                },
+                minChars: 1
+            });
+        }
+    }
+
+    toKindSelect.addEventListener('change', wireToPicker);
+    wireToPicker();
+
+    // -------------------------
+    // FROM (user or dept)
+    // -------------------------
+    const fromKindSelect = document.getElementById('fromKindSelect');
+    const memoFromInput = document.getElementById('memoFromInput');
+    const memoFromBtn = document.getElementById('memoFromBtn');
+    const fromDeptCodeHidden = document.getElementById('fromDeptCodeHidden');
+
+    let disposeFrom = null;
+
+    function wireFromPicker() {
+        if (disposeFrom) disposeFrom();
+
+        fromDeptCodeHidden.value = "";
+        memoFromInput.value = "";
+
+        if (fromKindSelect.value === "DEPT") {
+            memoFromInput.placeholder = "Search department...";
+            disposeFrom = attachTypeahead({
+                inputEl: memoFromInput,
+                buttonEl: memoFromBtn,
+                fetcher: (q, take) => searchDepartments(q, take),
+                onPick: (item) => {
+                    memoFromInput.value = item.deptName || item.DeptName || stripEmpId(getLabel(item));
+                    fromDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
+                },
+                minChars: 1
+            });
+        } else {
+            memoFromInput.placeholder = "Search employee...";
+            disposeFrom = attachTypeahead({
+                inputEl: memoFromInput,
+                buttonEl: memoFromBtn,
+                fetcher: (q, take) => searchEmployees(q, take),
+                onPick: (item) => {
+                    memoFromInput.value = stripEmpId(getLabel(item));
+                },
+                minChars: 1
+            });
+        }
+    }
+
+    fromKindSelect.addEventListener('change', wireFromPicker);
+    wireFromPicker();
+
+})();
+</script>
 }
