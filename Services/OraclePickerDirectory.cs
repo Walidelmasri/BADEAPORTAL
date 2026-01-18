@@ -10,8 +10,7 @@ namespace BADEAPORTAL.Services
         private readonly PortalDbContext _db;
         public OraclePickerDirectory(PortalDbContext db) => _db = db;
 
-        public async Task<IReadOnlyList<EmployeePickDto>> SearchEmployeesAsync(
-            string? q, int take = 20, CancellationToken ct = default)
+        public async Task<IReadOnlyList<EmployeePickDto>> SearchEmployeesAsync(string? q, int take = 50, CancellationToken ct = default)
         {
             var list = new List<EmployeePickDto>();
             var conn = _db.Database.GetDbConnection();
@@ -19,33 +18,13 @@ namespace BADEAPORTAL.Services
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
-            var limit = take <= 0 ? 20 : Math.Min(take, 5000);
-            var hasQuery = !string.IsNullOrWhiteSpace(q);
+            if (string.IsNullOrWhiteSpace(q))
+                return Array.Empty<EmployeePickDto>(); // IMPORTANT: no “fetch all” here
+
+            var limit = take <= 0 ? 50 : Math.Min(take, 200);
 
             await using var cmd = conn.CreateCommand();
-
-            if (!hasQuery)
-            {
-                // KPI-style "list" query, but limited for dropdown (ROWNUM)
-                cmd.CommandText = @"
-SELECT EMP_ID, NAME_ENG, USERID
-FROM (
-    SELECT EMP_ID, NAME_ENG, USERID
-    FROM   BADEA_ADDONS.EMPLOYEES
-    WHERE  EMP_ID IS NOT NULL
-    ORDER  BY NAME_ENG
-)
-WHERE ROWNUM <= :p_take";
-
-                var pTake = cmd.CreateParameter();
-                pTake.ParameterName = "p_take";
-                pTake.Value = limit;
-                cmd.Parameters.Add(pTake);
-            }
-            else
-            {
-                // KPI-style search query (ROWNUM + LIKE)
-                cmd.CommandText = @"
+cmd.CommandText = @"
 SELECT EMP_ID, NAME_ENG, USERID
 FROM (
     SELECT EMP_ID, NAME_ENG, USERID
@@ -57,19 +36,19 @@ FROM (
          OR UPPER(USERID)   LIKE :p_like
       )
     ORDER BY NAME_ENG
-)
-WHERE ROWNUM <= :p_take";
+) x
+WHERE x.ROWNUM <= :p_take";
 
-                var pLike = cmd.CreateParameter();
-                pLike.ParameterName = "p_like";
-                pLike.Value = $"%{q!.Trim().ToUpperInvariant()}%";
-                cmd.Parameters.Add(pLike);
 
-                var pTake = cmd.CreateParameter();
-                pTake.ParameterName = "p_take";
-                pTake.Value = limit;
-                cmd.Parameters.Add(pTake);
-            }
+            var pLike = cmd.CreateParameter();
+            pLike.ParameterName = "p_like";
+            pLike.Value = $"%{q.Trim().ToUpperInvariant()}%";
+            cmd.Parameters.Add(pLike);
+
+            var pTake = cmd.CreateParameter();
+            pTake.ParameterName = "p_take";
+            pTake.Value = limit;
+            cmd.Parameters.Add(pTake);
 
             await using var rdr = await cmd.ExecuteReaderAsync(ct);
             while (await rdr.ReadAsync(ct))
@@ -82,8 +61,7 @@ WHERE ROWNUM <= :p_take";
                 {
                     EmpId = empId,
                     Label = $"{name} ({empId})",
-                    UserId = userId,
-                    Email = null
+                    UserId = userId
                 });
             }
 
@@ -91,6 +69,50 @@ WHERE ROWNUM <= :p_take";
         }
 
 
+
+        public async Task<IReadOnlyList<EmployeePickDto>> ListEmployeesAsync(int take = 200, CancellationToken ct = default)
+        {
+            var list = new List<EmployeePickDto>();
+            var conn = _db.Database.GetDbConnection();
+
+            if (conn.State != ConnectionState.Open)
+                await conn.OpenAsync(ct);
+
+            var limit = take <= 0 ? 200 : Math.Min(take, 2000);
+
+            await using var cmd = conn.CreateCommand();
+            cmd.CommandText = @"
+SELECT EMP_ID, NAME_ENG, USERID
+FROM (
+    SELECT EMP_ID, NAME_ENG, USERID
+    FROM   BADEA_ADDONS.EMPLOYEES
+    WHERE  EMP_ID IS NOT NULL
+    ORDER  BY NAME_ENG
+)
+WHERE ROWNUM <= :p_take";
+
+            var pTake = cmd.CreateParameter();
+            pTake.ParameterName = "p_take";
+            pTake.Value = limit;
+            cmd.Parameters.Add(pTake);
+
+            await using var rdr = await cmd.ExecuteReaderAsync(ct);
+            while (await rdr.ReadAsync(ct))
+            {
+                var empId = rdr.GetString(0);
+                var name = rdr.IsDBNull(1) ? "-" : rdr.GetString(1);
+                var userId = rdr.IsDBNull(2) ? null : rdr.GetString(2);
+
+                list.Add(new EmployeePickDto
+                {
+                    EmpId = empId,
+                    Label = $"{name} ({empId})",
+                    UserId = userId
+                });
+            }
+
+            return list;
+        }
 
 
 

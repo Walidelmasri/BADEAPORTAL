@@ -344,22 +344,27 @@
         return await res.json();
     }
 
+    // ✅ IMPORTANT: these must accept (q, take) because attachTypeahead passes both
     async function searchEmployees(q, take) {
-        const url = `${lookupBase}/employees?q=${encodeURIComponent(q || "")}&take=${take}`;
+        const url = `${lookupBase}/employees?q=${encodeURIComponent(q || "")}&take=${encodeURIComponent(take || 50)}`;
+        return await fetchJson(url);
+    }
+
+    async function listEmployees(take) {
+        const url = `${lookupBase}/employees/list?take=${encodeURIComponent(take || 300)}`;
         return await fetchJson(url);
     }
 
     async function searchDepartments(q, take) {
-        const url = `${lookupBase}/departments?q=${encodeURIComponent(q || "")}&take=${take}`;
+        const url = `${lookupBase}/departments?q=${encodeURIComponent(q || "")}&take=${encodeURIComponent(take || 50)}`;
         return await fetchJson(url);
     }
 
     // -------------------------
     // Typeahead (robust)
-    // - search triggers from 1 char
-    // - button opens list even if empty
-    // - DOES NOT close on scroll, only repositions
-    // - clicking inside dropdown doesn't close it
+    // - typing triggers search
+    // - button opens dropdown
+    // - doesn't close on scroll (only repositions)
     // -------------------------
     function attachTypeahead({ inputEl, buttonEl, fetcher, onPick, minChars = 1 }) {
         let box = null;
@@ -405,10 +410,9 @@
             const reqId = ++lastReq;
             try {
                 const items = await fetcher(q, take);
-                if (reqId !== lastReq) return; // ignore stale responses
+                if (reqId !== lastReq) return;
                 render(items);
-            } catch (err) {
-                // fail silently; you can console.log if you want
+            } catch {
                 close();
             }
         }
@@ -419,13 +423,13 @@
 
             if (q.length < minChars) { close(); return; }
 
-            t = setTimeout(() => openList(q, 50), 180); // search: 50 results
+            t = setTimeout(() => openList(q, 50), 180); // typing search
         }
 
         function onButtonClick() {
             const q = (inputEl.value || '').trim();
-            // button: empty => show first 200; typed => show 200 matching
-            openList(q, 200);
+            // button click uses larger take
+            openList(q, 300);
         }
 
         function onDocClick(e) {
@@ -434,13 +438,10 @@
             close();
         }
 
-        function onResize() { position(); }
-        function onScroll() { position(); }
-
         inputEl.addEventListener('input', onInput);
         document.addEventListener('click', onDocClick);
-        window.addEventListener('resize', onResize);
-        window.addEventListener('scroll', onScroll, true);
+        window.addEventListener('resize', position);
+        window.addEventListener('scroll', position, true);
 
         if (buttonEl) buttonEl.addEventListener('click', onButtonClick);
 
@@ -448,8 +449,8 @@
             clearTimeout(t);
             inputEl.removeEventListener('input', onInput);
             document.removeEventListener('click', onDocClick);
-            window.removeEventListener('resize', onResize);
-            window.removeEventListener('scroll', onScroll, true);
+            window.removeEventListener('resize', position);
+            window.removeEventListener('scroll', position, true);
             if (buttonEl) buttonEl.removeEventListener('click', onButtonClick);
             close();
         };
@@ -504,7 +505,11 @@
             disposeTo = attachTypeahead({
                 inputEl: memoToInput,
                 buttonEl: memoToBtn,
-                fetcher: (q, take) => searchEmployees(q, take),
+                // ✅ empty -> list endpoint, typed -> search endpoint
+                fetcher: (q, take) => {
+                    const s = (q || "").trim();
+                    return s.length ? searchEmployees(s, take) : listEmployees(take);
+                },
                 onPick: (item) => {
                     memoToInput.value = stripEmpId(getLabel(item));
                 },
@@ -549,7 +554,11 @@
             disposeFrom = attachTypeahead({
                 inputEl: memoFromInput,
                 buttonEl: memoFromBtn,
-                fetcher: (q, take) => searchEmployees(q, take),
+                // ✅ empty -> list endpoint, typed -> search endpoint
+                fetcher: (q, take) => {
+                    const s = (q || "").trim();
+                    return s.length ? searchEmployees(s, take) : listEmployees(take);
+                },
                 onPick: (item) => {
                     memoFromInput.value = stripEmpId(getLabel(item));
                 },
@@ -564,3 +573,4 @@
 })();
 </script>
 }
+

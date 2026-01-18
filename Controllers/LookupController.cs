@@ -24,5 +24,12 @@ namespace BADEAPORTAL.Controllers
             var results = await _pickers.SearchDepartmentsAsync(q, take, ct);
             return Ok(results);
         }
+        [HttpGet("employees/list")]
+        public async Task<IActionResult> EmployeesList([FromQuery] int take = 200, CancellationToken ct = default)
+        {
+            var results = await _pickers.ListEmployeesAsync(take, ct);
+            return Ok(results);
+        }
+
     }
 }
