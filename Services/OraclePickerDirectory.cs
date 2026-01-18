@@ -18,20 +18,48 @@ namespace BADEAPORTAL.Services
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
-            var limit = take <= 0 ? 20 : Math.Min(take, 50);
+            var hasQuery = !string.IsNullOrWhiteSpace(q);
+            var limit = take <= 0 ? 20 : Math.Min(take, 5000); // allow "all" if they ask for it
 
-            // Pull a small ordered window (KPI Monitor style) then filter in C#
-            // (avoids Oracle weirdness + avoids EMAIL column existence issues)
             await using var cmd = conn.CreateCommand();
-            cmd.CommandText = @"
+
+            if (!hasQuery)
+            {
+                // ✅ return ALL employees (no cap)
+                cmd.CommandText = @"
+SELECT EMP_ID, NAME_ENG, USERID
+FROM   BADEA_ADDONS.EMPLOYEES
+WHERE  EMP_ID IS NOT NULL
+ORDER  BY NAME_ENG";
+            }
+            else
+            {
+                // ✅ search mode (cap by take)
+                cmd.CommandText = @"
 SELECT *
 FROM (
     SELECT EMP_ID, NAME_ENG, USERID
     FROM   BADEA_ADDONS.EMPLOYEES
     WHERE  EMP_ID IS NOT NULL
-    ORDER  BY NAME_ENG
+      AND (
+            UPPER(NAME_ENG) LIKE :p_like
+         OR UPPER(EMP_ID)   LIKE :p_like
+         OR UPPER(USERID)   LIKE :p_like
+      )
+    ORDER BY NAME_ENG
 )
-WHERE ROWNUM <= 300";
+WHERE ROWNUM <= :p_take";
+
+                var pLike = cmd.CreateParameter();
+                pLike.ParameterName = "p_like";
+                pLike.Value = $"%{q!.Trim().ToUpperInvariant()}%";
+                cmd.Parameters.Add(pLike);
+
+                var pTake = cmd.CreateParameter();
+                pTake.ParameterName = "p_take";
+                pTake.Value = limit;
+                cmd.Parameters.Add(pTake);
+            }
 
             await using var rdr = await cmd.ExecuteReaderAsync(ct);
             while (await rdr.ReadAsync(ct))
@@ -49,26 +77,9 @@ WHERE ROWNUM <= 300";
                 });
             }
 
-            if (!string.IsNullOrWhiteSpace(q))
-            {
-                var qq = q.Trim();
-
-                list = list
-                    .Where(x =>
-                        (x.EmpId?.Contains(qq, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                        (x.Label?.Contains(qq, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                        (x.UserId?.Contains(qq, StringComparison.OrdinalIgnoreCase) ?? false)
-                    )
-                    .Take(limit)
-                    .ToList();
-            }
-            else
-            {
-                list = list.Take(limit).ToList();
-            }
-
             return list;
         }
+
 
 
 
