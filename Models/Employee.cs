@@ -14,6 +14,9 @@ namespace BADEAPORTAL.Models
         [Column("NAME_ENG")]
         [StringLength(255)]
         public string? NameEng { get; set; }
+        [Column("NAME_ARABIC")]
+        [StringLength(255)]
+        public string? NameArabic { get; set; }
 
         [Column("USERID")]
         [StringLength(50)]

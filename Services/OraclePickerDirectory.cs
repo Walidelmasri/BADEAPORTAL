@@ -18,35 +18,31 @@ namespace BADEAPORTAL.Services
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
-            // you said: no "fetch all" here
             if (string.IsNullOrWhiteSpace(q))
                 return Array.Empty<EmployeePickDto>();
+
+            var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
+            var nameCol = isArabic ? "NAME_ARABIC" : "NAME_ENG";
 
             var limit = take <= 0 ? 50 : Math.Min(take, 200);
 
             await using var cmd = conn.CreateCommand();
-            var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
-            var nameCol = isArabic ? "NAME_ARABIC" : "NAME_ENG";
-
-            // if you truly only want to search by name, keep ONLY the nameCol predicate
             cmd.CommandText = $@"
 SELECT EMP_ID, {nameCol} AS NAME_COL, USERID
 FROM (
-    SELECT EMP_ID, {nameCol}, USERID
+    SELECT EMP_ID, {nameCol} AS NAME_COL, USERID
     FROM   BADEA_ADDONS.EMPLOYEES
     WHERE  EMP_ID IS NOT NULL
       AND  UPPER({nameCol}) LIKE :p_like
-    ORDER BY {nameCol}
+    ORDER  BY {nameCol}
 )
 WHERE ROWNUM <= :p_take";
 
-
-            cmd.Parameters.Clear();
-
-            var pName = cmd.CreateParameter();
-            pName.ParameterName = "p_name";
-            pName.Value = q.Trim().ToUpperInvariant() + "%"; // STARTS WITH (normal)
-            cmd.Parameters.Add(pName);
+            // ✅ CONTAINS: %VALUE%
+            var pLike = cmd.CreateParameter();
+            pLike.ParameterName = "p_like";
+            pLike.Value = $"%{q.Trim().ToUpperInvariant()}%";
+            cmd.Parameters.Add(pLike);
 
             var pTake = cmd.CreateParameter();
             pTake.ParameterName = "p_take";
@@ -56,8 +52,7 @@ WHERE ROWNUM <= :p_take";
             await using var rdr = await cmd.ExecuteReaderAsync(ct);
             while (await rdr.ReadAsync(ct))
             {
-                // keep EXACTLY your existing mapping behavior
-                var empId = rdr.GetString(0);                 // if this ever throws, EMP_ID is NUMBER and you must ToString it
+                var empId = rdr.GetString(0);
                 var name = rdr.IsDBNull(1) ? "-" : rdr.GetString(1);
                 var userId = rdr.IsDBNull(2) ? null : rdr.GetString(2);
 
@@ -82,20 +77,19 @@ WHERE ROWNUM <= :p_take";
 
             var limit = take <= 0 ? 200 : Math.Min(take, 2000);
 
-            await using var cmd = conn.CreateCommand();
             var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
             var nameCol = isArabic ? "NAME_ARABIC" : "NAME_ENG";
 
+            await using var cmd = conn.CreateCommand();
             cmd.CommandText = $@"
-SELECT EMP_ID, {nameCol} AS NAME_COL, USERID
+SELECT EMP_ID, NAME_COL, USERID
 FROM (
-    SELECT EMP_ID, {nameCol}, USERID
+    SELECT EMP_ID, {nameCol} AS NAME_COL, USERID
     FROM   BADEA_ADDONS.EMPLOYEES
     WHERE  EMP_ID IS NOT NULL
     ORDER  BY {nameCol}
 )
 WHERE ROWNUM <= :p_take";
-
 
             var pTake = cmd.CreateParameter();
             pTake.ParameterName = "p_take";
@@ -130,18 +124,20 @@ WHERE ROWNUM <= :p_take";
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
+            var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
+            var nameCol = isArabic ? "DEPT_NAME_ARB" : "DEPT_NAME_ENG";
+
             var limit = take <= 0 ? 20 : Math.Min(take, 50);
 
             await using var cmd = conn.CreateCommand();
-            cmd.CommandText = @"
-SELECT *
+            cmd.CommandText = $@"
+SELECT DEPT_CODE, DEPT_NAME_COL, HEAD_EMP_ID
 FROM (
-    SELECT DEPT_CODE, DEPT_NAME, HEAD_EMP_ID
+    SELECT DEPT_CODE, {nameCol} AS DEPT_NAME_COL, HEAD_EMP_ID
     FROM   BADEA_ADDONS.DEPARTMENTS
     WHERE  :p_q IS NULL
-       OR  UPPER(DEPT_NAME) LIKE :p_like
-       OR  UPPER(DEPT_CODE) LIKE :p_like
-    ORDER BY DEPT_NAME
+       OR  UPPER({nameCol}) LIKE :p_like
+    ORDER  BY {nameCol}
 )
 WHERE ROWNUM <= :p_take";
 
@@ -152,9 +148,9 @@ WHERE ROWNUM <= :p_take";
 
             var pLike = cmd.CreateParameter();
             pLike.ParameterName = "p_like";
-            // pLike.Value = string.IsNullOrWhiteSpace(q) ? DBNull.Value : $"%{q.Trim().ToUpperInvariant()}%";
-            pLike.Value = $"{q.Trim().ToUpperInvariant()}%";
-
+            pLike.Value = string.IsNullOrWhiteSpace(q)
+                ? DBNull.Value
+                : $"%{q.Trim().ToUpperInvariant()}%"; // CONTAINS
             cmd.Parameters.Add(pLike);
 
             var pTake = cmd.CreateParameter();
@@ -180,6 +176,8 @@ WHERE ROWNUM <= :p_take";
 
             return list;
         }
+
+
 
 
         public async Task<(string EmpId, string NameEng)?> TryGetEmployeeByUserIdAsync(string userId, CancellationToken ct = default)

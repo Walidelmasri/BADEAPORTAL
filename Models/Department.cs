@@ -11,9 +11,12 @@ namespace BADEAPORTAL.Models
         [StringLength(30)]
         public string DeptCode { get; set; } = null!;
 
-        [Column("DEPT_NAME")]
+        [Column("DEPT_NAME_ENG")]
         [StringLength(200)]
         public string DeptName { get; set; } = null!;
+        [Column("DEPT_NAME_ARB")]
+        [StringLength(200)]
+        public string? DeptNameArabic { get; set; }
 
         [Column("HEAD_EMP_ID")]
         [StringLength(50)]
