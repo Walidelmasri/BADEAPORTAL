@@ -21,27 +21,31 @@ namespace BADEAPORTAL.Services
             if (string.IsNullOrWhiteSpace(q))
                 return Array.Empty<EmployeePickDto>();
 
+            var limit = take <= 0 ? 50 : Math.Min(take, 200);
+
             var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
             var nameCol = isArabic ? "NAME_ARABIC" : "NAME_ENG";
 
-            var limit = take <= 0 ? 50 : Math.Min(take, 200);
-
             await using var cmd = conn.CreateCommand();
+
             cmd.CommandText = $@"
-SELECT EMP_ID, {nameCol} AS NAME_COL, USERID
+SELECT EMP_ID, NAME_COL, USERID
 FROM (
-    SELECT EMP_ID, {nameCol} AS NAME_COL, USERID
-    FROM   BADEA_ADDONS.EMPLOYEES
+    SELECT EMP_ID,
+           {nameCol} AS NAME_COL,
+           USERID
+    FROM   EMPLOYEES
     WHERE  EMP_ID IS NOT NULL
-      AND  UPPER({nameCol}) LIKE :p_like
+      AND  {(isArabic ? $"{nameCol} LIKE :p_like" : $"UPPER({nameCol}) LIKE :p_like")}
     ORDER  BY {nameCol}
 )
 WHERE ROWNUM <= :p_take";
 
-            // ✅ CONTAINS: %VALUE%
             var pLike = cmd.CreateParameter();
             pLike.ParameterName = "p_like";
-            pLike.Value = $"%{q.Trim().ToUpperInvariant()}%";
+            pLike.Value = isArabic
+                ? $"%{q.Trim()}%"
+                : $"%{q.Trim().ToUpperInvariant()}%";
             cmd.Parameters.Add(pLike);
 
             var pTake = cmd.CreateParameter();
@@ -124,33 +128,33 @@ WHERE ROWNUM <= :p_take";
             if (conn.State != ConnectionState.Open)
                 await conn.OpenAsync(ct);
 
-            var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
-            var nameCol = isArabic ? "DEPT_NAME_ARB" : "DEPT_NAME_ENG";
+            if (string.IsNullOrWhiteSpace(q))
+                return Array.Empty<DepartmentPickDto>();
 
             var limit = take <= 0 ? 20 : Math.Min(take, 50);
+
+            var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
+            var nameCol = isArabic ? "DEPT_NAME_ARB" : "DEPT_NAME_ENG";
 
             await using var cmd = conn.CreateCommand();
             cmd.CommandText = $@"
 SELECT DEPT_CODE, DEPT_NAME_COL, HEAD_EMP_ID
 FROM (
-    SELECT DEPT_CODE, {nameCol} AS DEPT_NAME_COL, HEAD_EMP_ID
-    FROM   BADEA_ADDONS.DEPARTMENTS
-    WHERE  :p_q IS NULL
-       OR  UPPER({nameCol}) LIKE :p_like
+    SELECT DEPT_CODE,
+           {nameCol} AS DEPT_NAME_COL,
+           HEAD_EMP_ID
+    FROM   DEPARTMENTS
+    WHERE  DEPT_CODE IS NOT NULL
+      AND  {(isArabic ? $"{nameCol} LIKE :p_like" : $"UPPER({nameCol}) LIKE :p_like")}
     ORDER  BY {nameCol}
 )
 WHERE ROWNUM <= :p_take";
 
-            var pQ = cmd.CreateParameter();
-            pQ.ParameterName = "p_q";
-            pQ.Value = string.IsNullOrWhiteSpace(q) ? DBNull.Value : q.Trim();
-            cmd.Parameters.Add(pQ);
-
             var pLike = cmd.CreateParameter();
             pLike.ParameterName = "p_like";
-            pLike.Value = string.IsNullOrWhiteSpace(q)
-                ? DBNull.Value
-                : $"%{q.Trim().ToUpperInvariant()}%"; // CONTAINS
+            pLike.Value = isArabic
+                ? $"%{q.Trim()}%"
+                : $"%{q.Trim().ToUpperInvariant()}%";
             cmd.Parameters.Add(pLike);
 
             var pTake = cmd.CreateParameter();
@@ -178,6 +182,56 @@ WHERE ROWNUM <= :p_take";
         }
 
 
+
+        public async Task<IReadOnlyList<DepartmentPickDto>> ListDepartmentsAsync(int take = 200, string lang = "en", CancellationToken ct = default)
+        {
+            var list = new List<DepartmentPickDto>();
+            var conn = _db.Database.GetDbConnection();
+
+            if (conn.State != ConnectionState.Open)
+                await conn.OpenAsync(ct);
+
+            var limit = take <= 0 ? 200 : Math.Min(take, 2000);
+
+            var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
+            var nameCol = isArabic ? "DEPT_NAME_ARB" : "DEPT_NAME_ENG";
+
+            await using var cmd = conn.CreateCommand();
+            cmd.CommandText = $@"
+SELECT DEPT_CODE, DEPT_NAME_COL, HEAD_EMP_ID
+FROM (
+    SELECT DEPT_CODE,
+           {nameCol} AS DEPT_NAME_COL,
+           HEAD_EMP_ID
+    FROM   DEPARTMENTS
+    WHERE  DEPT_CODE IS NOT NULL
+    ORDER  BY {nameCol}
+)
+WHERE ROWNUM <= :p_take";
+
+            var pTake = cmd.CreateParameter();
+            pTake.ParameterName = "p_take";
+            pTake.Value = limit;
+            cmd.Parameters.Add(pTake);
+
+            await using var rdr = await cmd.ExecuteReaderAsync(ct);
+            while (await rdr.ReadAsync(ct))
+            {
+                var code = rdr.GetString(0);
+                var name = rdr.IsDBNull(1) ? "-" : rdr.GetString(1);
+                var head = rdr.IsDBNull(2) ? null : rdr.GetString(2);
+
+                list.Add(new DepartmentPickDto
+                {
+                    DeptCode = code,
+                    DeptName = name,
+                    HeadEmpId = head,
+                    Label = $"{name} ({code})"
+                });
+            }
+
+            return list;
+        }
 
 
         public async Task<(string EmpId, string NameEng)?> TryGetEmployeeByUserIdAsync(string userId, CancellationToken ct = default)
