@@ -10,7 +10,7 @@ namespace BADEAPORTAL.Services
         private readonly PortalDbContext _db;
         public OraclePickerDirectory(PortalDbContext db) => _db = db;
 
-        public async Task<IReadOnlyList<EmployeePickDto>> SearchEmployeesAsync(string? q, int take = 50, CancellationToken ct = default)
+        public async Task<IReadOnlyList<EmployeePickDto>> SearchEmployeesAsync(string? q, int take = 50, string lang = "en", CancellationToken ct = default)
         {
             var list = new List<EmployeePickDto>();
             var conn = _db.Database.GetDbConnection();
@@ -25,18 +25,21 @@ namespace BADEAPORTAL.Services
             var limit = take <= 0 ? 50 : Math.Min(take, 200);
 
             await using var cmd = conn.CreateCommand();
+            var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
+            var nameCol = isArabic ? "NAME_ARABIC" : "NAME_ENG";
 
-            // NORMAL ORACLE SQL (no weird aliasing, no EMP_ID search, no USERID search)
-            cmd.CommandText = @"
-SELECT EMP_ID, NAME_ENG, USERID
+            // if you truly only want to search by name, keep ONLY the nameCol predicate
+            cmd.CommandText = $@"
+SELECT EMP_ID, {nameCol} AS NAME_COL, USERID
 FROM (
-    SELECT EMP_ID, NAME_ENG, USERID
+    SELECT EMP_ID, {nameCol}, USERID
     FROM   BADEA_ADDONS.EMPLOYEES
     WHERE  EMP_ID IS NOT NULL
-      AND  UPPER(NAME_ENG) LIKE :p_name
-    ORDER BY NAME_ENG
+      AND  UPPER({nameCol}) LIKE :p_like
+    ORDER BY {nameCol}
 )
 WHERE ROWNUM <= :p_take";
+
 
             cmd.Parameters.Clear();
 
@@ -69,7 +72,7 @@ WHERE ROWNUM <= :p_take";
             return list;
         }
 
-        public async Task<IReadOnlyList<EmployeePickDto>> ListEmployeesAsync(int take = 200, CancellationToken ct = default)
+        public async Task<IReadOnlyList<EmployeePickDto>> ListEmployeesAsync(int take = 200, string lang = "en", CancellationToken ct = default)
         {
             var list = new List<EmployeePickDto>();
             var conn = _db.Database.GetDbConnection();
@@ -80,15 +83,19 @@ WHERE ROWNUM <= :p_take";
             var limit = take <= 0 ? 200 : Math.Min(take, 2000);
 
             await using var cmd = conn.CreateCommand();
-            cmd.CommandText = @"
-SELECT EMP_ID, NAME_ENG, USERID
+            var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
+            var nameCol = isArabic ? "NAME_ARABIC" : "NAME_ENG";
+
+            cmd.CommandText = $@"
+SELECT EMP_ID, {nameCol} AS NAME_COL, USERID
 FROM (
-    SELECT EMP_ID, NAME_ENG, USERID
+    SELECT EMP_ID, {nameCol}, USERID
     FROM   BADEA_ADDONS.EMPLOYEES
     WHERE  EMP_ID IS NOT NULL
-    ORDER  BY NAME_ENG
+    ORDER  BY {nameCol}
 )
 WHERE ROWNUM <= :p_take";
+
 
             var pTake = cmd.CreateParameter();
             pTake.ParameterName = "p_take";
@@ -115,7 +122,7 @@ WHERE ROWNUM <= :p_take";
 
 
 
-        public async Task<IReadOnlyList<DepartmentPickDto>> SearchDepartmentsAsync(string? q, int take = 20, CancellationToken ct = default)
+        public async Task<IReadOnlyList<DepartmentPickDto>> SearchDepartmentsAsync(string? q, int take = 20, string lang = "en", CancellationToken ct = default)
         {
             var list = new List<DepartmentPickDto>();
             var conn = _db.Database.GetDbConnection();
@@ -145,7 +152,9 @@ WHERE ROWNUM <= :p_take";
 
             var pLike = cmd.CreateParameter();
             pLike.ParameterName = "p_like";
-            pLike.Value = string.IsNullOrWhiteSpace(q) ? DBNull.Value : $"%{q.Trim().ToUpperInvariant()}%";
+            // pLike.Value = string.IsNullOrWhiteSpace(q) ? DBNull.Value : $"%{q.Trim().ToUpperInvariant()}%";
+            pLike.Value = $"{q.Trim().ToUpperInvariant()}%";
+
             cmd.Parameters.Add(pLike);
 
             var pTake = cmd.CreateParameter();
