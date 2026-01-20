@@ -10,66 +10,82 @@ namespace BADEAPORTAL.Services
         private readonly PortalDbContext _db;
         public OraclePickerDirectory(PortalDbContext db) => _db = db;
 
-        public async Task<IReadOnlyList<EmployeePickDto>> SearchEmployeesAsync(string? q, int take = 50, string lang = "en", CancellationToken ct = default)
-        {
-            var list = new List<EmployeePickDto>();
-            var conn = _db.Database.GetDbConnection();
+public async Task<IReadOnlyList<EmployeePickDto>> SearchEmployeesAsync(
+    string? q,
+    int take = 50,
+    string lang = "en",
+    CancellationToken ct = default)
+{
+    var list = new List<EmployeePickDto>();
+    var conn = _db.Database.GetDbConnection();
 
-            if (conn.State != ConnectionState.Open)
-                await conn.OpenAsync(ct);
+    if (conn.State != ConnectionState.Open)
+        await conn.OpenAsync(ct);
 
-            if (string.IsNullOrWhiteSpace(q))
-                return Array.Empty<EmployeePickDto>();
+    if (string.IsNullOrWhiteSpace(q))
+        return Array.Empty<EmployeePickDto>();
 
-            var limit = take <= 0 ? 50 : Math.Min(take, 200);
+    var normalizedLang = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase) ? "ar" : "en";
+    var limit = take <= 0 ? 50 : Math.Min(take, 200);
 
-            var isArabic = string.Equals(lang, "ar", StringComparison.OrdinalIgnoreCase);
-            var nameCol = isArabic ? "NAME_ARABIC" : "NAME_ENG";
-
-            await using var cmd = conn.CreateCommand();
-
-            cmd.CommandText = $@"
+    await using var cmd = conn.CreateCommand();
+    cmd.CommandText = @"
 SELECT EMP_ID, NAME_COL, USERID
 FROM (
-    SELECT EMP_ID,
-           {nameCol} AS NAME_COL,
-           USERID
-    FROM   EMPLOYEES
-    WHERE  EMP_ID IS NOT NULL
-      AND  {(isArabic ? $"{nameCol} LIKE :p_like" : $"UPPER({nameCol}) LIKE :p_like")}
-    ORDER  BY {nameCol}
+    SELECT
+        EMP_ID,
+        CASE WHEN :p_lang = 'ar' THEN NAME_ARABIC ELSE NAME_ENG END AS NAME_COL,
+        USERID
+    FROM BADEA_ADDONS.EMPLOYEES
+    WHERE EMP_ID IS NOT NULL
+      AND (
+            (:p_lang = 'ar'  AND NAME_ARABIC LIKE :p_like_ar)
+         OR (:p_lang <> 'ar' AND UPPER(NAME_ENG) LIKE :p_like_en)
+      )
+    ORDER BY CASE WHEN :p_lang = 'ar' THEN NAME_ARABIC ELSE NAME_ENG END
 )
 WHERE ROWNUM <= :p_take";
 
-            var pLike = cmd.CreateParameter();
-            pLike.ParameterName = "p_like";
-            pLike.Value = isArabic
-                ? $"%{q.Trim()}%"
-                : $"%{q.Trim().ToUpperInvariant()}%";
-            cmd.Parameters.Add(pLike);
+    var pLang = cmd.CreateParameter();
+    pLang.ParameterName = "p_lang";
+    pLang.Value = normalizedLang;
+    cmd.Parameters.Add(pLang);
 
-            var pTake = cmd.CreateParameter();
-            pTake.ParameterName = "p_take";
-            pTake.Value = limit;
-            cmd.Parameters.Add(pTake);
+    // Arabic: no UPPER
+    var pLikeAr = cmd.CreateParameter();
+    pLikeAr.ParameterName = "p_like_ar";
+    pLikeAr.Value = $"%{q.Trim()}%";
+    cmd.Parameters.Add(pLikeAr);
 
-            await using var rdr = await cmd.ExecuteReaderAsync(ct);
-            while (await rdr.ReadAsync(ct))
-            {
-                var empId = rdr.GetString(0);
-                var name = rdr.IsDBNull(1) ? "-" : rdr.GetString(1);
-                var userId = rdr.IsDBNull(2) ? null : rdr.GetString(2);
+    // English: UPPER both sides
+    var pLikeEn = cmd.CreateParameter();
+    pLikeEn.ParameterName = "p_like_en";
+    pLikeEn.Value = $"%{q.Trim().ToUpperInvariant()}%";
+    cmd.Parameters.Add(pLikeEn);
 
-                list.Add(new EmployeePickDto
-                {
-                    EmpId = empId,
-                    Label = $"{name} ({empId})",
-                    UserId = userId
-                });
-            }
+    var pTake = cmd.CreateParameter();
+    pTake.ParameterName = "p_take";
+    pTake.Value = limit;
+    cmd.Parameters.Add(pTake);
 
-            return list;
-        }
+    await using var rdr = await cmd.ExecuteReaderAsync(ct);
+    while (await rdr.ReadAsync(ct))
+    {
+        var empId = rdr.GetString(0);
+        var name = rdr.IsDBNull(1) ? "-" : rdr.GetString(1);
+        var userId = rdr.IsDBNull(2) ? null : rdr.GetString(2);
+
+        list.Add(new EmployeePickDto
+        {
+            EmpId = empId,
+            Label = $"{name} ({empId})",
+            UserId = userId
+        });
+    }
+
+    return list;
+}
+
 
         public async Task<IReadOnlyList<EmployeePickDto>> ListEmployeesAsync(int take = 200, string lang = "en", CancellationToken ct = default)
         {
