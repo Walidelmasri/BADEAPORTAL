@@ -494,6 +494,11 @@
                 const url = `${lookupBase}/departments?q=${encodeURIComponent(q || "")}&take=${encodeURIComponent(take || 50)}&lang=${encodeURIComponent(lang)}`;
                 return await fetchJson(url);
             }
+            async function listDepartments(take) {
+                const lang = getLang();
+                const url = `${lookupBase}/departments/list?take=${encodeURIComponent(take || 300)}&lang=${encodeURIComponent(lang)}`;
+                return await fetchJson(url);
+            }
 
             // -------------------------
             // Typeahead (robust)
@@ -612,7 +617,10 @@
             attachTypeahead({
                 inputEl: memoThroughInput,
                 buttonEl: memoThroughBtn,
-                fetcher: (q, take) => searchDepartments(q, take),
+                fetcher: (q, take) => {
+                    const s = (q || "").trim();
+                    return s.length ? searchDepartments(s, take) : listDepartments(take);
+                },
                 onPick: (item) => {
                     memoThroughInput.value = item.deptName || item.DeptName || stripEmpId(getLabel(item));
                 },
@@ -635,7 +643,10 @@
                     disposeTo = attachTypeahead({
                         inputEl: memoToInput,
                         buttonEl: memoToBtn,
-                        fetcher: (q, take) => searchDepartments(q, take),
+                        fetcher: (q, take) => {
+                            const s = (q || "").trim();
+                            return s.length ? searchDepartments(s, take) : listDepartments(take);
+                        },
                         onPick: (item) => {
                             memoToInput.value = item.deptName || item.DeptName || stripEmpId(getLabel(item));
                             toDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
@@ -678,7 +689,10 @@
                     disposeFrom = attachTypeahead({
                         inputEl: memoFromInput,
                         buttonEl: memoFromBtn,
-                        fetcher: (q, take) => searchDepartments(q, take),
+                        fetcher: (q, take) => {
+                            const s = (q || "").trim();
+                            return s.length ? searchDepartments(s, take) : listDepartments(take);
+                        },
                         onPick: (item) => {
                             memoFromInput.value = item.deptName || item.DeptName || stripEmpId(getLabel(item));
                             fromDeptCodeHidden.value = item.deptCode || item.DeptCode || '';
