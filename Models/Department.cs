@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BADEAPORTAL.Models
 {
-    [Table("DEPARTMENTS", Schema = "BADEA_ADDONS")]
+    [Table("DEPARTMENTS")]
     public class Department
     {
         [Key]
