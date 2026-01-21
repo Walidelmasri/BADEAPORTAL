@@ -249,6 +249,14 @@
 
                     <div id="memoFields" class="memo-panel">
                         <div class="memo-grid">
+                            <!-- TO KIND -->
+                            <div>
+                                <div class="field-label">To type</div>
+                                <select asp-for="ToKind" id="toKindSelect" class="form-select premium-input">
+                                    <option value="USER">User</option>
+                                    <option value="DEPT">Department</option>
+                                </select>
+                            </div>
 
                             <!-- TO -->
                             <div>
@@ -262,14 +270,6 @@
                                 <input asp-for="ToDeptCode" type="hidden" id="toDeptCodeHidden" />
                             </div>
 
-                            <!-- TO KIND -->
-                            <div>
-                                <div class="field-label">To type</div>
-                                <select asp-for="ToKind" id="toKindSelect" class="form-select premium-input">
-                                    <option value="USER">User</option>
-                                    <option value="DEPT">Department</option>
-                                </select>
-                            </div>
 
                             <!-- FROM KIND -->
                             <div>
