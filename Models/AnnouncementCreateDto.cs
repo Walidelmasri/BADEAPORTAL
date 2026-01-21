@@ -17,6 +17,8 @@ namespace BADEAPORTAL.Models
 
         public bool NotifyInApp { get; set; } = true;
         public bool NotifyEmail { get; set; } = true;
+        public string ToKind { get; set; } = "USER";
+        public string? ToDeptCode { get; set; }
 
     }
 }

@@ -80,16 +80,23 @@ namespace BADEAPORTAL.Controllers
                 Title = vm.Title,
                 BodyHtml = vm.BodyHtml,
                 IsMemo = vm.IsMemo,
+
                 MemoTo = vm.MemoTo,
                 MemoThrough = vm.MemoThrough,
                 MemoFrom = vm.MemoFrom,
                 MemoSubject = vm.MemoSubject,
                 MemoClassification = vm.MemoClassification,
+
+                ToKind = vm.ToKind,
+                ToDeptCode = vm.ToDeptCode,
+
                 FromKind = vm.FromKind,
                 FromDeptCode = vm.FromDeptCode,
+
                 NotifyInApp = vm.NotifyInApp,
                 NotifyEmail = vm.NotifyEmail
             };
+
 
             var id = await _announcements.CreateAsync(dto);
 

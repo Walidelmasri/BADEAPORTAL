@@ -259,13 +259,13 @@
                                     <button type="button" id="memoToBtn"
                                         class="btn btn-outline-secondary premium-input pick-btn">▾</button>
                                 </div>
-                                <input type="hidden" id="toDeptCodeHidden" name="ToDeptCode" />
+                                <input asp-for="ToDeptCode" type="hidden" id="toDeptCodeHidden" />
                             </div>
 
                             <!-- TO KIND -->
                             <div>
                                 <div class="field-label">To type</div>
-                                <select id="toKindSelect" class="form-select premium-input" name="ToKind">
+                                <select asp-for="ToKind" id="toKindSelect" class="form-select premium-input">
                                     <option value="USER">User</option>
                                     <option value="DEPT">Department</option>
                                 </select>
