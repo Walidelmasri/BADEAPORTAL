@@ -94,7 +94,8 @@ namespace BADEAPORTAL.Data
                 a.Property(x => x.FromDeptCode)
                     .HasColumnName("FROM_DEPT_CODE")
                     .HasMaxLength(3);
-
+                a.Property(x => x.ToKind).HasColumnName("TO_KIND").HasMaxLength(10);
+                a.Property(x => x.ToDeptCode).HasColumnName("TO_DEPT_CODE").HasMaxLength(30);
                 // notifications
                 a.Property(x => x.NotifyInApp)
                     .HasColumnName("NOTIFY_INAPP")
