@@ -95,5 +95,14 @@ namespace BADEAPORTAL.Models
         [Column("FROM_DEPT_CODE")]
         [StringLength(3)]
         public string? FromDeptCode { get; set; }
+        // recipient selection (To)
+        [Column("TO_KIND")]
+        [StringLength(10)]
+        public string ToKind { get; set; } = "USER"; // USER or DEPT
+
+        [Column("TO_DEPT_CODE")]
+        [StringLength(30)]
+        public string? ToDeptCode { get; set; }
+
     }
 }

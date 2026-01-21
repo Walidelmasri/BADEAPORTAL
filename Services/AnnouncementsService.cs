@@ -52,10 +52,17 @@ namespace BADEAPORTAL.Services
         {
             var user = _userProfile.GetCurrentUser();
 
+            // Normalize kinds to exactly: USER or DEPT
+            static string NormalizeKind(string? value)
+                => string.Equals(value, "DEPT", StringComparison.OrdinalIgnoreCase) ? "DEPT" : "USER";
+
+            var fromKind = NormalizeKind(dto.FromKind);
+            var toKind = NormalizeKind(dto.ToKind);
+
             var entity = new Announcement
             {
                 Title = dto.Title,
-                BodyHtml = _htmlNormalizer.Normalize(dto.BodyHtml), // ✅ FIX
+                BodyHtml = _htmlNormalizer.Normalize(dto.BodyHtml),
                 IsMemo = dto.IsMemo,
 
                 MemoTo = dto.MemoTo,
@@ -67,8 +74,14 @@ namespace BADEAPORTAL.Services
                 CreatedAtUtc = DateTime.UtcNow,
                 CreatedByName = user.FullName ?? user.DisplayName ?? user.EmailOrUpn ?? "Unknown",
                 CreatedByUpn = user.EmailOrUpn ?? "unknown@local",
-                FromKind = dto.FromKind ?? "USER",
-                FromDeptCode = dto.FromDeptCode,
+
+                // ✅ FROM
+                FromKind = fromKind,
+                FromDeptCode = (fromKind == "DEPT") ? dto.FromDeptCode : null,
+
+                // ✅ TO  (THIS WAS MISSING)
+                ToKind = toKind,
+                ToDeptCode = (toKind == "DEPT") ? dto.ToDeptCode : null,
 
                 NotifyInApp = dto.NotifyInApp,
                 NotifyEmail = dto.NotifyEmail
@@ -79,6 +92,7 @@ namespace BADEAPORTAL.Services
 
             return entity.Id;
         }
+
 
     }
 }
