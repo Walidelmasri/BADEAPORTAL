@@ -52,10 +52,10 @@
                     const modalBody = document.getElementById('announcementModalBody');
 
                     modalBody.innerHTML = `
-                        <div class="text-center py-5 text-muted">
-                            Loading…
-                        </div>
-                    `;
+                            <div class="text-center py-5 text-muted">
+                                Loading…
+                            </div>
+                        `;
 
                     const modal = new bootstrap.Modal(
                         document.getElementById('announcementModal')
@@ -69,10 +69,10 @@
                         modalBody.innerHTML = await res.text();
                     } catch {
                         modalBody.innerHTML = `
-                            <div class="alert alert-danger mb-0">
-                                Failed to load announcement.
-                            </div>
-                        `;
+                                <div class="alert alert-danger mb-0">
+                                    Failed to load announcement.
+                                </div>
+                            `;
                     }
                 });
             });
@@ -852,7 +852,7 @@
 
             <!-- 7. BADEA Services Portal (Oracle APEX) -->
             <div class="col-lg-4 col-md-6">
-                <a href="https://portalstaging.badea.org/ords/r/badea/services-portal-بوابة-الخدمات/login"
+                <a href="https://portal.badea.org/ords/r/badea/services-portal-%D8%A8%D9%88%D8%A7%D8%A8%D8%A9-%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/home"
                     target="_blank" rel="noopener noreferrer"
                     class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
@@ -892,7 +892,29 @@
                     </div>
                 </a>
             </div>
-            <!-- 9. ECM -->
+            <!-- 9. Payments Portal -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://portal.badea.org/ords/r/badea/payments-portal/home" target="_blank"
+                    rel="noopener noreferrer" class="portal-tool-card text-decoration-none text-dark d-block">
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Payments Portal</h5>
+                            <div class="portal-tool-meta mb-2">Finance · Transactions</div>
+                            <p class="mb-3 small text-muted">
+                                Manage payment requests, review transactions, and track financial disbursements
+                                securely.
+                            </p>
+                            <span class="portal-chip">Finance</span>
+
+                        </div>
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/payments-portal.png" alt="Freshworks icon"
+                                class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- 10. ECM -->
             <div class="col-lg-4 col-md-6">
                 <a href="https://ecm.badea.org/WebPortal" target="_blank" rel="noopener noreferrer"
                     class="portal-tool-card text-decoration-none text-dark d-block">
