@@ -6,78 +6,78 @@
 
 @section Scripts {
     <script>
-            // Card hover tilt
-            document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('.portal-tool-card').forEach(card => {
-                    card.addEventListener('mousemove', (e) => {
-                        const rect = card.getBoundingClientRect();
-                        const x = e.clientX - rect.left - rect.width / 2;
-                        const y = e.clientY - rect.top - rect.height / 2;
-                        card.style.transform =
-                            `translateY(-4px) rotateX(${(-y / 90)}deg) rotateY(${x / 90}deg)`;
-                    });
-                    card.addEventListener('mouseleave', () => {
-                        card.style.transform =
-                            'translateY(0) rotateX(0) rotateY(0)';
-                    });
-                });
-
-                // --- HERO BACKGROUND CAROUSEL ---
-                const heroImgs = document.querySelectorAll('.portal-hero-bg-carousel img');
-                if (heroImgs.length > 0) {
-                    let idx = 0;
-
-                    function showHero(i) {
-                        heroImgs.forEach((img, k) => {
-                            img.classList.toggle('active', k === i);
+                    // Card hover tilt
+                    document.addEventListener('DOMContentLoaded', () => {
+                        document.querySelectorAll('.portal-tool-card').forEach(card => {
+                            card.addEventListener('mousemove', (e) => {
+                                const rect = card.getBoundingClientRect();
+                                const x = e.clientX - rect.left - rect.width / 2;
+                                const y = e.clientY - rect.top - rect.height / 2;
+                                card.style.transform =
+                                    `translateY(-4px) rotateX(${(-y / 90)}deg) rotateY(${x / 90}deg)`;
+                            });
+                            card.addEventListener('mouseleave', () => {
+                                card.style.transform =
+                                    'translateY(0) rotateX(0) rotateY(0)';
+                            });
                         });
-                    }
 
-                    showHero(idx);
+                        // --- HERO BACKGROUND CAROUSEL ---
+                        const heroImgs = document.querySelectorAll('.portal-hero-bg-carousel img');
+                        if (heroImgs.length > 0) {
+                            let idx = 0;
 
-                    // faster rotation – 2.5 seconds
-                    setInterval(() => {
-                        idx = (idx + 1) % heroImgs.length;
-                        showHero(idx);
-                    }, 2500);
-                }
-            });
-            document.addEventListener('DOMContentLoaded', () => {
+                            function showHero(i) {
+                                heroImgs.forEach((img, k) => {
+                                    img.classList.toggle('active', k === i);
+                                });
+                            }
 
-                document.querySelectorAll('.js-ann-open').forEach(link => {
-                    link.addEventListener('click', async (e) => {
-                        e.preventDefault();
+                            showHero(idx);
 
-                        const id = link.getAttribute('data-ann-id');
-                        const modalBody = document.getElementById('announcementModalBody');
-
-                        modalBody.innerHTML = `
-                                <div class="text-center py-5 text-muted">
-                                    Loading…
-                                </div>
-                            `;
-
-                        const modal = new bootstrap.Modal(
-                            document.getElementById('announcementModal')
-                        );
-                        modal.show();
-
-                        try {
-                            const res = await fetch('@Url.Action("Modal", "Announcements")' + '?id=' + encodeURIComponent(id));
-                            if (!res.ok) throw new Error('Failed to load');
-
-                            modalBody.innerHTML = await res.text();
-                        } catch {
-                            modalBody.innerHTML = `
-                                    <div class="alert alert-danger mb-0">
-                                        Failed to load announcement.
-                                    </div>
-                                `;
+                            // faster rotation – 2.5 seconds
+                            setInterval(() => {
+                                idx = (idx + 1) % heroImgs.length;
+                                showHero(idx);
+                            }, 2500);
                         }
                     });
-                });
+                    document.addEventListener('DOMContentLoaded', () => {
 
-            });
+                        document.querySelectorAll('.js-ann-open').forEach(link => {
+                            link.addEventListener('click', async (e) => {
+                                e.preventDefault();
+
+                                const id = link.getAttribute('data-ann-id');
+                                const modalBody = document.getElementById('announcementModalBody');
+
+                                modalBody.innerHTML = `
+                                        <div class="text-center py-5 text-muted">
+                                            Loading…
+                                        </div>
+                                    `;
+
+                                const modal = new bootstrap.Modal(
+                                    document.getElementById('announcementModal')
+                                );
+                                modal.show();
+
+                                try {
+                                    const res = await fetch('@Url.Action("Modal", "Announcements")' + '?id=' + encodeURIComponent(id));
+                                    if (!res.ok) throw new Error('Failed to load');
+
+                                    modalBody.innerHTML = await res.text();
+                                } catch {
+                                    modalBody.innerHTML = `
+                                            <div class="alert alert-danger mb-0">
+                                                Failed to load announcement.
+                                            </div>
+                                        `;
+                                }
+                            });
+                        });
+
+                    });
 
     </script>
 }
@@ -852,7 +852,7 @@
 
             <!-- 7. BADEA Services Portal (Oracle APEX) -->
             <div class="col-lg-4 col-md-6">
-                <a href="https://portal.badea.org/ords/r/badea/yosr/home"                   target="_blank" rel="noopener noreferrer"
+                <a href="https://portal.badea.org/ords/r/badea/yosr/home" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
                         <div class="portal-tool-body">
@@ -870,35 +870,52 @@
                     </div>
                 </a>
             </div>
-<!-- TAAM -->
-<div class="col-lg-4 col-md-6">
-    <a href="https://portal.badea.org/ords/r/badea/%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D9%85%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D8%AD%D9%83%D9%88%D9%85%D9%8A%D8%A9102134/"
-       target="_blank" rel="noopener noreferrer"
-       class="portal-tool-card text-decoration-none text-dark d-block">
+            <!-- TAAM -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://portal.badea.org/ords/r/badea/%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D9%85%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D8%AD%D9%83%D9%88%D9%85%D9%8A%D8%A9102134/"
+                       target="_blank" rel="noopener noreferrer"
+                       class="portal-tool-card text-decoration-none text-dark d-block">
 
-        <div class="portal-tool-layout">
-            <div class="portal-tool-body">
-                <h5 class="mb-1 portal-tool-title">TAAM</h5>
-                <div class="portal-tool-meta mb-2">Government Transactions · Workflows</div>
-                <p class="mb-3 small text-muted">
-                    Manage government transactions, approvals, and related internal workflows.
-                </p>
-                <span class="portal-chip">Internal</span>
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">TAAM</h5>
+                            <div class="portal-tool-meta mb-2">Government Transactions · Workflows</div>
+                            <p class="mb-3 small text-muted">
+                                Manage government transactions, approvals, and related internal workflows.
+                            </p>
+                            <span class="portal-chip">Internal</span>
+                        </div>
+
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/yaam.png" alt="TAAM icon" class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
             </div>
+            <div class="col-lg-4 col-md-6">
+                <a href="https://portal.badea.org/ords/r/badearep/sijil/home"              target="_blank" rel="noopener noreferrer"
+                       class="portal-tool-card text-decoration-none text-dark d-block">
 
-            <div class="portal-tool-visual">
-                <img src="~/images/icons/yaam.png"
-                     alt="TAAM icon"
-                     class="portal-tool-logo-img" />
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Sijil</h5>
+                            <div class="portal-tool-meta mb-2">Government Transactions · Workflows</div>
+                            <p class="mb-3 small text-muted">
+                                Manage government transactions, approvals, and related internal workflows.
+                            </p>
+                            <span class="portal-chip">Internal</span>
+                        </div>
+
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/sijil.png" alt="TAAM icon" class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
             </div>
-        </div>
-    </a>
-</div>
-
             <!-- 9. Payments Portal -->
             <div class="col-lg-4 col-md-6">
-                <a href="https://portal.badea.org/ords/r/badea/fin-app" target="_blank"
-                       rel="noopener noreferrer" class="portal-tool-card text-decoration-none text-dark d-block">
+                <a href="https://portal.badea.org/ords/r/badea/fin-app" target="_blank" rel="noopener noreferrer"
+                       class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
                         <div class="portal-tool-body">
                             <h5 class="mb-1 portal-tool-title">Payments Portal</h5>
@@ -917,30 +934,27 @@
                     </div>
                 </a>
             </div>
-<!-- لوحة قيادة -->
-<div class="col-lg-4 col-md-6">
-    <a href="https://portal.badea.org/ords/f?p=123:1::::::"
-       target="_blank" rel="noopener noreferrer"
-       class="portal-tool-card text-decoration-none text-dark d-block">
+            <!-- لوحة قيادة -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://portal.badea.org/ords/f?p=123:1::::::" target="_blank" rel="noopener noreferrer"
+                       class="portal-tool-card text-decoration-none text-dark d-block">
 
-        <div class="portal-tool-layout">
-            <div class="portal-tool-body">
-                <h5 class="mb-1 portal-tool-title">لوحة قيادة</h5>
-                <div class="portal-tool-meta mb-2">Dashboards · Reporting</div>
-                <p class="mb-3 small text-muted">
-                    Access internal dashboards and reporting views.
-                </p>
-                <span class="portal-chip">Internal</span>
-            </div>
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">لوحة قيادة</h5>
+                            <div class="portal-tool-meta mb-2">Dashboards · Reporting</div>
+                            <p class="mb-3 small text-muted">
+                                Access internal dashboards and reporting views.
+                            </p>
+                            <span class="portal-chip">Internal</span>
+                        </div>
 
-            <div class="portal-tool-visual">
-                <img src="~/images/icons/payments-portal.png"
-                     alt="Dashboard icon"
-                     class="portal-tool-logo-img" />
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/chart.png" alt="Dashboard icon" class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
             </div>
-        </div>
-    </a>
-</div>
 
             @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/f?p=123:1::::::" target="_blank" rel="noopener noreferrer"
@@ -963,30 +977,28 @@
                     </div>
                 </a>
             </div> *@
-<!-- Treasury Forecast -->
-<div class="col-lg-4 col-md-6">
-    <a href="https://portal.badea.org/ords/r/badea/treasury-forecast/login"
-       target="_blank" rel="noopener noreferrer"
-       class="portal-tool-card text-decoration-none text-dark d-block">
+            <!-- Treasury Forecast -->
+            <div class="col-lg-4 col-md-6">
+                <a href="https://portal.badea.org/ords/r/badea/treasury-forecast/login" target="_blank"
+                       rel="noopener noreferrer" class="portal-tool-card text-decoration-none text-dark d-block">
 
-        <div class="portal-tool-layout">
-            <div class="portal-tool-body">
-                <h5 class="mb-1 portal-tool-title">Treasury Forecast</h5>
-                <div class="portal-tool-meta mb-2">Treasury · Forecasting</div>
-                <p class="mb-3 small text-muted">
-                    Review treasury forecasts, liquidity projections, and financial planning dashboards.
-                </p>
-                <span class="portal-chip">Finance</span>
-            </div>
+                    <div class="portal-tool-layout">
+                        <div class="portal-tool-body">
+                            <h5 class="mb-1 portal-tool-title">Treasury Forecast</h5>
+                            <div class="portal-tool-meta mb-2">Treasury · Forecasting</div>
+                            <p class="mb-3 small text-muted">
+                                Review treasury forecasts, liquidity projections, and financial planning dashboards.
+                            </p>
+                            <span class="portal-chip">Finance</span>
+                        </div>
 
-            <div class="portal-tool-visual">
-                <img src="~/images/icons/payments-portal.png"
-                     alt="Treasury Forecast icon"
-                     class="portal-tool-logo-img" />
+                        <div class="portal-tool-visual">
+                            <img src="~/images/icons/payments-portal.png" alt="Treasury Forecast icon"
+                                 class="portal-tool-logo-img" />
+                        </div>
+                    </div>
+                </a>
             </div>
-        </div>
-    </a>
-</div>
 
             <!-- 8. KPI Monitor -->
             <div class="col-lg-4 col-md-6">
