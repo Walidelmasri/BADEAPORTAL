@@ -4,13 +4,25 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using QuestPDF.Infrastructure;
-
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 // ...
 
 QuestPDF.Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
+var supportedCultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("ar")
+};
 
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("en");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
 // MVC
 builder.Services.AddControllersWithViews();
 
@@ -45,7 +57,7 @@ app.UseHttpsRedirection();
 
 // Static files MUST be before routing
 app.UseStaticFiles();
-
+app.UseRequestLocalization();
 app.UseRouting();
 
 app.UseAuthentication();

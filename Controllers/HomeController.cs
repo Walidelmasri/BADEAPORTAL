@@ -4,6 +4,7 @@ using BADEAPORTAL.Models;
 using BADEAPORTAL.Services;
 using BADEAPORTAL.Models.Home;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 
 namespace BADEAPORTAL.Controllers;
 
@@ -40,7 +41,25 @@ public class HomeController : Controller
 
         return View(vm);
     }
+    [HttpGet]
+    public IActionResult SetLanguage(string culture, string returnUrl = "/")
+    {
+        if (culture != "ar" && culture != "en")
+            culture = "en";
 
+        Response.Cookies.Append(
+            CookieRequestCultureProvider.DefaultCookieName,
+            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+            new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddYears(1),
+                IsEssential = true,
+                Secure = true,
+                SameSite = SameSiteMode.Lax
+            });
+
+        return LocalRedirect(returnUrl);
+    }
     public IActionResult Privacy()
     {
         return View();

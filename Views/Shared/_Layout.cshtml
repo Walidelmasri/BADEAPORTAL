@@ -1,359 +1,323 @@
-﻿@*
-  Views/Shared/_Layout.cshtml  (BADEAPORTAL)
-*@
-@using BADEAPORTAL.Services
+﻿@using BADEAPORTAL.Services
+@using System.Globalization
 @inject IUserProfileService UserProfileService
 
-<!DOCTYPE html>
-<html lang="en">
+@{
+    var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
 
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = culture == "ar";
+    var dir = isArabic ? "rtl" : "ltr";
+    var lang = isArabic ? "ar" : "en";
+
+    var userProfile = UserProfileService.GetCurrentUser();
+    var greetingName = userProfile.FullName ?? userProfile.DisplayName ?? "BADEA";
+
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
+
+<!DOCTYPE html>
+<html lang="@lang" dir="@dir">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BADEAPORTAL</title>
+    <title>@ViewData["Title"] - BADEA Portal</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @if (isArabic)
+    {
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    }
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BADEAPORTAL.styles.css" asp-append-version="true" />
-    <script>
-        (function () {
-            try {
-                const v = localStorage.getItem('badea.portal.sidebar'); // 'hidden' | null
-                if (v === 'hidden') {
-                    document.body.classList.add('portal-sidebar-hidden'); // desktop collapsed
-                    // don't auto-open mobile overlay on load
-                    document.body.classList.remove('portal-sidebar-open');
-                }
-            } catch { /* ignore */ }
-        })();
-    </script>
 
     <style>
         :root {
-            /* BADEA greens */
             --badea-green: #009639;
             --badea-green-dark: #006b2a;
             --badea-green-soft: #e6f4ec;
             --portal-bg: #f3f5f7;
+            --portal-ink: #15231b;
         }
 
         body.portal-body {
-            background: var(--portal-bg);
-        }
-
-        .portal-root {
+            background:
+                radial-gradient(circle at top left, rgba(0, 150, 57, .08), transparent 32rem),
+                var(--portal-bg);
             min-height: 100vh;
+            margin-bottom: 0;
         }
 
-        /* ----------------- SIDEBAR ----------------- */
-        .portal-sidebar {
-            width: 240px;
-            flex: 0 0 240px;
-            /* fixed width in the flex layout */
-            height: auto;
-            /* always full viewport height */
-            background: radial-gradient(circle at top left, #018f38 0, #006b2a 35%, #004118 100%);
-            color: #fff;
-            box-shadow: 4px 0 22px rgba(0, 0, 0, 0.25);
-            position: relative;
-            z-index: 10;
-            transition:
-                transform .72s cubic-bezier(0.22, 0.61, 0.36, 1),
-                opacity .72s cubic-bezier(0.22, 0.61, 0.36, 1);
-        }
-
-        /* top strip = logo only */
-        .portal-brand {
-            background: #00481d;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            height: 88px;
+        .portal-shell {
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            padding: 0 16px;
+            flex-direction: column;
+        }
+
+        .portal-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            background: rgba(255, 255, 255, .88);
+            border-bottom: 1px solid rgba(0, 0, 0, .06);
+            box-shadow: 0 16px 40px rgba(15, 29, 45, .06);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .portal-navbar-inner {
+            min-height: 78px;
         }
 
         .portal-brand-link {
             display: inline-flex;
             align-items: center;
-            height: 100%;
+            gap: .75rem;
+            text-decoration: none;
+            color: var(--portal-ink);
         }
 
-        .portal-logo-banner {
-            display: block;
-            height: 64px;
-            width: auto;
+        .portal-brand-mark {
+            width: 172px;
+            height: 54px;
             object-fit: contain;
         }
 
-        .portal-sidebar nav {
-            padding: 1.2rem 1.25rem 1.1rem 1.25rem;
-        }
-
-        .portal-sidebar-section-label {
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: .08em;
-            color: rgba(255, 255, 255, 0.75);
-            margin-bottom: .5rem;
-        }
-
-        .portal-sidebar .nav-link {
-            border-radius: 999px;
-            color: #e4f7eb;
-            font-size: 0.9rem;
-            padding: 0.45rem 0.9rem;
+        .portal-brand-text {
             display: flex;
-            align-items: center;
-            gap: .4rem;
-            transition: background .18s ease, color .18s ease, box-shadow .18s ease, transform .18s ease;
+            flex-direction: column;
+            line-height: 1.15;
         }
 
-        .portal-sidebar .nav-link.active {
-            background: #ffffff;
-            color: var(--badea-green-dark);
+        .portal-brand-title {
+            font-weight: 800;
+            letter-spacing: -.02em;
+            color: var(--portal-ink);
+        }
+
+        .portal-brand-subtitle {
+            font-size: .75rem;
+            color: #7b867f;
+        }
+
+        .portal-nav-pills {
+            padding: .35rem;
+            border-radius: 999px;
+            background: rgba(0, 150, 57, .07);
+            border: 1px solid rgba(0, 150, 57, .10);
+        }
+
+        .portal-nav-pills .nav-link {
+            border-radius: 999px;
+            color: #405046;
             font-weight: 600;
-            box-shadow: 0 10px 26px rgba(0, 0, 0, .35);
-            transform: translateY(-1px);
+            font-size: .92rem;
+            padding: .52rem 1rem;
+            transition: all .2s ease;
         }
 
-        .portal-sidebar .nav-link:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.10);
+        .portal-nav-pills .nav-link:hover {
+            color: var(--badea-green-dark);
+            background: rgba(255, 255, 255, .7);
         }
 
-        .portal-sidebar-footer {
-            font-size: 0.8rem;
-            padding: 0.65rem 1.1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.25);
-            display: flex;
-            justify-content: space-between;
+        .portal-nav-pills .nav-link.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--badea-green), var(--badea-green-dark));
+            box-shadow: 0 10px 24px rgba(0, 107, 42, .22);
+        }
+
+        .portal-user-pill {
+            display: inline-flex;
             align-items: center;
-            background: linear-gradient(90deg, rgba(0, 0, 0, .16), rgba(0, 0, 0, .08));
-        }
-
-        .portal-sidebar-footer .badge {
+            gap: .55rem;
+            padding: .48rem .78rem;
             border-radius: 999px;
-            font-size: 0.7rem;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, .08);
+            box-shadow: 0 8px 22px rgba(15, 29, 45, .06);
+            max-width: 260px;
         }
 
-        /* Always show the toggle button (desktop + mobile) */
-        #portalToggleBtn {
-            display: inline-flex !important;
+        .portal-user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(135deg, var(--badea-green), var(--badea-green-dark));
+            color: #fff;
+            font-weight: 800;
+            flex: 0 0 auto;
         }
 
-        /* --------------- MAIN AREA --------------- */
-        .portal-main {
-            background: var(--portal-bg);
+        .portal-user-name {
+            font-size: .86rem;
+            font-weight: 700;
+            color: var(--portal-ink);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        .portal-topbar {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 5;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        .portal-user-status {
+            font-size: .72rem;
+            color: #7b867f;
+            line-height: 1;
+        }
+
+        .portal-lang-switch {
+            border-radius: 999px;
+            border: 1px solid rgba(0, 150, 57, .18);
+            background: #fff;
+            color: var(--badea-green-dark);
+            font-weight: 700;
+            padding: .48rem .8rem;
+            text-decoration: none;
+            box-shadow: 0 8px 22px rgba(15, 29, 45, .05);
+        }
+
+        .portal-lang-switch:hover {
+            color: #fff;
+            background: var(--badea-green-dark);
         }
 
         .portal-content {
-            padding: 1.5rem 1.5rem 2.5rem 1.5rem;
+            flex: 1;
+            padding: 1.5rem 1.5rem 2.5rem;
         }
 
-        .portal-pill-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.15rem 0.75rem;
+        .portal-footer {
+            background: rgba(255, 255, 255, .7);
+            border-top: 1px solid rgba(0, 0, 0, .06);
+        }
+
+        .navbar-toggler {
             border-radius: 999px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            background: rgba(0, 0, 0, 0.05);
-            color: #555;
+            border-color: rgba(0, 150, 57, .25);
+            padding: .45rem .65rem;
         }
 
-        /* ---------- responsive sidebar / hamburger ---------- */
-
-        /* DESKTOP: sidebar in the flex flow, can be hidden with body.portal-sidebar-hidden */
-        @@media (min-width: 768px) {
-            .portal-sidebar {
-                position: relative;
-                transform: translateX(0);
-                opacity: 1;
+        @@media (max-width: 991.98px) {
+            .portal-navbar-collapse {
+                padding: 1rem 0 1.1rem;
             }
 
-            body.portal-sidebar-hidden .portal-sidebar {
-                position: absolute;
-                /* pull it out of the flex layout */
-                left: 0;
-                top: 0;
-                bottom: 0;
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-        }
-
-        /* MOBILE: slide over content */
-        @@media (max-width: 767.98px) {
-            .portal-root {
-                flex-direction: column;
+            .portal-nav-pills {
+                border-radius: 1.25rem;
+                align-items: stretch;
             }
 
-            .portal-sidebar {
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                width: 230px;
-                transform: translateX(-100%);
+            .portal-nav-pills .nav-link {
+                text-align: center;
             }
 
-            body.portal-sidebar-open .portal-sidebar {
-                transform: translateX(0);
-            }
-
-            body.portal-sidebar-open::before {
-                content: "";
-                position: fixed;
-                inset: 0;
-                background: rgba(0, 0, 0, 0.45);
-                z-index: 9;
-            }
-
-            .portal-main {
+            .portal-user-pill {
+                max-width: 100%;
                 width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @@media (max-width: 575.98px) {
+            .portal-brand-mark {
+                width: 136px;
+                height: 44px;
+            }
+
+            .portal-brand-text {
+                display: none;
+            }
+
+            .portal-content {
+                padding: 1rem 1rem 2rem;
             }
         }
     </style>
-
 </head>
 
 <body class="portal-body">
-    <div class="portal-root d-flex">
-        @{
-            var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
-            var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
-        }
+    <div class="portal-shell">
+        <header class="portal-navbar">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid px-3 px-lg-4 portal-navbar-inner">
+                    <a asp-controller="Home" asp-action="Index" class="portal-brand-link">
+                        <img src="~/images/logo-en.png" alt="BADEA" class="portal-brand-mark" />
+                        <span class="portal-brand-text">
+                            <span class="portal-brand-title">@(isArabic ? "بوابة باديا" : "BADEA Portal")</span>
+                            <span class="portal-brand-subtitle">@(isArabic ? "البوابة الداخلية" : "Internal portal")</span>
+                        </span>
+                    </a>
 
-        <!-- SIDEBAR -->
-        <aside class="portal-sidebar" id="portalSidebar">
-            <div class="portal-brand">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="portal-brand-link">
-                    <img src="~/images/logo-negative.png" alt="BADEA" class="portal-logo-banner" />
-                </a>
-            </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#portalTopNav"
+                            aria-controls="portalTopNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-            <nav>
-                <div class="portal-sidebar-section-label">Portal</div>
-                <ul class="nav nav-pills flex-column gap-1">
-                    <li class="nav-item">
-                        <a class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")"
-                            asp-area="" asp-controller="Home" asp-action="Index">
-                            Overview
-                        </a>
-                    </li>
-                    @* <li class="nav-item">
-                        <!-- you said not to touch this one; leaving it exactly as you had it -->
-                        <a class="nav-link @(currentController == "Portal" && currentAction == "Index" ? "" : "")"
-                            href="#tools-section">
-                            Phone Directory
-                        </a>
-                    </li> *@
-                    <li class="nav-item">
-                        <a class="nav-link @(currentController == "Announcements" && currentAction == "Index" ? "active" : "")"
-                            asp-area="" asp-controller="Announcements" asp-action="Index">
-                            Announcements
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                    <div class="collapse navbar-collapse portal-navbar-collapse" id="portalTopNav">
+                        <ul class="navbar-nav portal-nav-pills mx-lg-auto my-3 my-lg-0 gap-1">
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")"
+                                   asp-controller="Home" asp-action="Index">
+                                    @(isArabic ? "الرئيسية" : "Overview")
+                                </a>
+                            </li>
 
-            <div class="portal-sidebar-footer">
-                <span>Logged in to BADEA</span>
-                <span class="badge bg-success border border-light">Online</span>
-            </div>
-        </aside>
-        @{
-            var userProfile = UserProfileService.GetCurrentUser();
-            var greetingName = userProfile.FullName ?? userProfile.DisplayName ?? "BADEA";
-        }
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#tools-section">
+                                    @(isArabic ? "الأنظمة والأدوات" : "Tools")
+                                </a>
+                            </li>
 
-        <!-- MAIN -->
-        <div class="portal-main flex-grow-1 d-flex flex-column">
-            <header class="portal-topbar px-3 px-md-4 py-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-2">
-                        <!-- toggle button (now works on desktop + mobile) -->
-                        <button type="button" class="btn btn-sm btn-outline-success" id="portalToggleBtn"
-                            aria-label="Toggle navigation">
-                            ☰
-                        </button>
-                        <div class="fw-semibold text-secondary">
-                            Welcome to <span class="text-dark">BADEA</span>, @greetingName
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "Announcements" ? "active" : "")"
+                                   asp-controller="Announcements" asp-action="Index">
+                                    @(isArabic ? "الإعلانات" : "Announcements")
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="d-flex align-items-center gap-2 flex-column flex-lg-row">
+                            <a class="portal-lang-switch"
+                               asp-controller="Home"
+                               asp-action="SetLanguage"
+                               asp-route-culture="@(isArabic ? "en" : "ar")"
+                               asp-route-returnUrl="@returnUrl">
+                                @(isArabic ? "English" : "العربية")
+                            </a>
+
+                            <div class="portal-user-pill">
+                                <span class="portal-user-avatar">@greetingName.Substring(0, 1).ToUpper()</span>
+                                <span class="d-flex flex-column min-w-0">
+                                    <span class="portal-user-name">@greetingName</span>
+                                    <span class="portal-user-status">@(isArabic ? "متصل" : "Online")</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="small text-muted d-none d-sm-block">
-                        Internal portal
-                    </div>
                 </div>
-            </header>
+            </nav>
+        </header>
 
-            <main class="portal-content flex-grow-1">
-                @RenderBody()
-            </main>
+        <main class="portal-content">
+            @RenderBody()
+        </main>
 
-            <footer class="border-top small text-muted py-2 px-4">
-                &copy; 2025 BADEA – Internal Portal
-            </footer>
-        </div>
+        <footer class="portal-footer small text-muted py-2 px-4">
+            &copy; 2026 BADEA – @(isArabic ? "البوابة الداخلية" : "Internal Portal")
+        </footer>
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <script>
-        // sidebar toggle (mobile + desktop)
-        (function () {
-            const btn = document.getElementById('portalToggleBtn');
-            const sidebar = document.getElementById('portalSidebar');
-            if (!btn || !sidebar) return;
-
-            btn.addEventListener('click', function (e) {
-                e.stopPropagation();
-
-                const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-
-                if (isDesktop) {
-                    document.body.classList.toggle('portal-sidebar-hidden'); // desktop hide/show
-                    const hidden = document.body.classList.contains('portal-sidebar-hidden');
-                    try { localStorage.setItem('badea.portal.sidebar', hidden ? 'hidden' : 'shown'); } catch { }
-                } else {
-                    document.body.classList.toggle('portal-sidebar-open');   // mobile slide-in
-                    // don't persist mobile overlay state
-                }
-            });
-
-
-            // close sidebar when backdrop is clicked (mobile only)
-            document.addEventListener('click', function (e) {
-                if (!document.body.classList.contains('portal-sidebar-open')) return;
-                if (!sidebar.contains(e.target) && e.target !== btn) {
-                    document.body.classList.remove('portal-sidebar-open');
-                }
-            });
-        })();
-        window.addEventListener('resize', function () {
-            const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-            if (isDesktop) {
-                document.body.classList.remove('portal-sidebar-open'); // kill mobile overlay when entering desktop
-            }
-        });
-
-    </script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-
 </html>

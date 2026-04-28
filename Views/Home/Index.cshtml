@@ -1,83 +1,98 @@
 ﻿@model BADEAPORTAL.Models.Home.HomeIndexVm
-
+@using System.Globalization
 @{
     ViewData["Title"] = "BADEA Portal";
+
+    var isArabic = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar";
+
+    var heroBadge = isArabic ? "بوابة باديا الداخلية" : "BADEA internal portal";
+    var heroTitle = isArabic ? "مكان واحد للوصول إلى أنظمة وأدوات باديا." : "One place for your BADEA tools and insights.";
+    var heroSub = isArabic
+        ? "الوصول إلى الأنظمة والخدمات الداخلية من مكان واحد، بما يشمل الموارد البشرية، المالية، المهام، وسير العمل."
+        : "Access BADEA’s core tools in one place — from finance and HR to missions, workflows, and strategic KPIs.";
+
+    var browseTools = isArabic ? "استعراض الأنظمة والأدوات" : "Browse apps & tools";
+    var viewUpdates = isArabic ? "عرض تحديثات باديا" : "View BADEA updates";
+    var latestAnnouncements = isArabic ? "آخر الإعلانات" : "Latest announcements";
+    var loadMore = isArabic ? "عرض المزيد" : "Load more";
+    var noAnnouncements = isArabic ? "لا توجد إعلانات حالياً." : "No announcements yet.";
+    var toolsTitle = isArabic ? "الأنظمة والأدوات" : "Tools & workspaces";
 }
 
 @section Scripts {
     <script>
-                    // Card hover tilt
-                    document.addEventListener('DOMContentLoaded', () => {
-                        document.querySelectorAll('.portal-tool-card').forEach(card => {
-                            card.addEventListener('mousemove', (e) => {
-                                const rect = card.getBoundingClientRect();
-                                const x = e.clientX - rect.left - rect.width / 2;
-                                const y = e.clientY - rect.top - rect.height / 2;
-                                card.style.transform =
-                                    `translateY(-4px) rotateX(${(-y / 90)}deg) rotateY(${x / 90}deg)`;
-                            });
-                            card.addEventListener('mouseleave', () => {
-                                card.style.transform =
-                                    'translateY(0) rotateX(0) rotateY(0)';
-                            });
-                        });
+        // Card hover tilt
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.portal-tool-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    card.style.transform =
+                        `translateY(-4px) rotateX(${(-y / 90)}deg) rotateY(${x / 90}deg)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform =
+                        'translateY(0) rotateX(0) rotateY(0)';
+                });
+            });
 
-                        // --- HERO BACKGROUND CAROUSEL ---
-                        const heroImgs = document.querySelectorAll('.portal-hero-bg-carousel img');
-                        if (heroImgs.length > 0) {
-                            let idx = 0;
+            // --- HERO BACKGROUND CAROUSEL ---
+            const heroImgs = document.querySelectorAll('.portal-hero-bg-carousel img');
+            if (heroImgs.length > 0) {
+                let idx = 0;
 
-                            function showHero(i) {
-                                heroImgs.forEach((img, k) => {
-                                    img.classList.toggle('active', k === i);
-                                });
-                            }
-
-                            showHero(idx);
-
-                            // faster rotation – 2.5 seconds
-                            setInterval(() => {
-                                idx = (idx + 1) % heroImgs.length;
-                                showHero(idx);
-                            }, 2500);
-                        }
+                function showHero(i) {
+                    heroImgs.forEach((img, k) => {
+                        img.classList.toggle('active', k === i);
                     });
-                    document.addEventListener('DOMContentLoaded', () => {
+                }
 
-                        document.querySelectorAll('.js-ann-open').forEach(link => {
-                            link.addEventListener('click', async (e) => {
-                                e.preventDefault();
+                showHero(idx);
 
-                                const id = link.getAttribute('data-ann-id');
-                                const modalBody = document.getElementById('announcementModalBody');
+                // faster rotation – 2.5 seconds
+                setInterval(() => {
+                    idx = (idx + 1) % heroImgs.length;
+                    showHero(idx);
+                }, 2500);
+            }
+        });
+        document.addEventListener('DOMContentLoaded', () => {
 
-                                modalBody.innerHTML = `
-                                        <div class="text-center py-5 text-muted">
-                                            Loading…
-                                        </div>
-                                    `;
+            document.querySelectorAll('.js-ann-open').forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    e.preventDefault();
 
-                                const modal = new bootstrap.Modal(
-                                    document.getElementById('announcementModal')
-                                );
-                                modal.show();
+                    const id = link.getAttribute('data-ann-id');
+                    const modalBody = document.getElementById('announcementModalBody');
 
-                                try {
-                                    const res = await fetch('@Url.Action("Modal", "Announcements")' + '?id=' + encodeURIComponent(id));
-                                    if (!res.ok) throw new Error('Failed to load');
-
-                                    modalBody.innerHTML = await res.text();
-                                } catch {
-                                    modalBody.innerHTML = `
-                                            <div class="alert alert-danger mb-0">
-                                                Failed to load announcement.
+                    modalBody.innerHTML = `
+                                            <div class="text-center py-5 text-muted">
+                                                Loading…
                                             </div>
                                         `;
-                                }
-                            });
-                        });
 
-                    });
+                    const modal = new bootstrap.Modal(
+                        document.getElementById('announcementModal')
+                    );
+                    modal.show();
+
+                    try {
+                        const res = await fetch('@Url.Action("Modal", "Announcements")' + '?id=' + encodeURIComponent(id));
+                        if (!res.ok) throw new Error('Failed to load');
+
+                        modalBody.innerHTML = await res.text();
+                    } catch {
+                        modalBody.innerHTML = `
+                                                <div class="alert alert-danger mb-0">
+                                                    Failed to load announcement.
+                                                </div>
+                                            `;
+                    }
+                });
+            });
+
+        });
 
     </script>
 }
@@ -615,22 +630,21 @@
                 <div class="portal-hero-left">
                     <div class="portal-hero-main-card">
                         <div class="portal-pill-badge mb-2">
-                            <span>BADEA internal portal</span>
+                            <span>@heroBadge</span>
                         </div>
                         <h1 class="portal-hero-title mb-2">
-                            One place for your BADEA tools and insights.
+                            @heroTitle
                         </h1>
                         <p class="portal-hero-sub mb-3">
-                            Access BADEA’s core tools in one place — from finance and HR to missions, workflows, and
-                            strategic KPIs.
+                            @heroSub
 
                         </p>
                         <div class="portal-hero-actions d-flex flex-wrap gap-2 mt-2">
                             <a href="#tools-section" class="btn btn-primary btn-sm px-4">
-                                Browse apps & tools
+                                @browseTools
                             </a>
                             <a href="#updates-section" class="btn btn-outline-light btn-sm px-4">
-                                View BADEA updates
+                                @viewUpdates
                             </a>
                         </div>
 
@@ -648,11 +662,11 @@
     <section id="updates-section" class="mt-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
-                <div class="portal-section-title">Latest announcements</div>
+                <div class="portal-section-title">@latestAnnouncements</div>
             </div>
 
             <a asp-controller="Announcements" asp-action="Index" class="btn btn-outline-secondary btn-sm">
-                Load more
+                @loadMore
             </a>
         </div>
 
@@ -660,7 +674,7 @@
             @if (Model.LatestAnnouncements == null || Model.LatestAnnouncements.Count == 0)
             {
                 <div class="col-12">
-                    <div class="alert alert-info mb-0">No announcements yet.</div>
+                    <div class="alert alert-info mb-0">@noAnnouncements</div>
                 </div>
             }
             else
@@ -714,7 +728,7 @@
     <section id="tools-section" class="mb-4">
         <div class="d-flex justify-content-between align-items-end mb-2">
             <div>
-                <div class="portal-section-title">Tools &amp; workspaces</div>
+                <div class="portal-section-title">@toolsTitle</div>
             </div>
             @* <span class="portal-chip">
                 • Internal
@@ -893,7 +907,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-md-6">
-                <a href="https://portal.badea.org/ords/r/badearep/sijil/home"              target="_blank" rel="noopener noreferrer"
+                <a href="https://portal.badea.org/ords/r/badearep/sijil/home" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
 
                     <div class="portal-tool-layout">
