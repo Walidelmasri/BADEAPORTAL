@@ -16,7 +16,6 @@
 
 <!DOCTYPE html>
 <html lang="@lang" dir="@dir">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,145 +34,361 @@
     <link rel="stylesheet" href="~/BADEAPORTAL.styles.css" asp-append-version="true" />
 
     <style>
-            body.portal-body {
-                background: #f3f5f7;
-                min-height: 100vh;
+        :root {
+            --badea-green: #009639;
+            --badea-green-dark: #006b2a;
+            --badea-green-soft: #e6f4ec;
+            --portal-bg: #f3f5f7;
+            --portal-ink: #15231b;
+        }
+
+        body.portal-body {
+            background:
+                radial-gradient(circle at top left, rgba(0, 150, 57, .08), transparent 32rem),
+                var(--portal-bg);
+            min-height: 100vh;
+            margin-bottom: 0;
+        }
+
+        .portal-shell {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .portal-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            background: rgba(255, 255, 255, .88);
+            border-bottom: 1px solid rgba(0, 0, 0, .06);
+            box-shadow: 0 16px 40px rgba(15, 29, 45, .06);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .portal-navbar-inner {
+            min-height: 78px;
+        }
+
+        .portal-brand-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .75rem;
+            text-decoration: none;
+            color: var(--portal-ink);
+        }
+
+        .portal-brand-mark {
+            width: 172px;
+            height: 54px;
+            object-fit: contain;
+        }
+
+        .portal-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .portal-brand-title {
+            font-weight: 800;
+            letter-spacing: -.02em;
+            color: var(--portal-ink);
+        }
+
+        .portal-brand-subtitle {
+            font-size: .75rem;
+            color: #7b867f;
+        }
+
+        .portal-nav-pills {
+            padding: .35rem;
+            border-radius: 999px;
+            background: rgba(0, 150, 57, .07);
+            border: 1px solid rgba(0, 150, 57, .10);
+        }
+
+        .portal-nav-pills .nav-link {
+            border-radius: 999px;
+            color: #405046;
+            font-weight: 600;
+            font-size: .92rem;
+            padding: .52rem 1rem;
+            transition: all .2s ease;
+        }
+
+        .portal-nav-pills .nav-link:hover {
+            color: var(--badea-green-dark);
+            background: rgba(255, 255, 255, .7);
+        }
+
+        .portal-nav-pills .nav-link.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--badea-green), var(--badea-green-dark));
+            box-shadow: 0 10px 24px rgba(0, 107, 42, .22);
+        }
+
+        .portal-user-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            padding: .48rem .78rem;
+            border-radius: 999px;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, .08);
+            box-shadow: 0 8px 22px rgba(15, 29, 45, .06);
+            max-width: 260px;
+        }
+
+        .portal-user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--badea-green), var(--badea-green-dark));
+            color: #fff;
+            font-weight: 800;
+            flex: 0 0 auto;
+        }
+
+        .portal-user-name {
+            font-size: .86rem;
+            font-weight: 700;
+            color: var(--portal-ink);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .portal-user-status {
+            font-size: .72rem;
+            color: #7b867f;
+            line-height: 1;
+        }
+
+        .portal-lang-switch {
+            border-radius: 999px;
+            border: 1px solid rgba(0, 150, 57, .18);
+            background: #fff;
+            color: var(--badea-green-dark);
+            font-weight: 700;
+            padding: .48rem .8rem;
+            text-decoration: none;
+            box-shadow: 0 8px 22px rgba(15, 29, 45, .05);
+        }
+
+        .portal-lang-switch:hover {
+            color: #fff;
+            background: var(--badea-green-dark);
+        }
+
+        .portal-content {
+            flex: 1;
+            padding: 1.5rem 1.5rem 2.5rem;
+        }
+
+        .portal-footer {
+            background: rgba(255, 255, 255, .7);
+            border-top: 1px solid rgba(0, 0, 0, .06);
+        }
+
+        .navbar-toggler {
+            border-radius: 999px;
+            border-color: rgba(0, 150, 57, .25);
+            padding: .45rem .65rem;
+        }
+
+        @@media (max-width: 991.98px) {
+            .portal-navbar-collapse {
+                padding: 1rem 0 1.1rem;
             }
 
-            .portal-navbar {
-                position: sticky;
-                top: 0;
-                z-index: 1030;
-                background: rgba(255, 255, 255, .9);
-                backdrop-filter: blur(12px);
-                border-bottom: 1px solid rgba(0, 0, 0, .05);
+            .portal-nav-pills {
+                border-radius: 1.25rem;
+                align-items: stretch;
             }
 
             .portal-nav-pills .nav-link {
-                border-radius: 999px;
-                padding: .5rem 1rem;
-                font-weight: 600;
+                text-align: center;
             }
 
-            .portal-nav-pills .nav-link.active {
-                background: #009639;
-                color: #fff;
+            .portal-user-pill {
+                max-width: 100%;
+                width: 100%;
+                justify-content: center;
             }
+        }
+
+        @@media (max-width: 575.98px) {
+            .portal-brand-mark {
+                width: 136px;
+                height: 44px;
+            }
+
+            .portal-brand-text {
+                display: none;
+            }
+
+            .portal-content {
+                padding: 1rem 1rem 2rem;
+            }
+        }
     </style>
 </head>
 
 <body class="portal-body">
-
     <div id="top"></div>
 
-    <header class="portal-navbar">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid px-3 px-lg-4">
+    <div class="portal-shell">
+        <header class="portal-navbar">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid px-3 px-lg-4 portal-navbar-inner">
+                    <a href="#top" class="portal-brand-link" data-nav="overview-logo">
+                        <img src="~/images/logo-en.png" alt="BADEA" class="portal-brand-mark" />
+                        <span class="portal-brand-text">
+                            <span class="portal-brand-title">@(isArabic ? "بوابة باديا" : "BADEA Portal")</span>
+                            <span class="portal-brand-subtitle">@(isArabic ? "البوابة الداخلية" : "Internal portal")</span>
+                        </span>
+                    </a>
 
-                <a asp-controller="Home" asp-action="Index" class="navbar-brand">
-                    BADEA
-                </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#portalTopNav" aria-controls="portalTopNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#portalTopNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                    <div class="collapse navbar-collapse portal-navbar-collapse" id="portalTopNav">
+                        <ul class="navbar-nav portal-nav-pills mx-lg-auto my-3 my-lg-0 gap-1">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#top" data-nav="overview">
+                                    @(isArabic ? "الرئيسية" : "Overview")
+                                </a>
+                            </li>
 
-                <div class="collapse navbar-collapse" id="portalTopNav">
-                    <ul class="navbar-nav portal-nav-pills mx-auto gap-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tools-section" data-nav="tools">
+                                    @(isArabic ? "الأنظمة والأدوات" : "Tools")
+                                </a>
+                            </li>
+                        </ul>
 
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#top" data-nav="overview">
-                                @(isArabic ? "الرئيسية" : "Overview")
+                        <div class="d-flex align-items-center gap-2 flex-column flex-lg-row">
+                            <a class="portal-lang-switch"
+                               asp-controller="Home"
+                               asp-action="SetLanguage"
+                               asp-route-culture="@(isArabic ? "en" : "ar")"
+                               asp-route-returnUrl="@returnUrl">
+                                @(isArabic ? "English" : "العربية")
                             </a>
-                        </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#tools-section" data-nav="tools">
-                                @(isArabic ? "الأنظمة والأدوات" : "Tools")
-                            </a>
-                        </li>
-
-                    </ul>
-
-                    <div class="d-flex gap-2">
-
-                        <a class="btn btn-sm btn-outline-success" asp-controller="Home" asp-action="SetLanguage"
-                               asp-route-culture="@(isArabic ? "en" : "ar")" asp-route-returnUrl="@returnUrl">
-                            @(isArabic ? "English" : "العربية")
-                        </a>
-
-                        <div class="px-2 small">
-                            @greetingName
+                            <div class="portal-user-pill">
+                                <span class="portal-user-avatar">@greetingName.Substring(0, 1).ToUpper()</span>
+                                <span class="d-flex flex-column min-w-0">
+                                    <span class="portal-user-name">@greetingName</span>
+                                    <span class="portal-user-status">@(isArabic ? "متصل" : "Online")</span>
+                                </span>
+                            </div>
                         </div>
-
                     </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
 
-    <main class="container-fluid py-3">
-        @RenderBody()
-    </main>
+        <main class="portal-content">
+            @RenderBody()
+        </main>
+
+        <footer class="portal-footer small text-muted py-2 px-4">
+            &copy; 2026 BADEA – @(isArabic ? "البوابة الداخلية" : "Internal Portal")
+        </footer>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script>
-            document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
+            const overviewLink = document.querySelector('[data-nav="overview"]');
+            const overviewLogo = document.querySelector('[data-nav="overview-logo"]');
+            const toolsLink = document.querySelector('[data-nav="tools"]');
+            const toolsSection = document.getElementById('tools-section');
+            const navbarCollapse = document.getElementById('portalTopNav');
 
-                const overviewLink = document.querySelector('[data-nav="overview"]');
-                const toolsLink = document.querySelector('[data-nav="tools"]');
-                const toolsSection = document.getElementById('tools-section');
+            if (!overviewLink || !toolsLink || !toolsSection) return;
 
-                if (!overviewLink || !toolsLink || !toolsSection) return;
+            function setActive(link) {
+                document.querySelectorAll('.portal-nav-pills .nav-link')
+                    .forEach(x => x.classList.remove('active'));
 
-                function setActive(link) {
-                    document.querySelectorAll('.portal-nav-pills .nav-link')
-                        .forEach(x => x.classList.remove('active'));
+                link.classList.add('active');
+            }
 
-                    link.classList.add('active');
-                }
+            function closeMobileNav() {
+                if (!navbarCollapse || !navbarCollapse.classList.contains('show')) return;
 
-                overviewLink.addEventListener('click', function (e) {
-                    e.preventDefault();
+                const collapse = bootstrap.Collapse.getOrCreateInstance(navbarCollapse);
+                collapse.hide();
+            }
 
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
+            function scrollToTop(e) {
+                e.preventDefault();
 
-                    history.replaceState(null, '', window.location.pathname);
-                    setActive(overviewLink);
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
 
-                toolsLink.addEventListener('click', function (e) {
-                    e.preventDefault();
+                history.replaceState(null, '', window.location.pathname);
+                setActive(overviewLink);
+                closeMobileNav();
+            }
 
+            overviewLink.addEventListener('click', scrollToTop);
+
+            if (overviewLogo) {
+                overviewLogo.addEventListener('click', scrollToTop);
+            }
+
+            toolsLink.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                toolsSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                history.replaceState(null, '', '#tools-section');
+                setActive(toolsLink);
+                closeMobileNav();
+            });
+
+            window.addEventListener('scroll', function () {
+                const toolsTop = toolsSection.getBoundingClientRect().top;
+
+                if (toolsTop <= 140) {
+                    setActive(toolsLink);
+                } else {
+                    setActive(overviewLink);
+                }
+            }, { passive: true });
+
+            if (window.location.hash === '#tools-section') {
+                setTimeout(function () {
                     toolsSection.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
 
-                    history.replaceState(null, '', '#tools-section');
                     setActive(toolsLink);
-                });
-
-                window.addEventListener('scroll', function () {
-                    const toolsTop = toolsSection.getBoundingClientRect().top;
-
-                    if (toolsTop <= 120) {
-                        setActive(toolsLink);
-                    } else {
-                        setActive(overviewLink);
-                    }
-                });
-
-            });
+                }, 50);
+            }
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
-
 </html>
