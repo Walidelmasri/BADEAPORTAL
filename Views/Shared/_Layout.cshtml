@@ -265,8 +265,8 @@
                     <div class="collapse navbar-collapse portal-navbar-collapse" id="portalTopNav">
                         <ul class="navbar-nav portal-nav-pills mx-lg-auto my-3 my-lg-0 gap-1">
                             <li class="nav-item">
-                                <a class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")"
-                                       asp-controller="Home" asp-action="Index">
+                                <a class="nav-link @(currentController == "Home" ? "active" : "")"
+                                       href="@($"{Context.Request.PathBase}/")" data-nav="overview">
                                     @(isArabic ? "الرئيسية" : "Overview")
                                 </a>
                             </li>
@@ -318,8 +318,8 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const overviewLink = document.querySelector('.portal-nav-pills .nav-link[href]:not([href*="#tools-section"])');
-                const toolsLink = document.querySelector('.portal-nav-pills .nav-link[href="#tools-section"]');
+                const overviewLink = document.querySelector('[data-nav="overview"]');
+                const toolsLink = document.querySelector('[data-nav="tools"]');
                 const toolsSection = document.getElementById('tools-section');
 
                 if (!overviewLink || !toolsLink || !toolsSection) return;
@@ -332,17 +332,39 @@
                 }
 
                 toolsLink.addEventListener('click', function (e) {
-                    e.preventDefault();
+                    const isHome =
+                        window.location.pathname === '@Context.Request.PathBase/' ||
+                        window.location.pathname === '@Context.Request.PathBase';
 
-                    toolsSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    if (isHome) {
+                        e.preventDefault();
 
-                    history.replaceState(null, '', '#tools-section');
-                    setActive(toolsLink);
+                        toolsSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+
+                        history.replaceState(null, '', '#tools-section');
+                        setActive(toolsLink);
+                    }
                 });
+                overviewLink.addEventListener('click', function (e) {
+                    const isHome =
+                        window.location.pathname === '@Context.Request.PathBase/' ||
+                        window.location.pathname === '@Context.Request.PathBase';
 
+                    if (isHome) {
+                        e.preventDefault();
+
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+
+                        history.replaceState(null, '', window.location.pathname);
+                        setActive(overviewLink);
+                    }
+                });
                 window.addEventListener('scroll', function () {
                     const toolsTop = toolsSection.getBoundingClientRect().top;
 
