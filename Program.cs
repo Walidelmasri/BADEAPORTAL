@@ -54,7 +54,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UsePathBase("/portalbadea");
 // Static files MUST be before routing
 app.UseStaticFiles();
 app.UseRequestLocalization();

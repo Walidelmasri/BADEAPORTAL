@@ -14,8 +14,7 @@
     var userProfile = UserProfileService.GetCurrentUser();
     var greetingName = userProfile.FullName ?? userProfile.DisplayName ?? "BADEA";
 
-    var returnUrl = Context.Request.Path + Context.Request.QueryString;
-}
+var returnUrl = Context.Request.PathBase + Context.Request.Path + Context.Request.QueryString;}
 
 <!DOCTYPE html>
 <html lang="@lang" dir="@dir">
@@ -270,7 +269,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="/#tools-section">
+                                <a class="nav-link" href="@($"{Context.Request.PathBase}/#tools-section")">
                                     @(isArabic ? "الأنظمة والأدوات" : "Tools")
                                 </a>
                             </li>
