@@ -274,12 +274,12 @@ var returnUrl = Context.Request.PathBase + Context.Request.Path + Context.Reques
                                 </a>
                             </li>
 
-                            <li class="nav-item">
+                            @* <li class="nav-item">
                                 <a class="nav-link @(currentController == "Announcements" ? "active" : "")"
                                    asp-controller="Announcements" asp-action="Index">
                                     @(isArabic ? "الإعلانات" : "Announcements")
                                 </a>
-                            </li>
+                            </li> *@
                         </ul>
 
                         <div class="d-flex align-items-center gap-2 flex-column flex-lg-row">
@@ -316,7 +316,37 @@ var returnUrl = Context.Request.PathBase + Context.Request.Path + Context.Reques
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const overviewLink = document.querySelector('.portal-nav-pills .nav-link[href$="/portalbadea"], .portal-nav-pills .nav-link[href$="/portalbadea/"]');
+        const toolsLink = document.querySelector('.portal-nav-pills .nav-link[href*="#tools-section"]');
 
+        if (!toolsLink) return;
+
+        function setToolsActive() {
+            document.querySelectorAll('.portal-nav-pills .nav-link').forEach(x => x.classList.remove('active'));
+            toolsLink.classList.add('active');
+        }
+
+        function setOverviewActive() {
+            document.querySelectorAll('.portal-nav-pills .nav-link').forEach(x => x.classList.remove('active'));
+
+            if (overviewLink) {
+                overviewLink.classList.add('active');
+            }
+        }
+
+        toolsLink.addEventListener('click', function () {
+            setToolsActive();
+        });
+
+        if (window.location.hash === '#tools-section') {
+            setToolsActive();
+        } else {
+            setOverviewActive();
+        }
+    });
+</script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
