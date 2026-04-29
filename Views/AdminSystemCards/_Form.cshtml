@@ -9,13 +9,19 @@
             </div>
 
             <div class="col-md-4">
-                <label asp-for="IsActive" class="form-label d-block">Active</label>
-                <input asp-for="IsActive" class="form-check-input" />
+                <label asp-for="IsActive" class="form-label">Active</label>
+                <select asp-for="IsActive" class="form-select">
+                    <option value="1">Active</option>
+                    <option value="0">Hidden</option>
+                </select>
             </div>
 
             <div class="col-md-4">
-                <label asp-for="IsPublic" class="form-label d-block">Public</label>
-                <input asp-for="IsPublic" class="form-check-input" />
+                <label asp-for="IsPublic" class="form-label">Public</label>
+                <select asp-for="IsPublic" class="form-select">
+                    <option value="1">Public</option>
+                    <option value="0">Restricted</option>
+                </select>
             </div>
 
             <div class="col-md-6">
@@ -67,8 +73,7 @@
             {
                 <div class="col-12">
                     <div class="small text-muted mb-2">Current logo</div>
-                    <img src="@Model.LogoPath"
-                         style="width:80px;height:80px;object-fit:contain;border-radius:16px;"
+                    <img src="@Model.LogoPath" style="width:80px;height:80px;object-fit:contain;border-radius:16px;"
                          onerror="this.onerror=null;this.src='@Url.Content("~/images/logo-en.png")';" />
                 </div>
             }

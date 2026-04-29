@@ -19,8 +19,8 @@ namespace BADEAPORTAL.Models
 
         public string? RoleGroup { get; set; }
 
-        public bool IsPublic { get; set; }
-        public bool IsActive { get; set; }
+        public int IsActive { get; set; }
+        public int IsPublic { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }

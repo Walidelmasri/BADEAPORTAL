@@ -29,36 +29,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach (var card in Model)
-                {
-                    <tr>
-                        <td>
-                            <img src="@(string.IsNullOrWhiteSpace(card.LogoPath) ? Url.Content("~/images/logo-en.png") : card.LogoPath)"
-                                 style="width:48px;height:48px;object-fit:contain;border-radius:12px;"
-                                 onerror="this.onerror=null;this.src='@Url.Content("~/images/logo-en.png")';" />
-                        </td>
-                        <td>
-                            <strong>@card.SysNameEn</strong>
-                            <div class="small text-muted">@card.AppUrl</div>
-                        </td>
-                        <td>@card.SysNameAr</td>
-                        <td>@card.CategoryEn</td>
-                        <td>
-                            <span class="badge @(card.IsActive ? "bg-success" : "bg-secondary")">
-                                @(card.IsActive ? "Active" : "Hidden")
-                            </span>
-                        </td>
-                        <td>
-                            <span class="badge @(card.IsPublic ? "bg-primary" : "bg-warning text-dark")">
-                                @(card.IsPublic ? "Public" : "Restricted")
-                            </span>
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@card.CardId" class="btn btn-sm btn-outline-primary">Edit</a>
-                            <a asp-action="Delete" asp-route-id="@card.CardId" class="btn btn-sm btn-outline-danger">Delete</a>
-                        </td>
-                    </tr>
-                }
+                    @foreach (var card in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@(string.IsNullOrWhiteSpace(card.LogoPath) ? Url.Content("~/images/logo-en.png") : card.LogoPath)"
+                                     style="width:48px;height:48px;object-fit:contain;border-radius:12px;"
+                                     onerror="this.onerror=null;this.src='@Url.Content("~/images/logo-en.png")';" />
+                            </td>
+                            <td>
+                                <strong>@card.SysNameEn</strong>
+                                <div class="small text-muted">@card.AppUrl</div>
+                            </td>
+                            <td>@card.SysNameAr</td>
+                            <td>@card.CategoryEn</td>
+                            <td>
+                                <span class="badge @(card.IsActive == 1 ? "bg-success" : "bg-secondary")">
+                                    @(card.IsActive == 1 ? "Active" : "Hidden")
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge @(card.IsPublic == 1 ? "bg-primary" : "bg-warning text-dark")">
+                                    @(card.IsPublic == 1 ? "Public" : "Restricted")
+                                </span>
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@card.CardId"
+                                   class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@card.CardId"
+                                   class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

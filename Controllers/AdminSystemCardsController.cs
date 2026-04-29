@@ -150,7 +150,7 @@ namespace BADEAPORTAL.Controllers
             if (card == null)
                 return NotFound();
 
-            card.IsActive = false;
+            card.IsActive = 0;
             card.UpdatedAt = DateTime.Now;
 
             await _db.SaveChangesAsync();

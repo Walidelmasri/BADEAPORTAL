@@ -21,8 +21,8 @@ namespace BADEAPORTAL.Models.Admin
 
         public string? RoleGroup { get; set; }
 
-        public bool IsPublic { get; set; } = true;
-        public bool IsActive { get; set; } = true;
+        public int IsActive { get; set; } = 1;
+        public int IsPublic { get; set; } = 1;
 
         public IFormFile? LogoFile { get; set; }
     }
