@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BADEAPORTAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6f3e3858f92d34cfc632029a6ac4d889b999e30")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4439933980a4edf13ca15f640a618ac63289cd54")]
 [assembly: System.Reflection.AssemblyProductAttribute("BADEAPORTAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BADEAPORTAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

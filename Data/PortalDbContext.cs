@@ -15,7 +15,7 @@ namespace BADEAPORTAL.Data
         // These will be used for pickers (read-only)
         public DbSet<Employee> Employees => Set<Employee>();
         public DbSet<Department> Departments => Set<Department>();
-
+        public DbSet<PortalSystemCard> PortalSystemCards => Set<PortalSystemCard>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -111,7 +111,46 @@ namespace BADEAPORTAL.Data
                     .HasDefaultValue(1)
                     .IsRequired();
             });
+            modelBuilder.Entity<PortalSystemCard>(e =>
+            {
+                e.ToTable("PORTAL_SYSTEM_CARDS");
 
+                e.HasKey(x => x.CardId);
+
+                e.Property(x => x.CardId).HasColumnName("CARD_ID").ValueGeneratedOnAdd();
+                e.Property(x => x.SysId).HasColumnName("SYSID");
+
+                e.Property(x => x.SysNameEn).HasColumnName("SYSNAME_EN").HasMaxLength(150).IsRequired();
+                e.Property(x => x.SysNameAr).HasColumnName("SYSNAME_AR").HasMaxLength(150).IsRequired();
+
+                e.Property(x => x.DescriptionEn).HasColumnName("DESCRIPTION_EN").HasMaxLength(500);
+                e.Property(x => x.DescriptionAr).HasColumnName("DESCRIPTION_AR").HasMaxLength(500);
+
+                e.Property(x => x.CategoryEn).HasColumnName("CATEGORY_EN").HasMaxLength(100);
+                e.Property(x => x.CategoryAr).HasColumnName("CATEGORY_AR").HasMaxLength(100);
+
+                e.Property(x => x.AppUrl).HasColumnName("APP_URL").HasMaxLength(1000).IsRequired();
+                e.Property(x => x.LogoPath).HasColumnName("LOGO_PATH").HasMaxLength(500);
+
+                e.Property(x => x.RoleGroup).HasColumnName("ROLE_GROUP").HasMaxLength(100);
+
+                e.Property(x => x.IsPublic)
+                    .HasColumnName("IS_PUBLIC")
+                    .HasColumnType("NUMBER(1)")
+                    .HasConversion<int>()
+                    .HasDefaultValue(1)
+                    .IsRequired();
+
+                e.Property(x => x.IsActive)
+                    .HasColumnName("IS_ACTIVE")
+                    .HasColumnType("NUMBER(1)")
+                    .HasConversion<int>()
+                    .HasDefaultValue(1)
+                    .IsRequired();
+
+                e.Property(x => x.CreatedAt).HasColumnName("CREATED_AT").IsRequired();
+                e.Property(x => x.UpdatedAt).HasColumnName("UPDATED_AT");
+            });
             // =========================
             // EMPLOYEES (READ-ONLY)
             // =========================

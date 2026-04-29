@@ -736,9 +736,53 @@
             </span> *@
         </div>
         <div class="row g-3">
+@foreach (var card in Model.SystemCards)
+{
+    var title = isArabic ? card.SysNameAr : card.SysNameEn;
+    var description = isArabic ? card.DescriptionAr : card.DescriptionEn;
+    var category = isArabic ? card.CategoryAr : card.CategoryEn;
 
+    var logo = string.IsNullOrWhiteSpace(card.LogoPath)
+        ? Url.Content("~/images/logo-en.png")
+        : card.LogoPath.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+            ? card.LogoPath
+            : Url.Content(card.LogoPath.StartsWith("~/") ? card.LogoPath : "~" + card.LogoPath);
+
+    <div class="col-lg-4 col-md-6">
+        <a href="@card.AppUrl"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="portal-tool-card text-decoration-none text-dark d-block">
+
+            <div class="portal-tool-layout">
+                <div class="portal-tool-body">
+                    <h5 class="mb-1 portal-tool-title">@title</h5>
+
+                    @if (!string.IsNullOrWhiteSpace(category))
+                    {
+                        <div class="portal-tool-meta mb-2">@category</div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(description))
+                    {
+                        <p class="mb-3 small text-muted">@description</p>
+                    }
+
+                    <span class="portal-chip">@(isArabic ? "داخلي" : "Internal")</span>
+                </div>
+
+                <div class="portal-tool-visual">
+                    <img src="@logo"
+                         alt="@title"
+                         class="portal-tool-logo-img"
+                         onerror="this.onerror=null;this.src='@Url.Content("~/images/logo-en.png")';" />
+                </div>
+            </div>
+        </a>
+    </div>
+}
             <!-- 1. Missions Management -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/r/badea/mofad/" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
@@ -755,10 +799,10 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
 
             <!-- 2. SAP Employee Central -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://hcm55.sapsf.eu/login?company=arabbankfo&_s.crb=ucnoZgVwtxw7m4mncpVzAllNfSvR9S6JSu2rTdH68Ww%3d#/login"
                        target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
@@ -777,10 +821,10 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
 
             <!-- 3. Freshworks (Support) -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://support.badea.org/support/home" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
@@ -798,10 +842,10 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
 
             <!-- 4. Laserfiche -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://10.3.0.82/laserfiche" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
@@ -819,10 +863,10 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
 
             <!-- 5. Operational Risk Management -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/r/badea/operation-risk-events-management110/login"
                        target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
@@ -840,10 +884,10 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
 
             <!-- 6. SAP Fiori -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://vharfws4wd01.sap.badea.org:44380/sap/bc/ui2/flp?sap-client=100&amp;sap-language=EN"
                        target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
@@ -862,10 +906,10 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
 
             <!-- 7. BADEA Services Portal (Oracle APEX) -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/r/badea/yosr/home" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
@@ -883,9 +927,9 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
             <!-- TAAM -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/r/badea/%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D9%85%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D8%AD%D9%83%D9%88%D9%85%D9%8A%D8%A9102134/"
                        target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
@@ -905,8 +949,8 @@
                         </div>
                     </div>
                 </a>
-            </div>
-            <div class="col-lg-4 col-md-6">
+            </div> *@
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/r/badearep/sijil/home" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
 
@@ -925,9 +969,9 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
             <!-- 9. Payments Portal -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/r/badea/fin-app" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
@@ -947,9 +991,9 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
             <!-- لوحة قيادة -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/f?p=123:1::::::" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
 
@@ -968,7 +1012,7 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
 
             @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/f?p=123:1::::::" target="_blank" rel="noopener noreferrer"
@@ -992,7 +1036,7 @@
                 </a>
             </div> *@
             <!-- Treasury Forecast -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/r/badea/treasury-forecast/login" target="_blank"
                        rel="noopener noreferrer" class="portal-tool-card text-decoration-none text-dark d-block">
 
@@ -1012,10 +1056,10 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
 
             <!-- 8. KPI Monitor -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://kpimonitor.badea.org" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
@@ -1033,9 +1077,9 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
             <!-- 9. Payments Portal -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://portal.badea.org/ords/r/badea/payments-portal/home" target="_blank"
                        rel="noopener noreferrer" class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
@@ -1055,9 +1099,9 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
             <!-- 10. ECM -->
-            <div class="col-lg-4 col-md-6">
+            @* <div class="col-lg-4 col-md-6">
                 <a href="https://ecm.badea.org/WebPortal" target="_blank" rel="noopener noreferrer"
                        class="portal-tool-card text-decoration-none text-dark d-block">
                     <div class="portal-tool-layout">
@@ -1074,7 +1118,7 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
         </div>
     </section>
 

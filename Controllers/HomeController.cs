@@ -5,6 +5,8 @@ using BADEAPORTAL.Services;
 using BADEAPORTAL.Models.Home;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
+using BADEAPORTAL.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BADEAPORTAL.Controllers;
 
@@ -13,18 +15,39 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IAnnouncementsService _announcements;
+    private readonly PortalDbContext _db;
 
     public HomeController(
         ILogger<HomeController> logger,
-        IAnnouncementsService announcements)
+        IAnnouncementsService announcements,
+        PortalDbContext db)
     {
         _logger = logger;
         _announcements = announcements;
+        _db = db;
     }
 
     public async Task<IActionResult> Index()
     {
         var (items, _) = await _announcements.GetPagedAsync(page: 1, pageSize: 3);
+
+        var cards = await _db.PortalSystemCards
+            .AsNoTracking()
+            .Where(x => x.IsActive)
+            .OrderBy(x => x.CardId)
+            .Select(x => new PortalSystemCardVm
+            {
+                CardId = x.CardId,
+                SysNameEn = x.SysNameEn,
+                SysNameAr = x.SysNameAr,
+                DescriptionEn = x.DescriptionEn,
+                DescriptionAr = x.DescriptionAr,
+                CategoryEn = x.CategoryEn,
+                CategoryAr = x.CategoryAr,
+                AppUrl = x.AppUrl,
+                LogoPath = x.LogoPath
+            })
+            .ToListAsync();
 
         var vm = new HomeIndexVm
         {
@@ -36,11 +59,14 @@ public class HomeController : Controller
                 IsMemo = a.IsMemo,
                 CreatedAtUtc = a.CreatedAtUtc,
                 CreatedByName = a.CreatedByName
-            }).ToList()
+            }).ToList(),
+
+            SystemCards = cards
         };
 
         return View(vm);
     }
+
     [HttpGet]
     public IActionResult SetLanguage(string culture, string returnUrl = "/")
     {
@@ -60,6 +86,7 @@ public class HomeController : Controller
 
         return LocalRedirect(returnUrl);
     }
+
     public IActionResult Privacy()
     {
         return View();
