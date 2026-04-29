@@ -31,24 +31,39 @@ public class HomeController : Controller
     {
         var (items, _) = await _announcements.GetPagedAsync(page: 1, pageSize: 3);
 
-        var cards = await _db.PortalSystemCards
-            .AsNoTracking()
-            .Where(x => x.IsActive)
-            .OrderBy(x => x.CardId)
-            .Select(x => new PortalSystemCardVm
-            {
-                CardId = x.CardId,
-                SysNameEn = x.SysNameEn,
-                SysNameAr = x.SysNameAr,
-                DescriptionEn = x.DescriptionEn,
-                DescriptionAr = x.DescriptionAr,
-                CategoryEn = x.CategoryEn,
-                CategoryAr = x.CategoryAr,
-                AppUrl = x.AppUrl,
-                LogoPath = x.LogoPath
-            })
-            .ToListAsync();
-
+        // var cards = await _db.PortalSystemCards
+        //     .AsNoTracking()
+        //     .Where(x => x.IsActive)
+        //     .OrderBy(x => x.CardId)
+        //     .Select(x => new PortalSystemCardVm
+        //     {
+        //         CardId = x.CardId,
+        //         SysNameEn = x.SysNameEn,
+        //         SysNameAr = x.SysNameAr,
+        //         DescriptionEn = x.DescriptionEn,
+        //         DescriptionAr = x.DescriptionAr,
+        //         CategoryEn = x.CategoryEn,
+        //         CategoryAr = x.CategoryAr,
+        //         AppUrl = x.AppUrl,
+        //         LogoPath = x.LogoPath
+        //     })
+        //     .ToListAsync();
+var cards = await _db.PortalSystemCards
+    .AsNoTracking()
+    .OrderBy(x => x.CardId)
+    .Select(x => new PortalSystemCardVm
+    {
+        CardId = x.CardId,
+        SysNameEn = x.SysNameEn,
+        SysNameAr = x.SysNameAr,
+        DescriptionEn = x.DescriptionEn,
+        DescriptionAr = x.DescriptionAr,
+        CategoryEn = x.CategoryEn,
+        CategoryAr = x.CategoryAr,
+        AppUrl = x.AppUrl,
+        LogoPath = x.LogoPath
+    })
+    .ToListAsync();
         var vm = new HomeIndexVm
         {
             LatestAnnouncements = items.Select(a => new AnnouncementPreviewVm
