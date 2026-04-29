@@ -50,7 +50,7 @@ public class HomeController : Controller
         //     .ToListAsync();
         var cards = await _db.PortalSystemCards
             .AsNoTracking()
-            .Where(x => x.IsActive == 1)
+            // .Where(x => x.IsActive == 1)
             .OrderBy(x => x.CardId)
             .Select(x => new PortalSystemCardVm
             {
