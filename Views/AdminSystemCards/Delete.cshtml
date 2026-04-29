@@ -1,0 +1,27 @@
+@model BADEAPORTAL.Models.PortalSystemCard
+
+@{
+    ViewData["Title"] = "Delete Tool";
+}
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body">
+        <h2>Hide Tool?</h2>
+
+        <p class="text-muted">
+            This will not permanently delete the tool. It will set it as inactive.
+        </p>
+
+        <div class="border rounded-4 p-3 mb-4">
+            <strong>@Model.SysNameEn</strong>
+            <div class="text-muted">@Model.AppUrl</div>
+        </div>
+
+        <form asp-action="DeleteConfirmed" method="post">
+            <input type="hidden" name="id" value="@Model.CardId" />
+
+            <button type="submit" class="btn btn-danger">Hide Tool</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

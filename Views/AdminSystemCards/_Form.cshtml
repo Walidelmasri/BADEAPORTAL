@@ -1,0 +1,77 @@
+@model BADEAPORTAL.Models.Admin.SystemCardFormVm
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label asp-for="SysId" class="form-label">SYSID</label>
+                <input asp-for="SysId" class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="IsActive" class="form-label d-block">Active</label>
+                <input asp-for="IsActive" class="form-check-input" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="IsPublic" class="form-label d-block">Public</label>
+                <input asp-for="IsPublic" class="form-check-input" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="SysNameEn" class="form-label">Name English</label>
+                <input asp-for="SysNameEn" class="form-control" required />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="SysNameAr" class="form-label">Name Arabic</label>
+                <input asp-for="SysNameAr" class="form-control" dir="rtl" required />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="DescriptionEn" class="form-label">Description English</label>
+                <textarea asp-for="DescriptionEn" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="DescriptionAr" class="form-label">Description Arabic</label>
+                <textarea asp-for="DescriptionAr" class="form-control" rows="3" dir="rtl"></textarea>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="CategoryEn" class="form-label">Category English</label>
+                <input asp-for="CategoryEn" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="CategoryAr" class="form-label">Category Arabic</label>
+                <input asp-for="CategoryAr" class="form-control" dir="rtl" />
+            </div>
+
+            <div class="col-12">
+                <label asp-for="AppUrl" class="form-label">URL</label>
+                <input asp-for="AppUrl" class="form-control" required />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="RoleGroup" class="form-label">Role Group</label>
+                <input asp-for="RoleGroup" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="LogoFile" class="form-label">Upload Logo</label>
+                <input asp-for="LogoFile" type="file" class="form-control" accept=".png,.jpg,.jpeg,.webp" />
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.LogoPath))
+            {
+                <div class="col-12">
+                    <div class="small text-muted mb-2">Current logo</div>
+                    <img src="@Model.LogoPath"
+                         style="width:80px;height:80px;object-fit:contain;border-radius:16px;"
+                         onerror="this.onerror=null;this.src='@Url.Content("~/images/logo-en.png")';" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

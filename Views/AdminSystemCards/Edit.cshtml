@@ -1,0 +1,19 @@
+@model BADEAPORTAL.Models.Admin.SystemCardFormVm
+
+@{
+    ViewData["Title"] = "Edit Tool";
+}
+
+<h2 class="mb-4">Edit Tool</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="CardId" />
+    <input type="hidden" asp-for="LogoPath" />
+
+    @await Html.PartialAsync("_Form", Model)
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</form>
