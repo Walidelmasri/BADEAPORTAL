@@ -136,13 +136,13 @@ namespace BADEAPORTAL.Data
 
                 e.Property(x => x.IsPublic)
                     .HasColumnName("IS_PUBLIC")
-                    .HasColumnType("NUMBER(1)")
+                    .HasPrecision(1, 0)
                     .HasDefaultValue(1)
                     .IsRequired();
 
                 e.Property(x => x.IsActive)
                     .HasColumnName("IS_ACTIVE")
-                    .HasColumnType("NUMBER(1)")
+                    .HasPrecision(1, 0)
                     .HasDefaultValue(1)
                     .IsRequired();
 
