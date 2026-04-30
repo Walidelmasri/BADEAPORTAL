@@ -615,14 +615,23 @@
     <section class="mb-4">
         <div class="portal-hero">
             <!-- background carousel under the text -->
-            <div class="portal-hero-bg-carousel">
-                <img src="~/images/portal-hero.jpg" alt="BADEA hero 1" />
-                <img src="~/images/portal-hero2.jpg" alt="BADEA hero 2" />
-                <img src="~/images/portal-hero3.jpg" alt="BADEA hero 3" />
-                <img src="~/images/portal-hero4.jpg" alt="BADEA hero 4" />
-                <img src="~/images/portal-hero5.jpg" alt="BADEA hero 5" />
+<div class="portal-hero-bg-carousel">
+    @if (Model.HeroSlides != null && Model.HeroSlides.Count > 0)
+    {
+        foreach (var slide in Model.HeroSlides)
+        {
+            var altText = isArabic
+                ? (slide.AltTextAr ?? slide.AltTextEn ?? "BADEA hero image")
+                : (slide.AltTextEn ?? slide.AltTextAr ?? "BADEA hero image");
 
-            </div>
+            <img src="@Url.Content(slide.ImagePath)" alt="@altText" />
+        }
+    }
+    else
+    {
+        <img src="~/images/portal-hero.jpg" alt="BADEA hero image" />
+    }
+</div>
 
             <div class="portal-hero-overlay"></div>
 

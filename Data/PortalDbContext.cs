@@ -16,6 +16,7 @@ namespace BADEAPORTAL.Data
         public DbSet<Employee> Employees => Set<Employee>();
         public DbSet<Department> Departments => Set<Department>();
         public DbSet<PortalSystemCard> PortalSystemCards => Set<PortalSystemCard>();
+        public DbSet<PortalHeroSlide> PortalHeroSlides => Set<PortalHeroSlide>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -111,6 +112,47 @@ namespace BADEAPORTAL.Data
                     .HasDefaultValue(1)
                     .IsRequired();
             });
+            modelBuilder.Entity<PortalHeroSlide>(e =>
+{
+    e.ToTable("PORTAL_HERO_SLIDES");
+
+    e.HasKey(x => x.SlideId);
+
+    e.Property(x => x.SlideId)
+        .HasColumnName("SLIDE_ID")
+        .ValueGeneratedOnAdd();
+
+    e.Property(x => x.ImagePath)
+        .HasColumnName("IMAGE_PATH")
+        .HasMaxLength(500)
+        .IsRequired();
+
+    e.Property(x => x.AltTextEn)
+        .HasColumnName("ALT_TEXT_EN")
+        .HasMaxLength(200);
+
+    e.Property(x => x.AltTextAr)
+        .HasColumnName("ALT_TEXT_AR")
+        .HasMaxLength(200);
+
+    e.Property(x => x.SortOrder)
+        .HasColumnName("SORT_ORDER")
+        .HasDefaultValue(0)
+        .IsRequired();
+
+    e.Property(x => x.IsActive)
+        .HasColumnName("IS_ACTIVE")
+        .HasPrecision(1, 0)
+        .HasDefaultValue(1)
+        .IsRequired();
+
+    e.Property(x => x.CreatedAt)
+        .HasColumnName("CREATED_AT")
+        .IsRequired();
+
+    e.Property(x => x.UpdatedAt)
+        .HasColumnName("UPDATED_AT");
+});
             modelBuilder.Entity<PortalSystemCard>(e =>
             {
                 e.ToTable("PORTAL_SYSTEM_CARDS");

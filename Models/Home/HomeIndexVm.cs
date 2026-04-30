@@ -7,8 +7,15 @@ namespace BADEAPORTAL.Models.Home
     {
         public List<AnnouncementPreviewVm> LatestAnnouncements { get; set; } = new();
         public List<PortalSystemCardVm> SystemCards { get; set; } = new();
+        public List<PortalHeroSlideVm> HeroSlides { get; set; } = new();
     }
-
+    public sealed class PortalHeroSlideVm
+    {
+        public int SlideId { get; set; }
+        public string ImagePath { get; set; } = "";
+        public string? AltTextEn { get; set; }
+        public string? AltTextAr { get; set; }
+    }
     public sealed class AnnouncementPreviewVm
     {
         public int Id { get; set; }

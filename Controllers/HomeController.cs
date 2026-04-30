@@ -31,7 +31,19 @@ public class HomeController : Controller
     {
         var (items, _) = await _announcements.GetPagedAsync(page: 1, pageSize: 3);
 
-
+        var heroSlides = await _db.PortalHeroSlides
+            .AsNoTracking()
+            .Where(x => x.IsActive == 1)
+            .OrderBy(x => x.SortOrder)
+            .ThenBy(x => x.SlideId)
+            .Select(x => new PortalHeroSlideVm
+            {
+                SlideId = x.SlideId,
+                ImagePath = x.ImagePath,
+                AltTextEn = x.AltTextEn,
+                AltTextAr = x.AltTextAr
+            })
+            .ToListAsync();
         var cards = await _db.PortalSystemCards
             .AsNoTracking()
             .Where(x => x.IsActive == 1)
@@ -60,7 +72,7 @@ public class HomeController : Controller
                 CreatedAtUtc = a.CreatedAtUtc,
                 CreatedByName = a.CreatedByName
             }).ToList(),
-
+            HeroSlides = heroSlides,
             SystemCards = cards
         };
 
