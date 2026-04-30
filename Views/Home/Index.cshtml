@@ -624,8 +624,7 @@
                 ? (slide.AltTextAr ?? slide.AltTextEn ?? "BADEA hero image")
                 : (slide.AltTextEn ?? slide.AltTextAr ?? "BADEA hero image");
 
-            <img src="@Url.Content(slide.ImagePath)" alt="@altText" />
-        }
+<img src="@Url.Content("~" + slide.ImagePath)" alt="@altText" />        }
     }
     else
     {
