@@ -1,0 +1,98 @@
+@model IReadOnlyList<BADEAPORTAL.Models.Documents.SharePointDocumentVm>
+
+@{
+    ViewData["Title"] = "Documents";
+}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Documents</h2>
+            <p class="text-muted mb-0">
+                SharePoint document library integration
+            </p>
+        </div>
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No documents were found.
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="table-responsive">
+
+                <table class="table align-middle mb-0">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Size</th>
+                            <th>Last Modified</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td class="fw-semibold">
+                                    @item.Name
+                                </td>
+
+                                <td>
+                                    @(item.IsFolder ? "Folder" : "File")
+                                </td>
+
+                                <td>
+                                    @{
+                                        var sizeText = item.Size.HasValue
+                                            ? $"{Math.Round(item.Size.Value / 1024.0, 2)} KB"
+                                            : "-";
+                                    }
+
+                                    @sizeText
+                                </td>
+
+                                <td>
+                                    @(item.LastModifiedDateTime?.ToLocalTime()
+                                        .ToString("dd MMM yyyy hh:mm tt"))
+                                </td>
+
+                                <td class="text-end">
+
+                                    <a href="@item.WebUrl"
+                                       target="_blank"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Open
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    }
+
+</div>

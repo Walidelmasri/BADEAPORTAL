@@ -35,7 +35,13 @@ builder.Services.AddScoped<IAnnouncementsService, AnnouncementsService>();
 builder.Services.AddScoped<IMemoPdfService, QuestPdfMemoService>();
 builder.Services.AddScoped<IHtmlContentNormalizer, QuillHtmlNormalizer>();
 builder.Services.AddScoped<IPickerDirectory, OraclePickerDirectory>();
+builder.Services.Configure<SharePointOptions>(
 
+    builder.Configuration.GetSection("SharePoint"));
+
+builder.Services.AddHttpClient();
+
+builder.Services.AddScoped<ISharePointDocumentService, SharePointDocumentService>();
 // Oracle EF Core
 builder.Services.AddDbContext<PortalDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));

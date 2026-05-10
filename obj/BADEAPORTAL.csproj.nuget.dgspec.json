@@ -44,6 +44,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.14.0, )"
+            },
             "HtmlAgilityPack": {
               "target": "Package",
               "version": "[1.12.4, )"
