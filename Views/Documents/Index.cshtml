@@ -18,72 +18,302 @@
     }
 }
 
-<div class="container py-4">
+<style>
+    .documents-page {
+        font-family: 'Tajawal', sans-serif;
+    }
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    .documents-hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 28px;
+        padding: 2rem;
+        background:
+            linear-gradient(135deg, rgba(13,110,253,0.10), rgba(111,66,193,0.08)),
+            rgba(255,255,255,0.72);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255,255,255,0.45);
+        box-shadow:
+            0 10px 35px rgba(0,0,0,0.06),
+            inset 0 1px 0 rgba(255,255,255,0.55);
+    }
 
-        <div>
-            <h2 class="fw-bold mb-1">Documents</h2>
+    .documents-hero::before {
+        content: "";
+        position: absolute;
+        top: -120px;
+        right: -120px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: rgba(13,110,253,0.08);
+    }
 
-            @if (string.IsNullOrWhiteSpace(currentFolderPath))
-            {
-                <p class="text-muted mb-0">
-                    Root Folder
-                </p>
-            }
-            else
-            {
-                <p class="text-muted mb-0">
-                    @currentFolderPath
-                </p>
-            }
+    .documents-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .documents-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    .documents-card {
+        background: rgba(255,255,255,0.75);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255,255,255,0.45);
+        border-radius: 24px;
+        box-shadow:
+            0 10px 30px rgba(0,0,0,0.05),
+            inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+
+    .documents-table th {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #6b7280;
+        border-bottom: 1px solid #eef2f7;
+        background: transparent !important;
+        padding: 1rem;
+    }
+
+    .documents-table td {
+        padding: 1rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .documents-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .document-name {
+        font-weight: 600;
+        color: #111827;
+    }
+
+    .document-meta {
+        color: #6b7280;
+        font-size: 0.92rem;
+    }
+
+    .folder-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.4rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(13,110,253,0.10);
+        color: #0d6efd;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .file-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.4rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(108,117,125,0.12);
+        color: #495057;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .glass-btn {
+        border-radius: 14px;
+        padding: 0.6rem 1rem;
+        font-weight: 600;
+        border: 1px solid rgba(255,255,255,0.4);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: all 0.2s ease;
+    }
+
+    .glass-btn:hover {
+        transform: translateY(-1px);
+    }
+
+    .upload-card {
+        border-radius: 24px;
+        background: rgba(255,255,255,0.72);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255,255,255,0.45);
+        box-shadow:
+            0 8px 25px rgba(0,0,0,0.04),
+            inset 0 1px 0 rgba(255,255,255,0.55);
+    }
+
+    .custom-file-input {
+        border-radius: 14px;
+        min-height: 52px;
+        border: 1px solid #dbe2ea;
+        padding: 0.8rem 1rem;
+    }
+
+    .path-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        background: rgba(13,110,253,0.08);
+        color: #0d6efd;
+        font-weight: 600;
+        font-size: 0.88rem;
+    }
+
+    .empty-state {
+        padding: 3rem 2rem;
+        text-align: center;
+        color: #6b7280;
+    }
+
+    .alert {
+        border-radius: 18px;
+        border: none;
+    }
+</style>
+
+<div class="container py-4 documents-page">
+
+    <div class="documents-hero mb-4">
+
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+
+            <div>
+                <div class="documents-title mb-2">
+                    Document Management
+                </div>
+
+                <div class="documents-subtitle mb-3">
+                    Centralized enterprise document library powered by SharePoint integration
+                </div>
+
+                @if (string.IsNullOrWhiteSpace(currentFolderPath))
+                {
+                    <div class="path-pill">
+                        Root Folder
+                    </div>
+                }
+                else
+                {
+                    <div class="path-pill">
+                        @currentFolderPath
+                    </div>
+                }
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+
+                @if (!string.IsNullOrWhiteSpace(currentFolderPath))
+                {
+                    <a asp-controller="Documents"
+                       asp-action="Index"
+                       asp-route-folderPath="@parentFolderPath"
+                       class="btn btn-light glass-btn">
+                        ← Back
+                    </a>
+                }
+
+            </div>
+
         </div>
 
     </div>
 
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success shadow-sm mb-4">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
     @if (TempData["ErrorMessage"] != null)
     {
-        <div class="alert alert-danger">
+        <div class="alert alert-danger shadow-sm mb-4">
             @TempData["ErrorMessage"]
         </div>
     }
 
     @if (ViewBag.ErrorMessage != null)
     {
-        <div class="alert alert-danger">
+        <div class="alert alert-danger shadow-sm mb-4">
             @ViewBag.ErrorMessage
         </div>
     }
 
-    <div class="mb-3">
+    <div class="upload-card p-4 mb-4">
 
-        @if (!string.IsNullOrWhiteSpace(currentFolderPath))
-        {
-            <a asp-controller="Documents"
-               asp-action="Index"
-               asp-route-folderPath="@parentFolderPath"
-               class="btn btn-outline-secondary btn-sm">
-                ← Back
-            </a>
-        }
+        <form asp-controller="Documents"
+              asp-action="Upload"
+              method="post"
+              enctype="multipart/form-data">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden"
+                   name="folderPath"
+                   value="@currentFolderPath" />
+
+            <div class="row align-items-end g-3">
+
+                <div class="col-lg-8">
+
+                    <label class="form-label fw-semibold mb-2">
+                        Upload Document
+                    </label>
+
+                    <input type="file"
+                           name="file"
+                           class="form-control custom-file-input"
+                           accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg" />
+
+                    <div class="form-text mt-2">
+                        Allowed: PDF, Word, Excel, PowerPoint, PNG, JPG — Maximum 10 MB
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4 text-lg-end">
+
+                    <button type="submit"
+                            class="btn btn-primary glass-btn px-4">
+                        Upload Document
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
 
     </div>
 
-    @if (!Model.Any())
-    {
-        <div class="alert alert-info">
-            No documents were found.
-        </div>
-    }
-    else
-    {
-        <div class="card shadow-sm border-0">
+    <div class="documents-card p-0 overflow-hidden">
 
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+                <h5 class="fw-bold mb-2">
+                    No Documents Found
+                </h5>
+
+                <p class="mb-0">
+                    This folder currently does not contain any files or folders.
+                </p>
+            </div>
+        }
+        else
+        {
             <div class="table-responsive">
 
-                <table class="table align-middle mb-0">
+                <table class="table documents-table align-middle mb-0">
 
-                    <thead class="table-light">
+                    <thead>
                         <tr>
                             <th>Name</th>
                             <th>Type</th>
@@ -99,15 +329,30 @@
                         {
                             <tr>
 
-                                <td class="fw-semibold">
-                                    @item.Name
+                                <td>
+                                    <div class="document-name">
+                                        @item.Name
+                                    </div>
                                 </td>
 
                                 <td>
-                                    @(item.IsFolder ? "Folder" : "File")
+
+                                    @if (item.IsFolder)
+                                    {
+                                        <span class="folder-badge">
+                                            Folder
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="file-badge">
+                                            File
+                                        </span>
+                                    }
+
                                 </td>
 
-                                <td>
+                                <td class="document-meta">
 
                                     @if (item.IsFolder)
                                     {
@@ -124,7 +369,7 @@
 
                                 </td>
 
-                                <td>
+                                <td class="document-meta">
                                     @(item.LastModifiedDateTime?.ToLocalTime()
                                         .ToString("dd MMM yyyy hh:mm tt"))
                                 </td>
@@ -136,7 +381,7 @@
                                         <a asp-controller="Documents"
                                            asp-action="Index"
                                            asp-route-folderPath="@item.FolderPath"
-                                           class="btn btn-sm btn-outline-primary">
+                                           class="btn btn-outline-primary glass-btn btn-sm">
                                             Open
                                         </a>
                                     }
@@ -145,7 +390,7 @@
                                         <a asp-controller="Documents"
                                            asp-action="Download"
                                            asp-route-itemId="@item.ItemId"
-                                           class="btn btn-sm btn-primary">
+                                           class="btn btn-primary glass-btn btn-sm">
                                             Download
                                         </a>
                                     }
@@ -160,8 +405,8 @@
                 </table>
 
             </div>
+        }
 
-        </div>
-    }
+    </div>
 
 </div>

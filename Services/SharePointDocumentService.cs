@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Identity;
 using BADEAPORTAL.Models.Documents;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
 
 namespace BADEAPORTAL.Services;
 
@@ -90,7 +91,46 @@ public sealed class SharePointDocumentService : ISharePointDocumentService
 
         return (content, fileName, contentType);
     }
+    public async Task UploadDocumentAsync(string? folderPath, IFormFile file)
+    {
+        ValidateUploadFile(file);
 
+        await SetGraphAuthorizationHeaderAsync();
+
+        var siteId = await GetSiteIdAsync();
+        var driveId = await GetDriveIdAsync(siteId);
+
+        var cleanFolderPath = NormalizeFolderPath(folderPath);
+
+        var uploadPath = string.IsNullOrWhiteSpace(cleanFolderPath)
+            ? file.FileName
+            : $"{cleanFolderPath}/{file.FileName}";
+
+        var encodedUploadPath = EncodeFolderPath(uploadPath);
+
+        var url =
+            $"https://graph.microsoft.com/v1.0/drives/{driveId}/root:/{encodedUploadPath}:/content";
+
+        await using var stream = file.OpenReadStream();
+
+        using var content = new StreamContent(stream);
+
+        if (!string.IsNullOrWhiteSpace(file.ContentType))
+        {
+            content.Headers.ContentType =
+                new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+        }
+
+        using var response = await _httpClient.PutAsync(url, content);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+
+            throw new InvalidOperationException(
+                $"Unable to upload SharePoint document. Status: {response.StatusCode}. Details: {error}");
+        }
+    }
     private async Task SetGraphAuthorizationHeaderAsync()
     {
         var tenantId = _configuration["AzureAd:TenantId"];
@@ -279,7 +319,74 @@ public sealed class SharePointDocumentService : ISharePointDocumentService
 
         return $"{currentFolderPath}/{folderName}";
     }
+    private static void ValidateUploadFile(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+        {
+            throw new InvalidOperationException("A valid file is required.");
+        }
 
+        const long maxFileSize = 10 * 1024 * 1024; // 10 MB
+
+        if (file.Length > maxFileSize)
+        {
+            throw new InvalidOperationException("File size must be 10 MB or less.");
+        }
+
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+        var allowedExtensions = new HashSet<string>
+    {
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".xls",
+        ".xlsx",
+        ".ppt",
+        ".pptx",
+        ".png",
+        ".jpg",
+        ".jpeg"
+    };
+
+        if (!allowedExtensions.Contains(extension))
+        {
+            throw new InvalidOperationException(
+                "File type is not allowed. Allowed types: PDF, Word, Excel, PowerPoint, PNG, JPG.");
+        }
+
+        if (!IsAllowedContentType(file.ContentType))
+        {
+            throw new InvalidOperationException("File content type is not allowed.");
+        }
+    }
+
+    private static bool IsAllowedContentType(string? contentType)
+    {
+        if (string.IsNullOrWhiteSpace(contentType))
+        {
+            return false;
+        }
+
+        var allowedContentTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "application/pdf",
+
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+
+        "application/vnd.ms-powerpoint",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+
+        "image/png",
+        "image/jpeg"
+    };
+
+        return allowedContentTypes.Contains(contentType);
+    }
     private static string EncodeFolderPath(string folderPath)
     {
         var segments = folderPath

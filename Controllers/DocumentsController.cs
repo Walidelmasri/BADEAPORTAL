@@ -1,6 +1,7 @@
 using BADEAPORTAL.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace BADEAPORTAL.Controllers;
 
@@ -56,6 +57,48 @@ public class DocumentsController : Controller
                 "The document could not be downloaded right now. Please contact IT if the issue continues.";
 
             return RedirectToAction(nameof(Index));
+        }
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Upload(
+    string? folderPath,
+    IFormFile? file)
+    {
+        try
+        {
+            if (file == null)
+            {
+                TempData["ErrorMessage"] =
+                    "Please select a file to upload.";
+
+                return RedirectToAction(
+                    nameof(Index),
+                    new { folderPath });
+            }
+
+            await _sharePointDocumentService
+                .UploadDocumentAsync(folderPath, file);
+
+            TempData["SuccessMessage"] =
+                "Document uploaded successfully.";
+
+            return RedirectToAction(
+                nameof(Index),
+                new { folderPath });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to upload SharePoint document to folder path {FolderPath}.",
+                folderPath);
+
+            TempData["ErrorMessage"] = ex.Message;
+
+            return RedirectToAction(
+                nameof(Index),
+                new { folderPath });
         }
     }
 }
