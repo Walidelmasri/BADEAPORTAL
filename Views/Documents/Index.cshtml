@@ -2,18 +2,51 @@
 
 @{
     ViewData["Title"] = "Documents";
+
+    var currentFolderPath = ViewBag.CurrentFolderPath as string ?? "";
+
+    string? parentFolderPath = null;
+
+    if (!string.IsNullOrWhiteSpace(currentFolderPath))
+    {
+        var lastSlashIndex = currentFolderPath.LastIndexOf('/');
+
+        parentFolderPath =
+            lastSlashIndex >= 0
+                ? currentFolderPath[..lastSlashIndex]
+                : "";
+    }
 }
 
 <div class="container py-4">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
+
         <div>
             <h2 class="fw-bold mb-1">Documents</h2>
-            <p class="text-muted mb-0">
-                SharePoint document library integration
-            </p>
+
+            @if (string.IsNullOrWhiteSpace(currentFolderPath))
+            {
+                <p class="text-muted mb-0">
+                    Root Folder
+                </p>
+            }
+            else
+            {
+                <p class="text-muted mb-0">
+                    @currentFolderPath
+                </p>
+            }
         </div>
+
     </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
 
     @if (ViewBag.ErrorMessage != null)
     {
@@ -21,6 +54,20 @@
             @ViewBag.ErrorMessage
         </div>
     }
+
+    <div class="mb-3">
+
+        @if (!string.IsNullOrWhiteSpace(currentFolderPath))
+        {
+            <a asp-controller="Documents"
+               asp-action="Index"
+               asp-route-folderPath="@parentFolderPath"
+               class="btn btn-outline-secondary btn-sm">
+                ← Back
+            </a>
+        }
+
+    </div>
 
     @if (!Model.Any())
     {
@@ -31,6 +78,7 @@
     else
     {
         <div class="card shadow-sm border-0">
+
             <div class="table-responsive">
 
                 <table class="table align-middle mb-0">
@@ -60,13 +108,20 @@
                                 </td>
 
                                 <td>
-                                    @{
+
+                                    @if (item.IsFolder)
+                                    {
+                                        <span>-</span>
+                                    }
+                                    else
+                                    {
                                         var sizeText = item.Size.HasValue
                                             ? $"{Math.Round(item.Size.Value / 1024.0, 2)} KB"
                                             : "-";
+
+                                        @sizeText
                                     }
 
-                                    @sizeText
                                 </td>
 
                                 <td>
@@ -76,11 +131,24 @@
 
                                 <td class="text-end">
 
-                                    <a href="@item.WebUrl"
-                                       target="_blank"
-                                       class="btn btn-sm btn-outline-primary">
-                                        Open
-                                    </a>
+                                    @if (item.IsFolder)
+                                    {
+                                        <a asp-controller="Documents"
+                                           asp-action="Index"
+                                           asp-route-folderPath="@item.FolderPath"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Open
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Documents"
+                                           asp-action="Download"
+                                           asp-route-itemId="@item.ItemId"
+                                           class="btn btn-sm btn-primary">
+                                            Download
+                                        </a>
+                                    }
 
                                 </td>
 
@@ -92,6 +160,7 @@
                 </table>
 
             </div>
+
         </div>
     }
 
