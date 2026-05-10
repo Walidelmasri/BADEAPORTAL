@@ -30,8 +30,7 @@ public class DocumentsController : Controller
         {
             _logger.LogError(ex, "Failed to load SharePoint documents.");
 
-            ViewBag.ErrorMessage =
-                "Documents could not be loaded right now. Please contact IT if the issue continues.";
+            ViewBag.ErrorMessage = ex.ToString();
 
             return View(Array.Empty<BADEAPORTAL.Models.Documents.SharePointDocumentVm>());
         }
