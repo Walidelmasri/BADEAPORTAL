@@ -22,7 +22,8 @@
 
     var isAdminToolsPage =
         string.Equals(currentController, "AdminSystemCards", StringComparison.OrdinalIgnoreCase);
-
+    var isDocumentsPage =
+        string.Equals(currentController, "Documents", StringComparison.OrdinalIgnoreCase);
     var overviewHref = isHomePage ? "#top" : Url.Action("Index", "Home");
     var toolsHref = isHomePage ? "#tools-section" : Url.Action("Index", "Home") + "#tools-section";
 
@@ -296,7 +297,12 @@
                                     @(isArabic ? "الأنظمة والأدوات" : "Tools")
                                 </a>
                             </li>
-
+                            <li class="nav-item">
+                                <a class="nav-link @(isDocumentsPage ? "active" : "")" asp-controller="Documents"
+                                       asp-action="Index">
+                                    @(isArabic ? "المستندات" : "Documents")
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link @(isAdminToolsPage ? "active" : "")"
                                        asp-controller="AdminSystemCards" asp-action="Index">
