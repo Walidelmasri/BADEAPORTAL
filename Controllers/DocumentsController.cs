@@ -218,4 +218,47 @@ public class DocumentsController : Controller
             return RedirectToAction(nameof(Index), new { folderPath });
         }
     }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Deactivate(
+    int documentId,
+    string? folderPath)
+    {
+        try
+        {
+            var currentUser = _userProfileService.GetCurrentUser();
+
+            var updatedBy =
+                currentUser.EmailOrUpn ??
+                currentUser.DisplayName ??
+                currentUser.FullName ??
+                User.Identity?.Name ??
+                "Unknown";
+
+            await _portalDocumentService.DeactivateDocumentAsync(
+                documentId,
+                updatedBy);
+
+            TempData["SuccessMessage"] =
+                "Document deactivated successfully.";
+
+            return RedirectToAction(
+                nameof(Index),
+                new { folderPath });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to deactivate document id {DocumentId}.",
+                documentId);
+
+            TempData["ErrorMessage"] =
+                ex.Message;
+
+            return RedirectToAction(
+                nameof(Index),
+                new { folderPath });
+        }
+    }
 }
