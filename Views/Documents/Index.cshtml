@@ -520,13 +520,13 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
-        const modalElement =
+        const historyModalElement =
             document.getElementById("historyModal");
 
-        const modal =
-            new bootstrap.Modal(modalElement);
+        const historyModal =
+            new bootstrap.Modal(historyModalElement);
 
-        const modalBody =
+        const historyModalBody =
             document.getElementById("historyModalBody");
 
         document.querySelectorAll(".history-btn")
@@ -537,26 +537,24 @@
                     const documentId =
                         this.dataset.documentId;
 
-                    modalBody.innerHTML =
+                    historyModalBody.innerHTML =
                         `<div class="text-center py-4">
                             Loading history...
                          </div>`;
 
-                    modal.show();
+                    historyModal.show();
 
                     try {
-
                         const response =
                             await fetch(`/portalbadea/Documents/HistoryModal?documentId=${documentId}`);
 
                         const html =
                             await response.text();
 
-                        modalBody.innerHTML = html;
-
-                    } catch {
-
-                        modalBody.innerHTML =
+                        historyModalBody.innerHTML = html;
+                    }
+                    catch {
+                        historyModalBody.innerHTML =
                             `<div class="alert alert-danger">
                                 Failed to load document history.
                              </div>`;
@@ -566,33 +564,34 @@
 
             });
 
-    });
-    const newVersionModalElement =
-        document.getElementById("newVersionModal");
+        const newVersionModalElement =
+            document.getElementById("newVersionModal");
 
-    const newVersionModal =
-        new bootstrap.Modal(newVersionModalElement);
+        const newVersionModal =
+            new bootstrap.Modal(newVersionModalElement);
 
-    const newVersionDocumentId =
-        document.getElementById("newVersionDocumentId");
+        const newVersionDocumentId =
+            document.getElementById("newVersionDocumentId");
 
-    const newVersionDocumentName =
-        document.getElementById("newVersionDocumentName");
+        const newVersionDocumentName =
+            document.getElementById("newVersionDocumentName");
 
-    document.querySelectorAll(".new-version-btn")
-        .forEach(button => {
+        document.querySelectorAll(".new-version-btn")
+            .forEach(button => {
 
-            button.addEventListener("click", function () {
+                button.addEventListener("click", function () {
 
-                newVersionDocumentId.value =
-                    this.dataset.documentId;
+                    newVersionDocumentId.value =
+                        this.dataset.documentId;
 
-                newVersionDocumentName.textContent =
-                    this.dataset.documentName;
+                    newVersionDocumentName.textContent =
+                        this.dataset.documentName;
 
-                newVersionModal.show();
+                    newVersionModal.show();
+
+                });
 
             });
 
-        });
+    });
 </script>
