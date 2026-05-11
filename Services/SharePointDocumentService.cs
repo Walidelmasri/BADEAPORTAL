@@ -104,9 +104,11 @@ public sealed class SharePointDocumentService : ISharePointDocumentService
 
         var cleanFolderPath = NormalizeFolderPath(folderPath);
 
+        var storageFileName = BuildStorageFileName(file.FileName);
+
         var uploadPath = string.IsNullOrWhiteSpace(cleanFolderPath)
-            ? file.FileName
-            : $"{cleanFolderPath}/{file.FileName}";
+            ? storageFileName
+            : $"{cleanFolderPath}/{storageFileName}";
 
         var encodedUploadPath = EncodeFolderPath(uploadPath);
 
@@ -339,6 +341,25 @@ public sealed class SharePointDocumentService : ISharePointDocumentService
         }
 
         return $"{currentFolderPath}/{folderName}";
+    }
+    private static string BuildStorageFileName(string originalFileName)
+    {
+        var extension = Path.GetExtension(originalFileName).ToLowerInvariant();
+
+        var baseName = Path.GetFileNameWithoutExtension(originalFileName);
+
+        var safeBaseName = string.Join(
+            "_",
+            baseName.Split(Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries));
+
+        if (string.IsNullOrWhiteSpace(safeBaseName))
+        {
+            safeBaseName = "document";
+        }
+
+        var timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+
+        return $"{safeBaseName}_{timestamp}_{Guid.NewGuid():N}{extension}";
     }
     private static void ValidateUploadFile(IFormFile file)
     {

@@ -91,26 +91,26 @@ public class DocumentsController : Controller
         }
     }
     public async Task<IActionResult> HistoryModal(int documentId)
-{
-    try
     {
-        var versions = await _portalDocumentService
-            .GetVersionHistoryAsync(documentId);
+        try
+        {
+            var versions = await _portalDocumentService
+                .GetVersionHistoryAsync(documentId);
 
-        return PartialView("_HistoryModal", versions);
+            return PartialView("_HistoryModal", versions);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to load document history for document id {DocumentId}.",
+                documentId);
+
+            Response.StatusCode = 500;
+
+            return Content("Document history could not be loaded right now.");
+        }
     }
-    catch (Exception ex)
-    {
-        _logger.LogError(
-            ex,
-            "Failed to load document history for document id {DocumentId}.",
-            documentId);
-
-        Response.StatusCode = 500;
-
-        return Content("Document history could not be loaded right now.");
-    }
-}
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Upload(
@@ -162,6 +162,56 @@ public class DocumentsController : Controller
                 ex,
                 "Failed to upload document to folder path {FolderPath}.",
                 folderPath);
+
+            TempData["ErrorMessage"] = ex.Message;
+
+            return RedirectToAction(nameof(Index), new { folderPath });
+        }
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UploadNewVersion(
+        int documentId,
+        string? folderPath,
+        IFormFile? file)
+    {
+        try
+        {
+            if (file == null)
+            {
+                TempData["ErrorMessage"] = "Please select a file to upload.";
+
+                return RedirectToAction(nameof(Index), new { folderPath });
+            }
+
+            var currentUser = _userProfileService.GetCurrentUser();
+
+            var uploadedBy =
+                currentUser.EmailOrUpn ??
+                currentUser.DisplayName ??
+                currentUser.FullName ??
+                User.Identity?.Name ??
+                "Unknown";
+
+            var uploadResult = await _sharePointDocumentService
+                .UploadDocumentAsync(folderPath, file);
+
+            await _portalDocumentService.CreateNewVersionAsync(
+                documentId,
+                file,
+                uploadResult.ItemId,
+                uploadedBy);
+
+            TempData["SuccessMessage"] = "New document version uploaded successfully.";
+
+            return RedirectToAction(nameof(Index), new { folderPath });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to upload new version for document id {DocumentId}.",
+                documentId);
 
             TempData["ErrorMessage"] = ex.Message;
 
