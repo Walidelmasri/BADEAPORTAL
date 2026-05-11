@@ -90,6 +90,27 @@ public class DocumentsController : Controller
             return RedirectToAction(nameof(Index));
         }
     }
+    public async Task<IActionResult> HistoryModal(int documentId)
+{
+    try
+    {
+        var versions = await _portalDocumentService
+            .GetVersionHistoryAsync(documentId);
+
+        return PartialView("_HistoryModal", versions);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(
+            ex,
+            "Failed to load document history for document id {DocumentId}.",
+            documentId);
+
+        Response.StatusCode = 500;
+
+        return Content("Document history could not be loaded right now.");
+    }
+}
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Upload(

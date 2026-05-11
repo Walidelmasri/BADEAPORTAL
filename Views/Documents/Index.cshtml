@@ -396,10 +396,19 @@
                                 }
                                 else
                                 {
-                                    <a asp-controller="Documents" asp-action="Download" asp-route-itemId="@item.SharePointItemId"
-                                           class="btn btn-primary glass-btn btn-sm">
-                                        Download
-                                    </a>
+                                    <div class="d-flex justify-content-end gap-2">
+
+                                        <button type="button" class="btn btn-outline-secondary glass-btn btn-sm history-btn"
+                                                data-document-id="@item.DocumentId">
+                                            History
+                                        </button>
+
+                                        <a asp-controller="Documents" asp-action="Download"
+                                               asp-route-itemId="@item.SharePointItemId" class="btn btn-primary glass-btn btn-sm">
+                                            Download
+                                        </a>
+
+                                    </div>
                                 }
 
                             </td>
@@ -415,5 +424,82 @@
     }
 
 </div>
+<div class="modal fade" id="historyModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+
+        <div class="modal-content border-0 shadow-lg">
+
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">
+                    Document Version History
+                </h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <div class="modal-body" id="historyModalBody">
+
+                <div class="text-center py-4">
+                    Loading history...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const modalElement =
+            document.getElementById("historyModal");
+
+        const modal =
+            new bootstrap.Modal(modalElement);
+
+        const modalBody =
+            document.getElementById("historyModalBody");
+
+        document.querySelectorAll(".history-btn")
+            .forEach(button => {
+
+                button.addEventListener("click", async function () {
+
+                    const documentId =
+                        this.dataset.documentId;
+
+                    modalBody.innerHTML =
+                        `<div class="text-center py-4">
+                            Loading history...
+                         </div>`;
+
+                    modal.show();
+
+                    try {
+
+                        const response =
+                            await fetch(`/portalbadea/Documents/HistoryModal?documentId=${documentId}`);
+
+                        const html =
+                            await response.text();
+
+                        modalBody.innerHTML = html;
+
+                    } catch {
+
+                        modalBody.innerHTML =
+                            `<div class="alert alert-danger">
+                                Failed to load document history.
+                             </div>`;
+                    }
+
+                });
+
+            });
+
+    });
+</script>
