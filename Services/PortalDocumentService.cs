@@ -19,18 +19,17 @@ public sealed class PortalDocumentService : IPortalDocumentService
     {
         var cleanFolderPath = NormalizeFolderPath(folderPath);
 
-        return await _dbContext.PortalDocuments
+        var documents = await _dbContext.PortalDocuments
             .AsNoTracking()
             .Where(x =>
                 x.Status == 1 &&
                 (x.FolderPath ?? "") == cleanFolderPath)
-            .Select(x => new DocumentListItemVm
+            .Select(x => new
             {
-                DocumentId = x.DocumentId,
-                Name = x.Name,
-                Description = x.Description,
+                x.DocumentId,
+                x.Name,
+                x.Description,
                 FolderPath = x.FolderPath ?? "",
-                IsFolder = false,
 
                 SharePointItemId = x.Versions
                     .Where(v => v.IsCurrent == 1)
@@ -38,26 +37,41 @@ public sealed class PortalDocumentService : IPortalDocumentService
                     .Select(v => v.SharePointItemId)
                     .FirstOrDefault(),
 
-                Type = x.Versions
+                FileType = x.Versions
                     .Where(v => v.IsCurrent == 1)
                     .OrderByDescending(v => v.VersionNo)
                     .Select(v => v.FileType)
-                    .FirstOrDefault() ?? "File",
+                    .FirstOrDefault(),
 
-                Size = x.Versions
+                FileSize = x.Versions
                     .Where(v => v.IsCurrent == 1)
                     .OrderByDescending(v => v.VersionNo)
                     .Select(v => v.FileSize)
                     .FirstOrDefault(),
 
-                LastModifiedDateTime = x.Versions
+                UploadedAt = x.Versions
                     .Where(v => v.IsCurrent == 1)
                     .OrderByDescending(v => v.VersionNo)
-                    .Select(v => (DateTimeOffset?)v.UploadedAt)
+                    .Select(v => v.UploadedAt)
                     .FirstOrDefault()
             })
             .OrderBy(x => x.Name)
             .ToListAsync();
+
+        return documents
+            .Select(x => new DocumentListItemVm
+            {
+                DocumentId = x.DocumentId,
+                Name = x.Name,
+                Description = x.Description,
+                FolderPath = x.FolderPath,
+                IsFolder = false,
+                SharePointItemId = x.SharePointItemId,
+                Type = x.FileType ?? "File",
+                Size = x.FileSize,
+                LastModifiedDateTime = x.UploadedAt
+            })
+            .ToList();
     }
 
     public async Task CreateDocumentAsync(
