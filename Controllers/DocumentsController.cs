@@ -66,8 +66,7 @@ public class DocumentsController : Controller
                 folderPath);
 
             ViewBag.CurrentFolderPath = folderPath ?? "";
-            ViewBag.ErrorMessage =
-                "Documents could not be loaded right now. Please contact IT if the issue continues.";
+            ViewBag.ErrorMessage = ex.ToString();
 
             return View(Array.Empty<BADEAPORTAL.Models.Documents.DocumentListItemVm>());
         }
