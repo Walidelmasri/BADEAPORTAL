@@ -5,8 +5,7 @@ namespace BADEAPORTAL.Services;
 
 public interface IPortalDocumentService
 {
-    Task<IReadOnlyList<PortalDocument>> GetActiveDocumentsAsync(string? folderPath);
-
+Task<IReadOnlyList<DocumentListItemVm>> GetActiveDocumentsAsync(string? folderPath);
     Task CreateDocumentAsync(
         string? folderPath,
         string name,

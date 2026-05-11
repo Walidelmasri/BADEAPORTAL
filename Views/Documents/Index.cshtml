@@ -1,5 +1,4 @@
-@model IReadOnlyList<BADEAPORTAL.Models.Documents.SharePointDocumentVm>
-
+@model IReadOnlyList<BADEAPORTAL.Models.Documents.DocumentListItemVm>
 @{
     ViewData["Title"] = "Documents";
 
@@ -246,169 +245,175 @@
 
     <div class="upload-card p-4 mb-4">
 
-        <div class="upload-card p-4 mb-4">
 
-            <form asp-controller="Documents" asp-action="Upload" method="post" enctype="multipart/form-data">
+        <form asp-controller="Documents" asp-action="Upload" method="post" enctype="multipart/form-data">
 
-                @Html.AntiForgeryToken()
+            @Html.AntiForgeryToken()
 
-                <input type="hidden" name="folderPath" value="@currentFolderPath" />
+            <input type="hidden" name="folderPath" value="@currentFolderPath" />
 
-                <div class="row g-3">
+            <div class="row g-3">
 
-                    <div class="col-lg-6">
-                        <label class="form-label fw-semibold mb-2">
-                            Document Name
-                        </label>
+                <div class="col-lg-6">
+                    <label class="form-label fw-semibold mb-2">
+                        Document Name
+                    </label>
 
-                        <input type="text" name="name" class="form-control custom-file-input"
-                               placeholder="Example: HR Policy" />
-                    </div>
-
-                    <div class="col-lg-6">
-                        <label class="form-label fw-semibold mb-2">
-                            Upload File
-                        </label>
-
-                        <input type="file" name="file" class="form-control custom-file-input"
-                               accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg" />
-
-                        <div class="form-text mt-2">
-                            Allowed: PDF, Word, Excel, PowerPoint, PNG, JPG — Maximum 10 MB
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <label class="form-label fw-semibold mb-2">
-                            Description
-                        </label>
-
-                        <textarea name="description" class="form-control custom-file-input" rows="3"
-                                  placeholder="Optional document description"></textarea>
-                    </div>
-
-                    <div class="col-12 text-end">
-                        <button type="submit" class="btn btn-primary glass-btn px-4">
-                            Upload Document
-                        </button>
-                    </div>
-
+                    <input type="text" name="name" class="form-control custom-file-input"
+                           placeholder="Example: HR Policy" />
                 </div>
 
-            </form>
+                <div class="col-lg-6">
+                    <label class="form-label fw-semibold mb-2">
+                        Upload File
+                    </label>
 
-        </div>
+                    <input type="file" name="file" class="form-control custom-file-input"
+                           accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg" />
 
-        <div class="documents-card p-0 overflow-hidden">
-
-            @if (!Model.Any())
-            {
-                <div class="empty-state">
-                    <h5 class="fw-bold mb-2">
-                        No Documents Found
-                    </h5>
-
-                    <p class="mb-0">
-                        This folder currently does not contain any files or folders.
-                    </p>
+                    <div class="form-text mt-2">
+                        Allowed: PDF, Word, Excel, PowerPoint, PNG, JPG — Maximum 10 MB
+                    </div>
                 </div>
-            }
-            else
-            {
-                <div class="table-responsive">
 
-                    <table class="table documents-table align-middle mb-0">
+                <div class="col-12">
+                    <label class="form-label fw-semibold mb-2">
+                        Description
+                    </label>
 
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Size</th>
-                                <th>Last Modified</th>
-                                <th class="text-end">Actions</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-
-                                    <td>
-                                        <div class="document-name">
-                                            @item.Name
-                                        </div>
-                                    </td>
-
-                                    <td>
-
-                                        @if (item.IsFolder)
-                                        {
-                                            <span class="folder-badge">
-                                                Folder
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="file-badge">
-                                                File
-                                            </span>
-                                        }
-
-                                    </td>
-
-                                    <td class="document-meta">
-
-                                        @if (item.IsFolder)
-                                        {
-                                            <span>-</span>
-                                        }
-                                        else
-                                        {
-                                            var sizeText = item.Size.HasValue
-                                                ? $"{Math.Round(item.Size.Value / 1024.0, 2)} KB"
-                                                : "-";
-
-                                            @sizeText
-                                        }
-
-                                    </td>
-
-                                    <td class="document-meta">
-                                        @(item.LastModifiedDateTime?.ToLocalTime()
-                                            .ToString("dd MMM yyyy hh:mm tt"))
-                                    </td>
-
-                                    <td class="text-end">
-
-                                        @if (item.IsFolder)
-                                        {
-                                            <a asp-controller="Documents" asp-action="Index" asp-route-folderPath="@item.FolderPath"
-                                                   class="btn btn-outline-primary glass-btn btn-sm">
-                                                Open
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <a asp-controller="Documents" asp-action="Download" asp-route-itemId="@item.ItemId"
-                                                   class="btn btn-primary glass-btn btn-sm">
-                                                Download
-                                            </a>
-                                        }
-
-                                    </td>
-
-                                </tr>
-                            }
-
-                        </tbody>
-
-                    </table>
-
+                    <textarea name="description" class="form-control custom-file-input" rows="3"
+                              placeholder="Optional document description"></textarea>
                 </div>
-            }
 
-        </div>
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary glass-btn px-4">
+                        Upload Document
+                    </button>
+                </div>
 
+            </div>
+
+        </form>
     </div>
+</div>
+
+<div class="documents-card p-0 overflow-hidden">
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <h5 class="fw-bold mb-2">
+                No Documents Found
+            </h5>
+
+            <p class="mb-0">
+                This folder currently does not contain any files or folders.
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+
+            <table class="table documents-table align-middle mb-0">
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Last Modified</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <div class="document-name">
+                                    @item.Name
+                                </div>
+
+                                @if (!string.IsNullOrWhiteSpace(item.Description))
+                                {
+                                    <div class="document-meta mt-1">
+                                        @item.Description
+                                    </div>
+                                }
+                            </td>
+
+                            <td>
+
+                                @if (item.IsFolder)
+                                {
+                                    <span class="folder-badge">
+                                        Folder
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="file-badge">
+                                        File
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td class="document-meta">
+
+                                @if (item.IsFolder)
+                                {
+                                    <span>-</span>
+                                }
+                                else
+                                {
+                                    var sizeText = item.Size.HasValue
+                                        ? $"{Math.Round(item.Size.Value / 1024.0, 2)} KB"
+                                        : "-";
+
+                                    @sizeText
+                                }
+
+                            </td>
+
+                            <td class="document-meta">
+                                @(item.LastModifiedDateTime?.ToLocalTime()
+                                    .ToString("dd MMM yyyy hh:mm tt"))
+                            </td>
+
+                            <td class="text-end">
+
+                                @if (item.IsFolder)
+                                {
+                                    <a asp-controller="Documents" asp-action="Index" asp-route-folderPath="@item.FolderPath"
+                                           class="btn btn-outline-primary glass-btn btn-sm">
+                                        Open
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Documents" asp-action="Download" asp-route-itemId="@item.SharePointItemId"
+                                           class="btn btn-primary glass-btn btn-sm">
+                                        Download
+                                    </a>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+
+</div>
+
+</div>

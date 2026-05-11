@@ -14,17 +14,48 @@ public sealed class PortalDocumentService : IPortalDocumentService
         _dbContext = dbContext;
     }
 
-    public async Task<IReadOnlyList<PortalDocument>> GetActiveDocumentsAsync(
+    public async Task<IReadOnlyList<DocumentListItemVm>> GetActiveDocumentsAsync(
         string? folderPath)
     {
         var cleanFolderPath = NormalizeFolderPath(folderPath);
 
         return await _dbContext.PortalDocuments
             .AsNoTracking()
-            .Include(x => x.Versions.Where(v => v.IsCurrent == 1))
             .Where(x =>
                 x.Status == 1 &&
                 (x.FolderPath ?? "") == cleanFolderPath)
+            .Select(x => new DocumentListItemVm
+            {
+                DocumentId = x.DocumentId,
+                Name = x.Name,
+                Description = x.Description,
+                FolderPath = x.FolderPath ?? "",
+                IsFolder = false,
+
+                SharePointItemId = x.Versions
+                    .Where(v => v.IsCurrent == 1)
+                    .OrderByDescending(v => v.VersionNo)
+                    .Select(v => v.SharePointItemId)
+                    .FirstOrDefault(),
+
+                Type = x.Versions
+                    .Where(v => v.IsCurrent == 1)
+                    .OrderByDescending(v => v.VersionNo)
+                    .Select(v => v.FileType)
+                    .FirstOrDefault() ?? "File",
+
+                Size = x.Versions
+                    .Where(v => v.IsCurrent == 1)
+                    .OrderByDescending(v => v.VersionNo)
+                    .Select(v => v.FileSize)
+                    .FirstOrDefault(),
+
+                LastModifiedDateTime = x.Versions
+                    .Where(v => v.IsCurrent == 1)
+                    .OrderByDescending(v => v.VersionNo)
+                    .Select(v => (DateTimeOffset?)v.UploadedAt)
+                    .FirstOrDefault()
+            })
             .OrderBy(x => x.Name)
             .ToListAsync();
     }

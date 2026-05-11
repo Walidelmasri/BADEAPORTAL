@@ -29,21 +29,47 @@ public class DocumentsController : Controller
     {
         try
         {
-            var documents = await _sharePointDocumentService.ListDocumentsAsync(folderPath);
+            var sharePointItems = await _sharePointDocumentService
+                .ListDocumentsAsync(folderPath);
+
+            var folders = sharePointItems
+                .Where(x => x.IsFolder)
+                .Select(x => new BADEAPORTAL.Models.Documents.DocumentListItemVm
+                {
+                    Name = x.Name,
+                    FolderPath = x.FolderPath,
+                    Type = "Folder",
+                    IsFolder = true,
+                    Size = null,
+                    LastModifiedDateTime = x.LastModifiedDateTime
+                })
+                .ToList();
+
+            var documents = await _portalDocumentService
+                .GetActiveDocumentsAsync(folderPath);
+
+            var model = folders
+                .Concat(documents)
+                .OrderByDescending(x => x.IsFolder)
+                .ThenBy(x => x.Name)
+                .ToList();
 
             ViewBag.CurrentFolderPath = folderPath ?? "";
 
-            return View(documents);
+            return View(model);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to load SharePoint documents for folder path {FolderPath}.", folderPath);
+            _logger.LogError(
+                ex,
+                "Failed to load documents for folder path {FolderPath}.",
+                folderPath);
 
             ViewBag.CurrentFolderPath = folderPath ?? "";
             ViewBag.ErrorMessage =
                 "Documents could not be loaded right now. Please contact IT if the issue continues.";
 
-            return View(Array.Empty<BADEAPORTAL.Models.Documents.SharePointDocumentVm>());
+            return View(Array.Empty<BADEAPORTAL.Models.Documents.DocumentListItemVm>());
         }
     }
 
