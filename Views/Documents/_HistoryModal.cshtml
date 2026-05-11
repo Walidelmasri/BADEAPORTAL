@@ -2,53 +2,97 @@
 
 @if (!Model.Any())
 {
-    <div class="text-muted">
+    <div class="text-center py-5 text-muted">
         No version history found for this document.
     </div>
 }
 else
 {
     <div class="table-responsive">
+
         <table class="table align-middle mb-0">
-            <thead class="table-light">
-                <tr>
-                    <th>Version</th>
-                    <th>File Name</th>
-                    <th>Type</th>
-                    <th>Size</th>
-                    <th>Uploaded By</th>
-                    <th>Uploaded At</th>
-                    <th>Status</th>
+
+            <thead>
+                <tr style="border-bottom: 1px solid #eef2f7;">
+                    <th class="fw-bold text-muted">Version</th>
+                    <th class="fw-bold text-muted">File Name</th>
+                    <th class="fw-bold text-muted">Type</th>
+                    <th class="fw-bold text-muted">Size</th>
+                    <th class="fw-bold text-muted">Uploaded By</th>
+                    <th class="fw-bold text-muted">Uploaded At</th>
+                    <th class="fw-bold text-muted text-center">Status</th>
                 </tr>
             </thead>
 
             <tbody>
+
                 @foreach (var version in Model)
                 {
                     var sizeText = version.FileSize.HasValue
                         ? $"{Math.Round(version.FileSize.Value / 1024.0, 2)} KB"
                         : "-";
 
-                    <tr>
-                        <td>v@version.VersionNo</td>
-                        <td>@version.OriginalFileName</td>
-                        <td>@version.FileType</td>
-                        <td>@sizeText</td>
-                        <td>@version.UploadedBy</td>
-                        <td>@version.UploadedAt.ToString("dd MMM yyyy hh:mm tt")</td>
+                    <tr style="border-bottom: 1px solid #f3f4f6;">
+
                         <td>
+                            <span class="badge rounded-pill text-bg-primary px-3 py-2">
+                                @($"v{version.VersionNo}")
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="fw-semibold text-dark">
+                                @version.OriginalFileName
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="text-muted">
+                                @version.FileType
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="text-muted">
+                                @sizeText
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="text-muted">
+                                @version.UploadedBy
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="text-muted">
+                                @version.UploadedAt.ToString("dd MMM yyyy hh:mm tt")
+                            </span>
+                        </td>
+
+                        <td class="text-center">
+
                             @if (version.IsCurrent == 1)
                             {
-                                <span class="badge bg-success">Current</span>
+                                <span class="badge rounded-pill bg-success px-3 py-2">
+                                    Current
+                                </span>
                             }
                             else
                             {
-                                <span class="badge bg-secondary">Old</span>
+                                <span class="badge rounded-pill bg-secondary px-3 py-2">
+                                    Old
+                                </span>
                             }
+
                         </td>
+
                     </tr>
                 }
+
             </tbody>
+
         </table>
+
     </div>
 }
