@@ -1,4 +1,6 @@
 using BADEAPORTAL.Models;
+using BADEAPORTAL.Models.Documents;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace BADEAPORTAL.Data
@@ -17,6 +19,9 @@ namespace BADEAPORTAL.Data
         public DbSet<Department> Departments => Set<Department>();
         public DbSet<PortalSystemCard> PortalSystemCards => Set<PortalSystemCard>();
         public DbSet<PortalHeroSlide> PortalHeroSlides => Set<PortalHeroSlide>();
+        public DbSet<PortalDocument> PortalDocuments => Set<PortalDocument>();
+
+        public DbSet<PortalDocumentVersion> PortalDocumentVersions => Set<PortalDocumentVersion>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -208,6 +213,95 @@ namespace BADEAPORTAL.Data
             {
                 d.ToTable("DEPARTMENTS");
                 d.HasKey(x => x.DeptCode);
+            });
+            modelBuilder.Entity<PortalDocument>(entity =>
+{
+    entity.ToTable("PORTAL_DOCUMENTS", "STRATEGYKPI");
+
+    entity.HasKey(x => x.DocumentId);
+
+    entity.Property(x => x.DocumentId)
+        .HasColumnName("DOCUMENT_ID");
+
+    entity.Property(x => x.Name)
+        .HasColumnName("NAME")
+        .HasMaxLength(300)
+        .IsRequired();
+
+    entity.Property(x => x.Description)
+        .HasColumnName("DESCRIPTION")
+        .HasMaxLength(1000);
+
+    entity.Property(x => x.FolderPath)
+        .HasColumnName("FOLDER_PATH")
+        .HasMaxLength(500);
+
+    entity.Property(x => x.Status)
+        .HasColumnName("STATUS");
+
+    entity.Property(x => x.CreatedBy)
+        .HasColumnName("CREATED_BY")
+        .HasMaxLength(256);
+
+    entity.Property(x => x.CreatedAt)
+        .HasColumnName("CREATED_AT");
+
+    entity.Property(x => x.LastUpdatedBy)
+        .HasColumnName("LAST_UPDATED_BY")
+        .HasMaxLength(256);
+
+    entity.Property(x => x.LastUpdatedAt)
+        .HasColumnName("LAST_UPDATED_AT");
+});
+            modelBuilder.Entity<PortalDocumentVersion>(entity =>
+            {
+                entity.ToTable("PORTAL_DOCUMENT_VERSIONS", "STRATEGYKPI");
+
+                entity.HasKey(x => x.VersionId);
+
+                entity.Property(x => x.VersionId)
+                    .HasColumnName("VERSION_ID");
+
+                entity.Property(x => x.DocumentId)
+                    .HasColumnName("DOCUMENT_ID");
+
+                entity.Property(x => x.VersionNo)
+                    .HasColumnName("VERSION_NO");
+
+                entity.Property(x => x.OriginalFileName)
+                    .HasColumnName("ORIGINAL_FILE_NAME")
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                entity.Property(x => x.FileType)
+                    .HasColumnName("FILE_TYPE")
+                    .HasMaxLength(50);
+
+                entity.Property(x => x.SharePointItemId)
+                    .HasColumnName("SHAREPOINT_ITEM_ID")
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                entity.Property(x => x.FileSize)
+                    .HasColumnName("FILE_SIZE");
+
+                entity.Property(x => x.UploadedBy)
+                    .HasColumnName("UPLOADED_BY")
+                    .HasMaxLength(256);
+
+                entity.Property(x => x.UploadedAt)
+                    .HasColumnName("UPLOADED_AT");
+
+                entity.Property(x => x.IsCurrent)
+                    .HasColumnName("IS_CURRENT");
+
+                entity.Property(x => x.FilePath)
+                    .HasColumnName("FILE_PATH")
+                    .HasMaxLength(1000);
+
+                entity.HasOne(x => x.Document)
+                    .WithMany(x => x.Versions)
+                    .HasForeignKey(x => x.DocumentId);
             });
         }
     }

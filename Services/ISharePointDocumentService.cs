@@ -9,5 +9,7 @@ public interface ISharePointDocumentService
 
     Task<(Stream Content, string FileName, string ContentType)> DownloadDocumentAsync(string itemId);
 
-    Task UploadDocumentAsync(string? folderPath, IFormFile file);
-}
+Task<SharePointUploadResult> UploadDocumentAsync(
+    string? folderPath,
+    IFormFile file);
+    }

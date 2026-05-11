@@ -91,7 +91,9 @@ public sealed class SharePointDocumentService : ISharePointDocumentService
 
         return (content, fileName, contentType);
     }
-    public async Task UploadDocumentAsync(string? folderPath, IFormFile file)
+    public async Task<SharePointUploadResult> UploadDocumentAsync(
+        string? folderPath,
+        IFormFile file)
     {
         ValidateUploadFile(file);
 
@@ -118,7 +120,7 @@ public sealed class SharePointDocumentService : ISharePointDocumentService
         if (!string.IsNullOrWhiteSpace(file.ContentType))
         {
             content.Headers.ContentType =
-                new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+                new MediaTypeHeaderValue(file.ContentType);
         }
 
         using var response = await _httpClient.PutAsync(url, content);
@@ -130,6 +132,25 @@ public sealed class SharePointDocumentService : ISharePointDocumentService
             throw new InvalidOperationException(
                 $"Unable to upload SharePoint document. Status: {response.StatusCode}. Details: {error}");
         }
+
+        using var responseStream = await response.Content.ReadAsStreamAsync();
+
+        using var document = await JsonDocument.ParseAsync(responseStream);
+
+        return new SharePointUploadResult
+        {
+            ItemId = document.RootElement
+                .GetProperty("id")
+                .GetString() ?? "",
+
+            FileName = document.RootElement
+                .GetProperty("name")
+                .GetString() ?? file.FileName,
+
+            FileSize = document.RootElement.TryGetProperty("size", out var size)
+                ? size.GetInt64()
+                : file.Length
+        };
     }
     private async Task SetGraphAuthorizationHeaderAsync()
     {

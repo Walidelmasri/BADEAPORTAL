@@ -42,6 +42,7 @@ builder.Services.Configure<SharePointOptions>(
 builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<ISharePointDocumentService, SharePointDocumentService>();
+builder.Services.AddScoped<IPortalDocumentService, PortalDocumentService>();
 // Oracle EF Core
 builder.Services.AddDbContext<PortalDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));

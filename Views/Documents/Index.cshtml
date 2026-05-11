@@ -29,14 +29,14 @@
         border-radius: 28px;
         padding: 2rem;
         background:
-            linear-gradient(135deg, rgba(13,110,253,0.10), rgba(111,66,193,0.08)),
-            rgba(255,255,255,0.72);
+            linear-gradient(135deg, rgba(13, 110, 253, 0.10), rgba(111, 66, 193, 0.08)),
+            rgba(255, 255, 255, 0.72);
         backdrop-filter: blur(18px);
         -webkit-backdrop-filter: blur(18px);
-        border: 1px solid rgba(255,255,255,0.45);
+        border: 1px solid rgba(255, 255, 255, 0.45);
         box-shadow:
-            0 10px 35px rgba(0,0,0,0.06),
-            inset 0 1px 0 rgba(255,255,255,0.55);
+            0 10px 35px rgba(0, 0, 0, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.55);
     }
 
     .documents-hero::before {
@@ -47,7 +47,7 @@
         width: 280px;
         height: 280px;
         border-radius: 50%;
-        background: rgba(13,110,253,0.08);
+        background: rgba(13, 110, 253, 0.08);
     }
 
     .documents-title {
@@ -62,14 +62,14 @@
     }
 
     .documents-card {
-        background: rgba(255,255,255,0.75);
+        background: rgba(255, 255, 255, 0.75);
         backdrop-filter: blur(18px);
         -webkit-backdrop-filter: blur(18px);
-        border: 1px solid rgba(255,255,255,0.45);
+        border: 1px solid rgba(255, 255, 255, 0.45);
         border-radius: 24px;
         box-shadow:
-            0 10px 30px rgba(0,0,0,0.05),
-            inset 0 1px 0 rgba(255,255,255,0.5);
+            0 10px 30px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
     .documents-table th {
@@ -106,7 +106,7 @@
         align-items: center;
         padding: 0.4rem 0.85rem;
         border-radius: 999px;
-        background: rgba(13,110,253,0.10);
+        background: rgba(13, 110, 253, 0.10);
         color: #0d6efd;
         font-weight: 600;
         font-size: 0.85rem;
@@ -117,7 +117,7 @@
         align-items: center;
         padding: 0.4rem 0.85rem;
         border-radius: 999px;
-        background: rgba(108,117,125,0.12);
+        background: rgba(108, 117, 125, 0.12);
         color: #495057;
         font-weight: 600;
         font-size: 0.85rem;
@@ -127,7 +127,7 @@
         border-radius: 14px;
         padding: 0.6rem 1rem;
         font-weight: 600;
-        border: 1px solid rgba(255,255,255,0.4);
+        border: 1px solid rgba(255, 255, 255, 0.4);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         transition: all 0.2s ease;
@@ -139,13 +139,13 @@
 
     .upload-card {
         border-radius: 24px;
-        background: rgba(255,255,255,0.72);
+        background: rgba(255, 255, 255, 0.72);
         backdrop-filter: blur(18px);
         -webkit-backdrop-filter: blur(18px);
-        border: 1px solid rgba(255,255,255,0.45);
+        border: 1px solid rgba(255, 255, 255, 0.45);
         box-shadow:
-            0 8px 25px rgba(0,0,0,0.04),
-            inset 0 1px 0 rgba(255,255,255,0.55);
+            0 8px 25px rgba(0, 0, 0, 0.04),
+            inset 0 1px 0 rgba(255, 255, 255, 0.55);
     }
 
     .custom-file-input {
@@ -160,7 +160,7 @@
         align-items: center;
         padding: 0.45rem 0.9rem;
         border-radius: 999px;
-        background: rgba(13,110,253,0.08);
+        background: rgba(13, 110, 253, 0.08);
         color: #0d6efd;
         font-weight: 600;
         font-size: 0.88rem;
@@ -211,10 +211,8 @@
 
                 @if (!string.IsNullOrWhiteSpace(currentFolderPath))
                 {
-                    <a asp-controller="Documents"
-                       asp-action="Index"
-                       asp-route-folderPath="@parentFolderPath"
-                       class="btn btn-light glass-btn">
+                    <a asp-controller="Documents" asp-action="Index" asp-route-folderPath="@parentFolderPath"
+                           class="btn btn-light glass-btn">
                         ← Back
                     </a>
                 }
@@ -248,165 +246,169 @@
 
     <div class="upload-card p-4 mb-4">
 
-        <form asp-controller="Documents"
-              asp-action="Upload"
-              method="post"
-              enctype="multipart/form-data">
+        <div class="upload-card p-4 mb-4">
 
-            @Html.AntiForgeryToken()
+            <form asp-controller="Documents" asp-action="Upload" method="post" enctype="multipart/form-data">
 
-            <input type="hidden"
-                   name="folderPath"
-                   value="@currentFolderPath" />
+                @Html.AntiForgeryToken()
 
-            <div class="row align-items-end g-3">
+                <input type="hidden" name="folderPath" value="@currentFolderPath" />
 
-                <div class="col-lg-8">
+                <div class="row g-3">
 
-                    <label class="form-label fw-semibold mb-2">
-                        Upload Document
-                    </label>
+                    <div class="col-lg-6">
+                        <label class="form-label fw-semibold mb-2">
+                            Document Name
+                        </label>
 
-                    <input type="file"
-                           name="file"
-                           class="form-control custom-file-input"
-                           accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg" />
+                        <input type="text" name="name" class="form-control custom-file-input"
+                               placeholder="Example: HR Policy" />
+                    </div>
 
-                    <div class="form-text mt-2">
-                        Allowed: PDF, Word, Excel, PowerPoint, PNG, JPG — Maximum 10 MB
+                    <div class="col-lg-6">
+                        <label class="form-label fw-semibold mb-2">
+                            Upload File
+                        </label>
+
+                        <input type="file" name="file" class="form-control custom-file-input"
+                               accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg" />
+
+                        <div class="form-text mt-2">
+                            Allowed: PDF, Word, Excel, PowerPoint, PNG, JPG — Maximum 10 MB
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-semibold mb-2">
+                            Description
+                        </label>
+
+                        <textarea name="description" class="form-control custom-file-input" rows="3"
+                                  placeholder="Optional document description"></textarea>
+                    </div>
+
+                    <div class="col-12 text-end">
+                        <button type="submit" class="btn btn-primary glass-btn px-4">
+                            Upload Document
+                        </button>
                     </div>
 
                 </div>
 
-                <div class="col-lg-4 text-lg-end">
+            </form>
 
-                    <button type="submit"
-                            class="btn btn-primary glass-btn px-4">
-                        Upload Document
-                    </button>
+        </div>
+
+        <div class="documents-card p-0 overflow-hidden">
+
+            @if (!Model.Any())
+            {
+                <div class="empty-state">
+                    <h5 class="fw-bold mb-2">
+                        No Documents Found
+                    </h5>
+
+                    <p class="mb-0">
+                        This folder currently does not contain any files or folders.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+
+                    <table class="table documents-table align-middle mb-0">
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Size</th>
+                                <th>Last Modified</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <div class="document-name">
+                                            @item.Name
+                                        </div>
+                                    </td>
+
+                                    <td>
+
+                                        @if (item.IsFolder)
+                                        {
+                                            <span class="folder-badge">
+                                                Folder
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="file-badge">
+                                                File
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <td class="document-meta">
+
+                                        @if (item.IsFolder)
+                                        {
+                                            <span>-</span>
+                                        }
+                                        else
+                                        {
+                                            var sizeText = item.Size.HasValue
+                                                ? $"{Math.Round(item.Size.Value / 1024.0, 2)} KB"
+                                                : "-";
+
+                                            @sizeText
+                                        }
+
+                                    </td>
+
+                                    <td class="document-meta">
+                                        @(item.LastModifiedDateTime?.ToLocalTime()
+                                            .ToString("dd MMM yyyy hh:mm tt"))
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        @if (item.IsFolder)
+                                        {
+                                            <a asp-controller="Documents" asp-action="Index" asp-route-folderPath="@item.FolderPath"
+                                                   class="btn btn-outline-primary glass-btn btn-sm">
+                                                Open
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="Documents" asp-action="Download" asp-route-itemId="@item.ItemId"
+                                                   class="btn btn-primary glass-btn btn-sm">
+                                                Download
+                                            </a>
+                                        }
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
 
                 </div>
+            }
 
-            </div>
-
-        </form>
-
-    </div>
-
-    <div class="documents-card p-0 overflow-hidden">
-
-        @if (!Model.Any())
-        {
-            <div class="empty-state">
-                <h5 class="fw-bold mb-2">
-                    No Documents Found
-                </h5>
-
-                <p class="mb-0">
-                    This folder currently does not contain any files or folders.
-                </p>
-            </div>
-        }
-        else
-        {
-            <div class="table-responsive">
-
-                <table class="table documents-table align-middle mb-0">
-
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Size</th>
-                            <th>Last Modified</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-
-                                <td>
-                                    <div class="document-name">
-                                        @item.Name
-                                    </div>
-                                </td>
-
-                                <td>
-
-                                    @if (item.IsFolder)
-                                    {
-                                        <span class="folder-badge">
-                                            Folder
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        <span class="file-badge">
-                                            File
-                                        </span>
-                                    }
-
-                                </td>
-
-                                <td class="document-meta">
-
-                                    @if (item.IsFolder)
-                                    {
-                                        <span>-</span>
-                                    }
-                                    else
-                                    {
-                                        var sizeText = item.Size.HasValue
-                                            ? $"{Math.Round(item.Size.Value / 1024.0, 2)} KB"
-                                            : "-";
-
-                                        @sizeText
-                                    }
-
-                                </td>
-
-                                <td class="document-meta">
-                                    @(item.LastModifiedDateTime?.ToLocalTime()
-                                        .ToString("dd MMM yyyy hh:mm tt"))
-                                </td>
-
-                                <td class="text-end">
-
-                                    @if (item.IsFolder)
-                                    {
-                                        <a asp-controller="Documents"
-                                           asp-action="Index"
-                                           asp-route-folderPath="@item.FolderPath"
-                                           class="btn btn-outline-primary glass-btn btn-sm">
-                                            Open
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-controller="Documents"
-                                           asp-action="Download"
-                                           asp-route-itemId="@item.ItemId"
-                                           class="btn btn-primary glass-btn btn-sm">
-                                            Download
-                                        </a>
-                                    }
-
-                                </td>
-
-                            </tr>
-                        }
-
-                    </tbody>
-
-                </table>
-
-            </div>
-        }
+        </div>
 
     </div>
-
-</div>

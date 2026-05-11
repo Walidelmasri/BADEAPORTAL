@@ -9,13 +9,19 @@ namespace BADEAPORTAL.Controllers;
 public class DocumentsController : Controller
 {
     private readonly ISharePointDocumentService _sharePointDocumentService;
+    private readonly IPortalDocumentService _portalDocumentService;
+    private readonly IUserProfileService _userProfileService;
     private readonly ILogger<DocumentsController> _logger;
 
     public DocumentsController(
         ISharePointDocumentService sharePointDocumentService,
+        IPortalDocumentService portalDocumentService,
+        IUserProfileService userProfileService,
         ILogger<DocumentsController> logger)
     {
         _sharePointDocumentService = sharePointDocumentService;
+        _portalDocumentService = portalDocumentService;
+        _userProfileService = userProfileService;
         _logger = logger;
     }
 
@@ -62,43 +68,58 @@ public class DocumentsController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Upload(
-    string? folderPath,
-    IFormFile? file)
+        string? folderPath,
+        IFormFile? file,
+        string? name,
+        string? description)
     {
         try
         {
             if (file == null)
             {
-                TempData["ErrorMessage"] =
-                    "Please select a file to upload.";
+                TempData["ErrorMessage"] = "Please select a file to upload.";
 
-                return RedirectToAction(
-                    nameof(Index),
-                    new { folderPath });
+                return RedirectToAction(nameof(Index), new { folderPath });
             }
 
-            await _sharePointDocumentService
+            var displayName = string.IsNullOrWhiteSpace(name)
+                ? Path.GetFileNameWithoutExtension(file.FileName)
+                : name.Trim();
+
+            var currentUser = _userProfileService.GetCurrentUser();
+
+            var uploadedBy =
+                currentUser.EmailOrUpn ??
+                currentUser.DisplayName ??
+                currentUser.FullName ??
+                User.Identity?.Name ??
+                "Unknown";
+
+            var uploadResult = await _sharePointDocumentService
                 .UploadDocumentAsync(folderPath, file);
 
-            TempData["SuccessMessage"] =
-                "Document uploaded successfully.";
+            await _portalDocumentService.CreateDocumentAsync(
+                folderPath,
+                displayName,
+                description,
+                file,
+                uploadResult.ItemId,
+                uploadedBy);
 
-            return RedirectToAction(
-                nameof(Index),
-                new { folderPath });
+            TempData["SuccessMessage"] = "Document uploaded successfully.";
+
+            return RedirectToAction(nameof(Index), new { folderPath });
         }
         catch (Exception ex)
         {
             _logger.LogError(
                 ex,
-                "Failed to upload SharePoint document to folder path {FolderPath}.",
+                "Failed to upload document to folder path {FolderPath}.",
                 folderPath);
 
             TempData["ErrorMessage"] = ex.Message;
 
-            return RedirectToAction(
-                nameof(Index),
-                new { folderPath });
+            return RedirectToAction(nameof(Index), new { folderPath });
         }
     }
 }
