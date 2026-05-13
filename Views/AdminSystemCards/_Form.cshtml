@@ -1,82 +1,168 @@
 @model BADEAPORTAL.Models.Admin.SystemCardFormVm
 
-<div class="card border-0 shadow-sm rounded-4">
-    <div class="card-body">
-        <div class="row g-3">
-            <div class="col-md-4">
-                <label asp-for="SysId" class="form-label">SYSID</label>
-                <input asp-for="SysId" class="form-control" />
-            </div>
+<style>
+    .admin-form-card {
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 24px;
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
 
-            <div class="col-md-4">
-                <label asp-for="IsActive" class="form-label">Active</label>
-                <select asp-for="IsActive" class="form-select">
-                    <option value="1">Active</option>
-                    <option value="0">Hidden</option>
-                </select>
-            </div>
+    .admin-section-title {
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 0.35rem;
+    }
 
-            <div class="col-md-4">
-                <label asp-for="IsPublic" class="form-label">Public</label>
-                <select asp-for="IsPublic" class="form-select">
-                    <option value="1">Public</option>
-                    <option value="0">Restricted</option>
-                </select>
-            </div>
+    .admin-section-subtitle {
+        color: #6b7280;
+        font-size: 0.92rem;
+        margin-bottom: 1.25rem;
+    }
 
-            <div class="col-md-6">
-                <label asp-for="SysNameEn" class="form-label">Name English</label>
-                <input asp-for="SysNameEn" class="form-control" required />
-            </div>
+    .admin-input {
+        border-radius: 14px;
+        min-height: 50px;
+        border: 1px solid #dbe2ea;
+        padding: 0.75rem 1rem;
+    }
 
-            <div class="col-md-6">
-                <label asp-for="SysNameAr" class="form-label">Name Arabic</label>
-                <input asp-for="SysNameAr" class="form-control" dir="rtl" required />
-            </div>
+    textarea.admin-input {
+        min-height: 110px;
+    }
 
-            <div class="col-md-6">
-                <label asp-for="DescriptionEn" class="form-label">Description English</label>
-                <textarea asp-for="DescriptionEn" class="form-control" rows="3"></textarea>
-            </div>
+    .admin-label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.45rem;
+    }
 
-            <div class="col-md-6">
-                <label asp-for="DescriptionAr" class="form-label">Description Arabic</label>
-                <textarea asp-for="DescriptionAr" class="form-control" rows="3" dir="rtl"></textarea>
-            </div>
+    .current-logo-preview {
+        width: 88px;
+        height: 88px;
+        object-fit: contain;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid #eef2f7;
+        padding: 0.5rem;
+        box-shadow: 0 8px 20px rgba(15, 29, 45, 0.05);
+    }
 
-            <div class="col-md-6">
-                <label asp-for="CategoryEn" class="form-label">Category English</label>
-                <input asp-for="CategoryEn" class="form-control" />
-            </div>
+    .form-divider {
+        height: 1px;
+        background: #eef2f7;
+        margin: 1.5rem 0;
+    }
+</style>
 
-            <div class="col-md-6">
-                <label asp-for="CategoryAr" class="form-label">Category Arabic</label>
-                <input asp-for="CategoryAr" class="form-control" dir="rtl" />
-            </div>
+<div class="admin-form-card p-4">
 
-            <div class="col-12">
-                <label asp-for="AppUrl" class="form-label">URL</label>
-                <input asp-for="AppUrl" class="form-control" required />
-            </div>
-
-            <div class="col-md-6">
-                <label asp-for="RoleGroup" class="form-label">Role Group</label>
-                <input asp-for="RoleGroup" class="form-control" />
-            </div>
-
-            <div class="col-md-6">
-                <label asp-for="LogoFile" class="form-label">Upload Logo</label>
-                <input asp-for="LogoFile" type="file" class="form-control" accept=".png,.jpg,.jpeg,.webp" />
-            </div>
-
-            @if (!string.IsNullOrWhiteSpace(Model.LogoPath))
-            {
-                <div class="col-12">
-                    <div class="small text-muted mb-2">Current logo</div>
-                    <img src="@Model.LogoPath" style="width:80px;height:80px;object-fit:contain;border-radius:16px;"
-                         onerror="this.onerror=null;this.src='@Url.Content("~/images/logo-en.png")';" />
-                </div>
-            }
-        </div>
+    <div class="admin-section-title">
+        Tool Details
     </div>
+
+    <div class="admin-section-subtitle">
+        Configure the system card information shown on the portal homepage.
+    </div>
+
+    <div class="row g-3">
+
+        <div class="col-md-4">
+            <label asp-for="SysId" class="form-label admin-label">SYSID</label>
+            <input asp-for="SysId" class="form-control admin-input" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="IsActive" class="form-label admin-label">Visibility</label>
+            <select asp-for="IsActive" class="form-select admin-input">
+                <option value="1">Active</option>
+                <option value="0">Hidden</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="IsPublic" class="form-label admin-label">Access</label>
+            <select asp-for="IsPublic" class="form-select admin-input">
+                <option value="1">Public</option>
+                <option value="0">Restricted</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="SysNameEn" class="form-label admin-label">Name English</label>
+            <input asp-for="SysNameEn" class="form-control admin-input" required />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="SysNameAr" class="form-label admin-label">Name Arabic</label>
+            <input asp-for="SysNameAr" class="form-control admin-input" dir="rtl" required />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="DescriptionEn" class="form-label admin-label">Description English</label>
+            <textarea asp-for="DescriptionEn" class="form-control admin-input" rows="3"></textarea>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="DescriptionAr" class="form-label admin-label">Description Arabic</label>
+            <textarea asp-for="DescriptionAr" class="form-control admin-input" rows="3" dir="rtl"></textarea>
+        </div>
+
+    </div>
+
+    <div class="form-divider"></div>
+
+    <div class="admin-section-title">
+        Classification & Access
+    </div>
+
+    <div class="admin-section-subtitle">
+        Group the tool and optionally restrict it using a role group.
+    </div>
+
+    <div class="row g-3">
+
+        <div class="col-md-6">
+            <label asp-for="CategoryEn" class="form-label admin-label">Category English</label>
+            <input asp-for="CategoryEn" class="form-control admin-input" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="CategoryAr" class="form-label admin-label">Category Arabic</label>
+            <input asp-for="CategoryAr" class="form-control admin-input" dir="rtl" />
+        </div>
+
+        <div class="col-12">
+            <label asp-for="AppUrl" class="form-label admin-label">URL</label>
+            <input asp-for="AppUrl" class="form-control admin-input" required />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="RoleGroup" class="form-label admin-label">Role Group</label>
+            <input asp-for="RoleGroup" class="form-control admin-input" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="LogoFile" class="form-label admin-label">Upload Logo</label>
+            <input asp-for="LogoFile" type="file" class="form-control admin-input" accept=".png,.jpg,.jpeg,.webp" />
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.LogoPath))
+        {
+            <div class="col-12">
+                <div class="small text-muted mb-2">
+                    Current logo
+                </div>
+
+                <img src="@Model.LogoPath" class="current-logo-preview"
+                     onerror="this.onerror=null;this.src='@Url.Content("~/images/logo-en.png")';" />
+            </div>
+        }
+
+    </div>
+
 </div>
