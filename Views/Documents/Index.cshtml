@@ -180,7 +180,6 @@
 <div class="container py-4 documents-page">
 
     <div class="documents-hero mb-4">
-
         <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
 
             <div>
@@ -207,7 +206,6 @@
             </div>
 
             <div class="d-flex align-items-center gap-2">
-
                 @if (!string.IsNullOrWhiteSpace(currentFolderPath))
                 {
                     <a asp-controller="Documents" asp-action="Index" asp-route-folderPath="@parentFolderPath"
@@ -215,11 +213,9 @@
                         ← Back
                     </a>
                 }
-
             </div>
 
         </div>
-
     </div>
 
     @if (TempData["SuccessMessage"] != null)
@@ -244,8 +240,6 @@
     }
 
     <div class="upload-card p-4 mb-4">
-
-
         <form asp-controller="Documents" asp-action="Upload" method="post" enctype="multipart/form-data">
 
             @Html.AntiForgeryToken()
@@ -292,152 +286,144 @@
                 </div>
 
             </div>
-
         </form>
     </div>
-</div>
 
-<div class="documents-card p-0 overflow-hidden">
+    <div class="documents-card p-0 overflow-hidden">
 
-    @if (!Model.Any())
-    {
-        <div class="empty-state">
-            <h5 class="fw-bold mb-2">
-                No Documents Found
-            </h5>
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+                <h5 class="fw-bold mb-2">
+                    No Documents Found
+                </h5>
 
-            <p class="mb-0">
-                This folder currently does not contain any files or folders.
-            </p>
-        </div>
-    }
-    else
-    {
-        <div class="table-responsive">
+                <p class="mb-0">
+                    This folder currently does not contain any files or folders.
+                </p>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table documents-table align-middle mb-0">
 
-            <table class="table documents-table align-middle mb-0">
-
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Size</th>
-                        <th>Last Modified</th>
-                        <th class="text-end">Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @foreach (var item in Model)
-                    {
+                    <thead>
                         <tr>
-
-                            <td>
-                                <div class="document-name">
-                                    @item.Name
-                                </div>
-
-                                @if (!string.IsNullOrWhiteSpace(item.Description))
-                                {
-                                    <div class="document-meta mt-1">
-                                        @item.Description
-                                    </div>
-                                }
-                            </td>
-
-                            <td>
-
-                                @if (item.IsFolder)
-                                {
-                                    <span class="folder-badge">
-                                        Folder
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="file-badge">
-                                        File
-                                    </span>
-                                }
-
-                            </td>
-
-                            <td class="document-meta">
-
-                                @if (item.IsFolder)
-                                {
-                                    <span>-</span>
-                                }
-                                else
-                                {
-                                    var sizeText = item.Size.HasValue
-                                        ? $"{Math.Round(item.Size.Value / 1024.0, 2)} KB"
-                                        : "-";
-
-                                    @sizeText
-                                }
-
-                            </td>
-
-                            <td class="document-meta">
-                                @(item.LastModifiedDateTime?.ToLocalTime()
-                                    .ToString("dd MMM yyyy hh:mm tt"))
-                            </td>
-
-                            <td class="text-end">
-
-                                @if (item.IsFolder)
-                                {
-                                    <a asp-controller="Documents" asp-action="Index" asp-route-folderPath="@item.FolderPath"
-                                           class="btn btn-outline-primary glass-btn btn-sm">
-                                        Open
-                                    </a>
-                                }
-                                else
-                                {
-                                    <div class="d-flex justify-content-end gap-2">
-
-                                        <button type="button" class="btn btn-outline-secondary glass-btn btn-sm history-btn"
-                                                data-document-id="@item.DocumentId">
-                                            History
-                                        </button>
-
-                                        <button type="button" class="btn btn-outline-primary glass-btn btn-sm new-version-btn"
-                                                data-document-id="@item.DocumentId" data-document-name="@item.Name">
-                                            New Version
-                                        </button>
-                                        <button type="button" class="btn btn-outline-danger glass-btn btn-sm deactivate-btn"
-                                                data-document-id="@item.DocumentId" data-document-name="@item.Name">
-                                            Deactivate
-                                        </button>
-                                        <a asp-controller="Documents" asp-action="Download"
-                                               asp-route-itemId="@item.SharePointItemId" class="btn btn-primary glass-btn btn-sm">
-                                            Download
-                                        </a>
-
-                                    </div>
-                                }
-
-                            </td>
-
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Size</th>
+                            <th>Last Modified</th>
+                            <th class="text-end">Actions</th>
                         </tr>
-                    }
+                    </thead>
 
-                </tbody>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="document-name">
+                                        @item.Name
+                                    </div>
 
-            </table>
+                                    @if (!string.IsNullOrWhiteSpace(item.Description))
+                                    {
+                                        <div class="document-meta mt-1">
+                                            @item.Description
+                                        </div>
+                                    }
+                                </td>
 
-        </div>
-    }
+                                <td>
+                                    @if (item.IsFolder)
+                                    {
+                                        <span class="folder-badge">
+                                            Folder
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="file-badge">
+                                            File
+                                        </span>
+                                    }
+                                </td>
+
+                                <td class="document-meta">
+                                    @if (item.IsFolder)
+                                    {
+                                        <span>-</span>
+                                    }
+                                    else
+                                    {
+                                        var sizeText = item.Size.HasValue
+                                            ? $"{Math.Round(item.Size.Value / 1024.0, 2)} KB"
+                                            : "-";
+
+                                        @sizeText
+                                    }
+                                </td>
+
+                                <td class="document-meta">
+                                    @(item.LastModifiedDateTime?.ToLocalTime()
+                                        .ToString("dd MMM yyyy hh:mm tt"))
+                                </td>
+
+                                <td class="text-end">
+                                    @if (item.IsFolder)
+                                    {
+                                        <a asp-controller="Documents" asp-action="Index" asp-route-folderPath="@item.FolderPath"
+                                               class="btn btn-outline-primary glass-btn btn-sm">
+                                            Open
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <button type="button" class="btn btn-outline-secondary glass-btn btn-sm history-btn"
+                                                    data-document-id="@item.DocumentId">
+                                                History
+                                            </button>
+
+                                            <button type="button" class="btn btn-outline-primary glass-btn btn-sm new-version-btn"
+                                                    data-document-id="@item.DocumentId" data-document-name="@item.Name">
+                                                New Version
+                                            </button>
+
+                                            <button type="button" class="btn btn-outline-danger glass-btn btn-sm deactivate-btn"
+                                                    data-document-id="@item.DocumentId" data-document-name="@item.Name">
+                                                Deactivate
+                                            </button>
+
+                                            <button type="button" class="btn btn-outline-success glass-btn btn-sm preview-btn"
+                                                    data-preview-url="@Url.Action("Preview", "Documents", new { itemId = item.SharePointItemId })"
+                                                    data-document-name="@item.Name">
+                                                Preview
+                                            </button>
+
+                                            <a asp-controller="Documents" asp-action="Download"
+                                                   asp-route-itemId="@item.SharePointItemId" class="btn btn-primary glass-btn btn-sm">
+                                                Download
+                                            </a>
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        }
+
+    </div>
 
 </div>
+
 <div class="modal fade" id="newVersionModal" tabindex="-1" aria-hidden="true">
-
     <div class="modal-dialog modal-lg">
-
         <div class="modal-content border-0 shadow-lg">
-
             <form asp-controller="Documents" asp-action="UploadNewVersion" method="post" enctype="multipart/form-data">
 
                 @Html.AntiForgeryToken()
@@ -461,7 +447,6 @@
                 </div>
 
                 <div class="modal-body">
-
                     <label class="form-label fw-semibold">
                         Replacement File
                     </label>
@@ -472,7 +457,6 @@
                     <div class="form-text mt-2">
                         The old version will remain in history, and this uploaded file will become the current version.
                     </div>
-
                 </div>
 
                 <div class="modal-footer">
@@ -486,16 +470,12 @@
                 </div>
 
             </form>
-
         </div>
-
     </div>
-
 </div>
+
 <div class="modal fade" id="historyModal" tabindex="-1" aria-hidden="true">
-
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
-
         <div class="modal-content border-0 shadow-lg">
 
             <div class="modal-header">
@@ -508,24 +488,18 @@
             </div>
 
             <div class="modal-body" id="historyModalBody">
-
                 <div class="text-center py-4">
                     Loading history...
                 </div>
-
             </div>
 
         </div>
-
     </div>
-
 </div>
+
 <div class="modal fade" id="deactivateModal" tabindex="-1" aria-hidden="true">
-
     <div class="modal-dialog modal-md modal-dialog-centered">
-
         <div class="modal-content border-0 shadow-lg">
-
             <form asp-controller="Documents" asp-action="Deactivate" method="post">
 
                 @Html.AntiForgeryToken()
@@ -535,18 +509,15 @@
                 <input type="hidden" name="documentId" id="deactivateDocumentId" />
 
                 <div class="modal-header border-0 pb-0">
-
                     <h5 class="modal-title fw-bold text-danger">
                         Deactivate Document
                     </h5>
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal">
                     </button>
-
                 </div>
 
                 <div class="modal-body pt-3">
-
                     <p class="mb-2">
                         Are you sure you want to deactivate:
                     </p>
@@ -558,11 +529,9 @@
                         The document will no longer appear in the portal, but version history will remain stored for
                         audit purposes.
                     </div>
-
                 </div>
 
                 <div class="modal-footer border-0">
-
                     <button type="button" class="btn btn-light glass-btn" data-bs-dismiss="modal">
                         Cancel
                     </button>
@@ -570,118 +539,128 @@
                     <button type="submit" class="btn btn-danger glass-btn">
                         Deactivate
                     </button>
-
                 </div>
 
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title fw-bold mb-1">
+                        Document Preview
+                    </h5>
+
+                    <div class="text-muted small" id="previewDocumentName">
+                    </div>
+                </div>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <div class="modal-body p-0" style="height: 75vh;">
+
+                <iframe id="previewFrame" src="" title="Document Preview" style="width: 100%; height: 100%; border: 0;">
+                </iframe>
+
+            </div>
 
         </div>
-
     </div>
-
 </div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
-        const historyModalElement =
-            document.getElementById("historyModal");
+        if (typeof bootstrap === "undefined") {
+            console.error("Bootstrap JS is not loaded.");
+            return;
+        }
 
-        const historyModal =
-            new bootstrap.Modal(historyModalElement);
+        const historyModalElement = document.getElementById("historyModal");
+        const historyModalBody = document.getElementById("historyModalBody");
 
-        const historyModalBody =
-            document.getElementById("historyModalBody");
+        if (historyModalElement && historyModalBody) {
+            const historyModal = new bootstrap.Modal(historyModalElement);
 
-        document.querySelectorAll(".history-btn")
-            .forEach(button => {
-
+            document.querySelectorAll(".history-btn").forEach(button => {
                 button.addEventListener("click", async function () {
-
-                    const documentId =
-                        this.dataset.documentId;
+                    const documentId = this.dataset.documentId;
 
                     historyModalBody.innerHTML =
-                        `<div class="text-center py-4">
-                            Loading history...
-                         </div>`;
+                        `<div class="text-center py-4">Loading history...</div>`;
 
                     historyModal.show();
 
                     try {
-                        const response =
-                            await fetch(`/portalbadea/Documents/HistoryModal?documentId=${documentId}`);
-
-                        const html =
-                            await response.text();
-
-                        historyModalBody.innerHTML = html;
+                        const response = await fetch(`/portalbadea/Documents/HistoryModal?documentId=${documentId}`);
+                        historyModalBody.innerHTML = await response.text();
                     }
                     catch {
                         historyModalBody.innerHTML =
-                            `<div class="alert alert-danger">
-                                Failed to load document history.
-                             </div>`;
+                            `<div class="alert alert-danger">Failed to load document history.</div>`;
                     }
-
                 });
-
             });
+        }
 
-        const newVersionModalElement =
-            document.getElementById("newVersionModal");
+        const newVersionModalElement = document.getElementById("newVersionModal");
+        const newVersionDocumentId = document.getElementById("newVersionDocumentId");
+        const newVersionDocumentName = document.getElementById("newVersionDocumentName");
 
-        const newVersionModal =
-            new bootstrap.Modal(newVersionModalElement);
+        if (newVersionModalElement && newVersionDocumentId && newVersionDocumentName) {
+            const newVersionModal = new bootstrap.Modal(newVersionModalElement);
 
-        const newVersionDocumentId =
-            document.getElementById("newVersionDocumentId");
-
-        const newVersionDocumentName =
-            document.getElementById("newVersionDocumentName");
-
-        document.querySelectorAll(".new-version-btn")
-            .forEach(button => {
-
+            document.querySelectorAll(".new-version-btn").forEach(button => {
                 button.addEventListener("click", function () {
-
-                    newVersionDocumentId.value =
-                        this.dataset.documentId;
-
-                    newVersionDocumentName.textContent =
-                        this.dataset.documentName;
-
+                    newVersionDocumentId.value = this.dataset.documentId;
+                    newVersionDocumentName.textContent = this.dataset.documentName;
                     newVersionModal.show();
-
                 });
-
             });
-        const deactivateModalElement =
-            document.getElementById("deactivateModal");
+        }
 
-        const deactivateModal =
-            new bootstrap.Modal(deactivateModalElement);
+        const deactivateModalElement = document.getElementById("deactivateModal");
+        const deactivateDocumentId = document.getElementById("deactivateDocumentId");
+        const deactivateDocumentName = document.getElementById("deactivateDocumentName");
 
-        const deactivateDocumentId =
-            document.getElementById("deactivateDocumentId");
+        if (deactivateModalElement && deactivateDocumentId && deactivateDocumentName) {
+            const deactivateModal = new bootstrap.Modal(deactivateModalElement);
 
-        const deactivateDocumentName =
-            document.getElementById("deactivateDocumentName");
-
-        document.querySelectorAll(".deactivate-btn")
-            .forEach(button => {
-
+            document.querySelectorAll(".deactivate-btn").forEach(button => {
                 button.addEventListener("click", function () {
-
-                    deactivateDocumentId.value =
-                        this.dataset.documentId;
-
-                    deactivateDocumentName.textContent =
-                        this.dataset.documentName;
-
+                    deactivateDocumentId.value = this.dataset.documentId;
+                    deactivateDocumentName.textContent = this.dataset.documentName;
                     deactivateModal.show();
-
                 });
-
             });
+        }
+
+        const previewModalElement = document.getElementById("previewModal");
+        const previewFrame = document.getElementById("previewFrame");
+        const previewDocumentName = document.getElementById("previewDocumentName");
+
+        if (previewModalElement && previewFrame && previewDocumentName) {
+            const previewModal = new bootstrap.Modal(previewModalElement);
+
+            document.querySelectorAll(".preview-btn").forEach(button => {
+                button.addEventListener("click", function () {
+                    previewFrame.src = this.dataset.previewUrl;
+                    previewDocumentName.textContent = this.dataset.documentName;
+                    previewModal.show();
+                });
+            });
+
+            previewModalElement.addEventListener("hidden.bs.modal", function () {
+                previewFrame.src = "";
+            });
+        }
+
     });
 </script>

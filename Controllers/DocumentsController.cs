@@ -90,6 +90,31 @@ public class DocumentsController : Controller
             return RedirectToAction(nameof(Index));
         }
     }
+    public async Task<IActionResult> Preview(string itemId)
+    {
+        try
+        {
+            var document = await _sharePointDocumentService
+                .DownloadDocumentAsync(itemId);
+
+            Response.Headers["Content-Disposition"] =
+                $"inline; filename=\"{document.FileName}\"";
+
+            return File(
+                document.Content,
+                document.ContentType);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to preview SharePoint document with item id {ItemId}.",
+                itemId);
+
+            return Content(
+                "The document could not be previewed right now.");
+        }
+    }
     public async Task<IActionResult> HistoryModal(int documentId)
     {
         try
