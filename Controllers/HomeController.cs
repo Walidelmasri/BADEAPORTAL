@@ -1,11 +1,10 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using BADEAPORTAL.Data;
 using BADEAPORTAL.Models;
-using BADEAPORTAL.Services;
 using BADEAPORTAL.Models.Home;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
-using BADEAPORTAL.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BADEAPORTAL.Controllers;
@@ -14,80 +13,85 @@ namespace BADEAPORTAL.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly IAnnouncementsService _announcements;
     private readonly PortalDbContext _db;
 
     public HomeController(
         ILogger<HomeController> logger,
-        IAnnouncementsService announcements,
         PortalDbContext db)
     {
         _logger = logger;
-        _announcements = announcements;
         _db = db;
     }
 
     public async Task<IActionResult> Index()
     {
-        var (items, _) = await _announcements.GetPagedAsync(page: 1, pageSize: 3);
-
-        var heroSlides = await _db.PortalHeroSlides
-            .AsNoTracking()
-            .Where(x => x.IsActive == 1)
-            .OrderBy(x => x.SortOrder)
-            .ThenBy(x => x.SlideId)
-            .Select(x => new PortalHeroSlideVm
-            {
-                SlideId = x.SlideId,
-                ImagePath = x.ImagePath,
-                AltTextEn = x.AltTextEn,
-                AltTextAr = x.AltTextAr
-            })
-            .ToListAsync();
-        var cards = await _db.PortalSystemCards
-            .AsNoTracking()
-            .Where(x => x.IsActive == 1)
-            .OrderBy(x => x.CardId)
-            .Select(x => new PortalSystemCardVm
-            {
-                CardId = x.CardId,
-                SysNameEn = x.SysNameEn,
-                SysNameAr = x.SysNameAr,
-                DescriptionEn = x.DescriptionEn,
-                DescriptionAr = x.DescriptionAr,
-                CategoryEn = x.CategoryEn,
-                CategoryAr = x.CategoryAr,
-                AppUrl = x.AppUrl,
-                LogoPath = x.LogoPath
-            })
-            .ToListAsync();
-        var vm = new HomeIndexVm
+        try
         {
-            LatestAnnouncements = items.Select(a => new AnnouncementPreviewVm
-            {
-                Id = a.Id,
-                Title = a.Title,
-                Excerpt = BuildExcerpt(a.BodyHtml, 140),
-                IsMemo = a.IsMemo,
-                CreatedAtUtc = a.CreatedAtUtc,
-                CreatedByName = a.CreatedByName
-            }).ToList(),
-            HeroSlides = heroSlides,
-            SystemCards = cards
-        };
+            var heroSlides = await _db.PortalHeroSlides
+                .AsNoTracking()
+                .Where(x => x.IsActive == 1)
+                .OrderBy(x => x.SortOrder)
+                .ThenBy(x => x.SlideId)
+                .Select(x => new PortalHeroSlideVm
+                {
+                    SlideId = x.SlideId,
+                    ImagePath = x.ImagePath,
+                    AltTextEn = x.AltTextEn,
+                    AltTextAr = x.AltTextAr
+                })
+                .ToListAsync();
 
-        return View(vm);
+            var cards = await _db.PortalSystemCards
+                .AsNoTracking()
+                .Where(x => x.IsActive == 1)
+                .OrderBy(x => x.CardId)
+                .Select(x => new PortalSystemCardVm
+                {
+                    CardId = x.CardId,
+                    SysNameEn = x.SysNameEn,
+                    SysNameAr = x.SysNameAr,
+                    DescriptionEn = x.DescriptionEn,
+                    DescriptionAr = x.DescriptionAr,
+                    CategoryEn = x.CategoryEn,
+                    CategoryAr = x.CategoryAr,
+                    AppUrl = x.AppUrl,
+                    LogoPath = x.LogoPath
+                })
+                .ToListAsync();
+
+            var vm = new HomeIndexVm
+            {
+                HeroSlides = heroSlides,
+                SystemCards = cards,
+                LatestAnnouncements = new List<AnnouncementPreviewVm>()
+            };
+
+            return View(vm);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to load portal homepage for {User}. Trace ID: {TraceId}",
+                User.Identity?.Name,
+                HttpContext.TraceIdentifier);
+
+            throw;
+        }
     }
 
     [HttpGet]
     public IActionResult SetLanguage(string culture, string returnUrl = "/")
     {
         if (culture != "ar" && culture != "en")
+        {
             culture = "en";
+        }
 
         Response.Cookies.Append(
             CookieRequestCultureProvider.DefaultCookieName,
-            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+            CookieRequestCultureProvider.MakeCookieValue(
+                new RequestCulture(culture)),
             new CookieOptions
             {
                 Expires = DateTimeOffset.UtcNow.AddYears(1),
@@ -104,23 +108,17 @@ public class HomeController : Controller
         return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    [ResponseCache(
+        Duration = 0,
+        Location = ResponseCacheLocation.None,
+        NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel
         {
-            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            RequestId =
+                Activity.Current?.Id ??
+                HttpContext.TraceIdentifier
         });
-    }
-
-    private static string BuildExcerpt(string html, int maxLength)
-    {
-        if (string.IsNullOrWhiteSpace(html)) return string.Empty;
-
-        var text = System.Text.RegularExpressions.Regex.Replace(html, "<.*?>", string.Empty);
-        text = System.Net.WebUtility.HtmlDecode(text).Trim();
-
-        if (text.Length <= maxLength) return text;
-        return text.Substring(0, maxLength) + "…";
     }
 }
