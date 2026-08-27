@@ -13,14 +13,14 @@ namespace BADEAPORTAL.Controllers
         [HttpGet]
         public IActionResult Login(string? returnUrl = "/")
         {
-            // If already signed in, just go back
+            var safeReturnUrl = GetSafeReturnUrl(returnUrl);
+
             if (User.Identity?.IsAuthenticated == true)
             {
-                return Redirect(returnUrl ?? "/");
+                return LocalRedirect(safeReturnUrl);
             }
 
-            // Show your premium landing page with a "Sign in with BADEA" button
-            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["ReturnUrl"] = safeReturnUrl;
             return View();
         }
 
@@ -29,24 +29,40 @@ namespace BADEAPORTAL.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SignIn(string? returnUrl = "/")
         {
-            var redirectUrl = Url.Action(nameof(SignedIn), "Account", new { returnUrl });
-            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
-            return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
+            var safeReturnUrl = GetSafeReturnUrl(returnUrl);
+            var redirectUrl = Url.Action(
+                nameof(SignedIn),
+                "Account",
+                new { returnUrl = safeReturnUrl });
+
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = redirectUrl
+            };
+
+            return Challenge(
+                properties,
+                OpenIdConnectDefaults.AuthenticationScheme);
         }
 
-        // called after Entra completes sign-in
+        // Called after Entra completes sign-in.
+        // No transition/history page is needed. The portal homepage itself
+        // installs the browser-history guard from wwwroot/js/site.js.
         [HttpGet]
         public IActionResult SignedIn(string? returnUrl = "/")
         {
-            if (string.IsNullOrEmpty(returnUrl)) returnUrl = "/";
-            return Redirect(returnUrl);
+            return LocalRedirect(GetSafeReturnUrl(returnUrl));
         }
 
         // GET: /Account/Logout
         [HttpGet]
         public IActionResult Logout()
         {
-            var callbackUrl = Url.Action(nameof(LoggedOut), "Account", values: null, protocol: Request.Scheme);
+            var callbackUrl = Url.Action(
+                nameof(LoggedOut),
+                "Account",
+                values: null,
+                protocol: Request.Scheme);
 
             return SignOut(
                 new AuthenticationProperties { RedirectUri = callbackUrl },
@@ -54,11 +70,22 @@ namespace BADEAPORTAL.Controllers
                 OpenIdConnectDefaults.AuthenticationScheme);
         }
 
-        // called after logout
+        // Called after logout
         [HttpGet]
         public IActionResult LoggedOut()
         {
             return RedirectToAction("Index", "Home");
+        }
+
+        private string GetSafeReturnUrl(string? returnUrl)
+        {
+            if (!string.IsNullOrWhiteSpace(returnUrl) &&
+                Url.IsLocalUrl(returnUrl))
+            {
+                return returnUrl;
+            }
+
+            return "/";
         }
     }
 }

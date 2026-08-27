@@ -1,7 +1,5 @@
 using BADEAPORTAL.Data;
 using BADEAPORTAL.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -56,10 +54,12 @@ builder.Services
     .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAd"));
 
-// A successful OIDC callback consumes its temporary correlation cookie.
-// If an already-authenticated user presses Back and the browser replays that
-// old /signin-oidc callback, treat only that stale replay as harmless and send
-// the user back to the portal root. Genuine login failures are left untouched.
+// Recover cleanly from a stale/replayed OIDC callback.
+// This commonly happens when a browser revisits /signin-oidc with the Back button
+// after the one-time correlation cookie has already been consumed.
+//
+// We do NOT treat other authentication failures as harmless: they continue through
+// Microsoft.Identity.Web's normal failure handling and can reach the normal error page.
 builder.Services.PostConfigure<OpenIdConnectOptions>(
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
@@ -75,19 +75,22 @@ builder.Services.PostConfigure<OpenIdConnectOptions>(
 
             if (isCorrelationFailure)
             {
-                var cookieResult = await context.HttpContext.AuthenticateAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme);
+                var logger = context.HttpContext.RequestServices
+                    .GetRequiredService<ILoggerFactory>()
+                    .CreateLogger("OidcCorrelationRecovery");
 
-                var alreadySignedIn =
-                    cookieResult.Succeeded &&
-                    cookieResult.Principal?.Identity?.IsAuthenticated == true;
+                logger.LogInformation(
+                    "Recovered from stale or invalid OIDC correlation callback at {Path}. Redirecting to a fresh login state.",
+                    context.Request.Path);
 
-                if (alreadySignedIn)
-                {
-                    context.HandleResponse();
-                    context.Response.Redirect("/");
-                    return;
-                }
+                context.HandleResponse();
+
+                // Account/Login is AllowAnonymous.
+                // If the normal application cookie is still valid, AccountController.Login
+                // immediately redirects the user back to '/'. If it is not valid, the user
+                // receives the normal sign-in page and can start a fresh OIDC transaction.
+                context.Response.Redirect("/Account/Login?returnUrl=%2F");
+                return;
             }
 
             if (existingOnRemoteFailure is not null)
@@ -108,7 +111,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // The portal is hosted at the domain root: https://portal.internal.badea.org/
-// Do not set a /portalbadea PathBase here.
 app.UseStaticFiles();
 app.UseRequestLocalization();
 app.UseRouting();
