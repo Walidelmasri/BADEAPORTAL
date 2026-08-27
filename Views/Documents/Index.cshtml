@@ -599,7 +599,8 @@
                     historyModal.show();
 
                     try {
-                        const response = await fetch(`/portalbadea/Documents/HistoryModal?documentId=${documentId}`);
+                        const historyUrl = '@Url.Action("HistoryModal", "Documents")';
+                        const response = await fetch(`${historyUrl}?documentId=${encodeURIComponent(documentId)}`);
                         historyModalBody.innerHTML = await response.text();
                     }
                     catch {
